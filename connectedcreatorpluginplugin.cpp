@@ -1,5 +1,7 @@
 ﻿#include "connectedcreatorpluginplugin.h"
 #include "connectedcreatorpluginconstants.h"
+#include "controldialog.h"
+#include "statisticsdialog.h"
 
 #include <coreplugin/icore.h>
 #include <coreplugin/icontext.h>
@@ -81,15 +83,27 @@ ExtensionSystem::IPlugin::ShutdownFlag ConnectedCreatorPluginPlugin::aboutToShut
     return SynchronousShutdown;
 }
 
+// Create a non-modal dialog with refresh function or raise if it exists
+template <class NonModalDialog>
+inline void showNonModalDialog(QPointer<NonModalDialog> &dialog)
+{
+    if (dialog) {
+        dialog->show();
+        dialog->raise();
+    } else {
+        dialog = new NonModalDialog(Core::ICore::mainWindow());
+        dialog->show();
+    }
+}
+
 void ConnectedCreatorPluginPlugin::controlAction()
 {
-    QMessageBox::information(Core::ICore::mainWindow(),
-                             tr("Action Triggered"),
-                             tr("This is an action from ConnectedCreatorPlugin."));
+    showNonModalDialog(m_controlDialog);
 }
 
 void ConnectedCreatorPluginPlugin::statisticsAction()
 {
+    showNonModalDialog(m_statDialog);
 }
 
 } // namespace Internal

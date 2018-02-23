@@ -4,6 +4,9 @@
 
 #include <extensionsystem/iplugin.h>
 
+class ControlDialog;
+class StatisticsDialog;
+
 namespace ConnectedCreatorPlugin {
 namespace Internal {
 
@@ -23,6 +26,9 @@ public:
 private:
     void controlAction();
     void statisticsAction();
+
+    QPointer<ControlDialog> m_controlDialog;
+    QPointer<StatisticsDialog> m_statDialog;
 };
 
 } // namespace Internal

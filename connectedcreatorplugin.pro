@@ -1,12 +1,23 @@
 DEFINES += CONNECTEDCREATORPLUGIN_LIBRARY
 
+#QT += KUserFeedbackCore KUserFeedbackWidgets
+
 # ConnectedCreatorPlugin files
+SOURCES += \
+    connectedcreatorpluginplugin.cpp \
+    controldialog.cpp \
+    statisticsdialog.cpp
 
-SOURCES += connectedcreatorpluginplugin.cpp
+HEADERS += \
+    connectedcreatorpluginplugin.h \
+    connectedcreatorplugin_global.h \
+    connectedcreatorpluginconstants.h \
+    controldialog.h \
+    statisticsdialog.h
 
-HEADERS += connectedcreatorpluginplugin.h \
-        connectedcreatorplugin_global.h \
-        connectedcreatorpluginconstants.h
+FORMS += \
+    controldialog.ui \
+    statisticsdialog.ui
 
 # Qt Creator linking
 
