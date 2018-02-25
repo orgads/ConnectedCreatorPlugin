@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/accessories-text-editor.png</file>
+        <file>icons/filesave.png</file>
+        <file>icons/listview.png</file>
+        <file>icons/view_text.svg</file>
+    </qresource>
+</RCC>
