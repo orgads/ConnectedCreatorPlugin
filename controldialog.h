@@ -16,6 +16,8 @@ public:
     ~ControlDialog();
 
 private:
+    bool checkEvalLicense();
+
     Ui::ControlDialog *ui;
 };
 
