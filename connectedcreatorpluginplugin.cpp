@@ -9,27 +9,28 @@
 #include <coreplugin/actionmanager/command.h>
 #include <coreplugin/actionmanager/actioncontainer.h>
 #include <coreplugin/coreconstants.h>
+#include <coreplugin/settingsdatabase.h>
 
 #include <QAction>
 #include <QMessageBox>
 #include <QMainWindow>
 #include <QMenu>
 
-namespace ConnectedCreatorPlugin {
+namespace ConnectedCreator {
 namespace Internal {
 
-ConnectedCreatorPluginPlugin::ConnectedCreatorPluginPlugin()
+ConnectedCreatorPlugin::ConnectedCreatorPlugin()
 {
     // Create your members
 }
 
-ConnectedCreatorPluginPlugin::~ConnectedCreatorPluginPlugin()
+ConnectedCreatorPlugin::~ConnectedCreatorPlugin()
 {
     // Unregister objects from the plugin manager's object pool
     // Delete members
 }
 
-bool ConnectedCreatorPluginPlugin::initialize(const QStringList &arguments, QString *errorString)
+bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *errorString)
 {
     // Register objects in the plugin manager's object pool
     // Load settings
@@ -43,14 +44,14 @@ bool ConnectedCreatorPluginPlugin::initialize(const QStringList &arguments, QStr
 
     // Create plugin menu actions
     auto actControl = new QAction(tr("&Control"), this);
-    connect(actControl, &QAction::triggered, this, &ConnectedCreatorPluginPlugin::controlAction);
+    connect(actControl, &QAction::triggered, this, &ConnectedCreatorPlugin::controlAction);
     Core::Command *cmd1 = Core::ActionManager::registerAction(
                 actControl, Constants::CONTROL_ACTION_ID,
                 Core::Context(Core::Constants::C_GLOBAL));
     cmd1->setDefaultKeySequence(QKeySequence(tr("Ctrl+Alt+Meta+C")));
 
     auto actStatistics = new QAction(tr("View &Statistics"), this);
-    connect(actStatistics, &QAction::triggered, this, &ConnectedCreatorPluginPlugin::statisticsAction);
+    connect(actStatistics, &QAction::triggered, this, &ConnectedCreatorPlugin::statisticsAction);
     Core::Command *cmd2 = Core::ActionManager::registerAction(
                 actStatistics, Constants::STATISTICS_ACTION_ID,
                 Core::Context(Core::Constants::C_GLOBAL));
@@ -68,14 +69,32 @@ bool ConnectedCreatorPluginPlugin::initialize(const QStringList &arguments, QStr
     return true;
 }
 
-void ConnectedCreatorPluginPlugin::extensionsInitialized()
+void ConnectedCreatorPlugin::extensionsInitialized()
 {
     // Retrieve objects from the plugin manager's object pool
     // In the extensionsInitialized function, a plugin can be sure that all
     // plugins that depend on it are completely initialized.
 }
 
-ExtensionSystem::IPlugin::ShutdownFlag ConnectedCreatorPluginPlugin::aboutToShutdown()
+/**
+ * @brief ConnectedCreatorPlugin::delayedInitialize
+ * Called after all plugins' IPlugin::extensionsInitialized() function has been
+ * called, and after the IPlugin::delayedInitialize() function of plugins that
+ * depend on this plugin have been called.
+ * @return
+ */
+bool ConnectedCreatorPlugin::delayedInitialize()
+{
+    // Show telemetry control dialog to user on first run
+    auto settings = Core::ICore::settingsDatabase();
+    if(settings->value(Constants::FIRST_RUN_KEY, true).value<bool>())
+        controlAction();
+
+    // Plugin should return true from the function if itactually implements delayedInitialize()
+    return true;
+}
+
+ExtensionSystem::IPlugin::ShutdownFlag ConnectedCreatorPlugin::aboutToShutdown()
 {
     // Save settings
     // Disconnect from signals that are not needed during shutdown
@@ -96,12 +115,12 @@ inline void showNonModalDialog(QPointer<NonModalDialog> &dialog)
     }
 }
 
-void ConnectedCreatorPluginPlugin::controlAction()
+void ConnectedCreatorPlugin::controlAction()
 {
     showNonModalDialog(m_controlDialog);
 }
 
-void ConnectedCreatorPluginPlugin::statisticsAction()
+void ConnectedCreatorPlugin::statisticsAction()
 {
     showNonModalDialog(m_statDialog);
 }

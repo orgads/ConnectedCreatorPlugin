@@ -7,6 +7,9 @@ namespace Ui {
 class StatisticsDialog;
 }
 
+namespace ConnectedCreator {
+namespace Internal {
+
 class StatisticsDialog : public QDialog
 {
     Q_OBJECT
@@ -22,5 +25,8 @@ private slots:
 private:
     Ui::StatisticsDialog *ui;
 };
+
+} // namespace Internal
+} // namespace ConnectedCreatorPlugin
 
 #endif // STATISTICSDIALOG_H

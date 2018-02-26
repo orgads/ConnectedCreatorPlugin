@@ -1,6 +1,9 @@
 ﻿#include "statisticsdialog.h"
 #include "ui_statisticsdialog.h"
 
+namespace ConnectedCreator {
+namespace Internal {
+
 StatisticsDialog::StatisticsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::StatisticsDialog)
@@ -28,3 +31,6 @@ void StatisticsDialog::on_treeToolButton_clicked(bool checked)
     else
         ui->treeWidget->show();
 }
+
+} // namespace Internal
+} // namespace ConnectedCreatorPlugin

@@ -7,6 +7,9 @@ namespace Ui {
 class ControlDialog;
 }
 
+namespace ConnectedCreator {
+namespace Internal {
+
 class ControlDialog : public QDialog
 {
     Q_OBJECT
@@ -17,8 +20,12 @@ public:
 
 private:
     bool checkEvalLicense();
+    bool firstRun();
 
     Ui::ControlDialog *ui;
 };
+
+} // namespace Internal
+} // namespace ConnectedCreatorPlugin
 
 #endif // CONTROLDIALOG_H

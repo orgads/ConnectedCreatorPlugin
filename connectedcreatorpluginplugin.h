@@ -4,23 +4,24 @@
 
 #include <extensionsystem/iplugin.h>
 
+namespace ConnectedCreator {
+namespace Internal {
+
 class ControlDialog;
 class StatisticsDialog;
 
-namespace ConnectedCreatorPlugin {
-namespace Internal {
-
-class ConnectedCreatorPluginPlugin : public ExtensionSystem::IPlugin
+class ConnectedCreatorPlugin : public ExtensionSystem::IPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QtCreatorPlugin" FILE "ConnectedCreatorPlugin.json")
 
 public:
-    ConnectedCreatorPluginPlugin();
-    ~ConnectedCreatorPluginPlugin();
+    ConnectedCreatorPlugin();
+    ~ConnectedCreatorPlugin();
 
     bool initialize(const QStringList &arguments, QString *errorString);
     void extensionsInitialized();
+    bool delayedInitialize() override;
     ShutdownFlag aboutToShutdown();
 
 private:

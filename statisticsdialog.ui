@@ -284,7 +284,7 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="source">
        <url>
-        <string>file:///home/aleksey/Work/Jobs/QtCompany/ConnectedCreatorPlugin/sample.html</string>
+        <string>file:///home/aleksey/Work/Jobs/QtCompany/Sources/ConnectedCreatorPlugin/sample.html</string>
        </url>
       </property>
      </widget>
