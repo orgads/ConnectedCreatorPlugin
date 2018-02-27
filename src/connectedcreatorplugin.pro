@@ -27,12 +27,12 @@ RESOURCES += \
 ## Either set the IDE_SOURCE_TREE when running qmake,
 ## or set the QTC_SOURCE environment variable, to override the default setting
 isEmpty(IDE_SOURCE_TREE): IDE_SOURCE_TREE = $$(QTC_SOURCE)
-isEmpty(IDE_SOURCE_TREE): IDE_SOURCE_TREE = ../qt-creator-src
+isEmpty(IDE_SOURCE_TREE): IDE_SOURCE_TREE = ../../qt-creator-src
 
 ## Either set the IDE_BUILD_TREE when running qmake,
 ## or set the QTC_BUILD environment variable, to override the default setting
 isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = $$(QTC_BUILD)
-isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = ../qt-creator-debug
+isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = ../../qt-creator-debug
 
 ## uncomment to build plugin into user config directory
 ## <localappdata>/plugins/<ideversion>
