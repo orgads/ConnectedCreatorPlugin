@@ -4,5 +4,6 @@
         <file>icons/filesave.png</file>
         <file>icons/listview.png</file>
         <file>icons/view_text.svg</file>
+        <file>images/monitoring-300px.png</file>
     </qresource>
 </RCC>

@@ -18,7 +18,12 @@ public:
     explicit ControlDialog(QWidget *parent = 0);
     ~ControlDialog();
 
+private slots:
+    void on_telemetryButton_clicked();
+    void goSecondPage();
+
 private:
+    void init();
     bool checkEvalLicense();
     bool firstRun();
 

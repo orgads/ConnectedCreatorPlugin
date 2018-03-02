@@ -16,17 +16,26 @@ ControlDialog::ControlDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    init();
+
     // Check first start here
     bool firstStart = firstRun();
 
     // Compose different description message if not first run or eval license
     if(!(firstStart || checkEvalLicense())) {
-        ui->descrLabel->setText("If enabled, the analytics can be disabled at any time.");
-        QFont font = ui->descrLabel->font();
-        font.setItalic(true);
-        ui->descrLabel->setFont(font);
-        ui->horizLineWidget->hide();
+        goSecondPage();
     }
+}
+
+void ControlDialog::init()
+{
+    ui->okButton->setIcon(style()->standardIcon(QStyle::SP_DialogOkButton));
+    ui->cancelButton->setIcon(style()->standardIcon(QStyle::SP_DialogCancelButton));
+    ui->helpButton->setIcon(style()->standardIcon(QStyle::SP_DialogHelpButton));
+
+    ui->stackedWidget->setCurrentIndex(0);  // Go to 1st page
+    ui->okButton->hide();
+    setWindowModality(Qt::WindowModal);
 }
 
 ControlDialog::~ControlDialog()
@@ -53,6 +62,19 @@ bool ControlDialog::firstRun()
     bool first = settings->value(Constants::FIRST_RUN_KEY, true).value<bool>();
     if(first) settings->setValue(Constants::FIRST_RUN_KEY, false);
     return first;
+}
+
+void ControlDialog::goSecondPage()
+{
+    ui->telemetryButton->hide();
+    ui->okButton->show();
+    ui->stackedWidget->setCurrentIndex(1);  // Go to 2nd page
+}
+
+void ControlDialog::on_telemetryButton_clicked()
+{
+    goSecondPage();
+    ui->groupBox->setChecked(true);
 }
 
 } // namespace Internal
