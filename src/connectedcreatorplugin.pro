@@ -1,10 +1,13 @@
-#include()
+include(../3rdparty/kuserfeedback/widgets/qt_KUserFeedbackWidgets.pri)
+include(../3rdparty/kuserfeedback/core/qt_KUserFeedbackCore.pri)
 
 DEFINES += CONNECTEDCREATORPLUGIN_LIBRARY
 
-#QT += KUserFeedbackCore KUserFeedbackWidgets
+QT += KUserFeedbackCore KUserFeedbackWidgets
 
 # ConnectedCreatorPlugin files
+INCLUDEPATH += ../3rdparty/kuserfeedback
+
 SOURCES += \
     connectedcreatorpluginplugin.cpp \
     controldialog.cpp \
@@ -52,6 +55,8 @@ message(Build tree: ($$IDE_BUILD_TREE))
 isEmpty(DESTDIR): DESTDIR = $${IDE_BUILD_TREE}/lib/qtcreator/plugins
 
 message(DESTDIR: ($$DESTDIR))
+
+unix|win32: LIBS += -L$${IDE_BUILD_TREE}/lib/qtcreator/plugins/ -lKUserFeedbackCore -lKUserFeedbackWidgets
 
 ###### If the plugin can be depended upon by other plugins, this code needs to be outsourced to
 ###### <dirname>_dependencies.pri, where <dirname> is the name of the directory containing the
