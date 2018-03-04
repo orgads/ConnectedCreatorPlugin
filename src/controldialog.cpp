@@ -18,11 +18,8 @@ ControlDialog::ControlDialog(QWidget *parent) :
 
     init();
 
-    // Check first start here
-    bool firstStart = firstRun();
-
-    // Compose different description message if not first run or eval license
-    if(!(firstStart || checkEvalLicense())) {
+    // Show 2nd dialog page and short description message if not first run or eval license
+    if(!(firstRun() || checkEvalLicense())) {
         goSecondPage();
     }
 }
@@ -35,7 +32,6 @@ void ControlDialog::init()
 
     ui->stackedWidget->setCurrentIndex(0);  // Go to 1st page
     ui->okButton->hide();
-    setWindowModality(Qt::WindowModal);
 }
 
 ControlDialog::~ControlDialog()

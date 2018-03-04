@@ -1,3 +1,5 @@
+#include()
+
 DEFINES += CONNECTEDCREATORPLUGIN_LIBRARY
 
 #QT += KUserFeedbackCore KUserFeedbackWidgets
@@ -34,6 +36,9 @@ isEmpty(IDE_SOURCE_TREE): IDE_SOURCE_TREE = ../../qt-creator-src
 isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = $$(QTC_BUILD)
 isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = ../../qt-creator-debug
 
+message(Source tree: ($$IDE_SOURCE_TREE))
+message(Build tree: ($$IDE_BUILD_TREE))
+
 ## uncomment to build plugin into user config directory
 ## <localappdata>/plugins/<ideversion>
 ##    where <localappdata> is e.g.
@@ -41,7 +46,9 @@ isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = ../../qt-creator-debug
 ##    "$XDG_DATA_HOME/data/QtProject/qtcreator" or "~/.local/share/data/QtProject/qtcreator" on Linux
 ##    "~/Library/Application Support/QtProject/Qt Creator" on OS X
 #USE_USER_DESTDIR = yes
-isEmpty(DESTDIR):DESTDIR=$$(IDE_BUILD_TREE)/lib/qtcreator/plugins
+isEmpty(DESTDIR): DESTDIR = $${IDE_BUILD_TREE}/lib/qtcreator/plugins
+
+message(DESTDIR: ($$DESTDIR))
 
 ###### If the plugin can be depended upon by other plugins, this code needs to be outsourced to
 ###### <dirname>_dependencies.pri, where <dirname> is the name of the directory containing the
@@ -60,3 +67,5 @@ QTC_PLUGIN_RECOMMENDS += \
 ###### End _dependencies.pri contents ######
 
 include($$IDE_SOURCE_TREE/src/qtcreatorplugin.pri)
+
+DISTFILES +=

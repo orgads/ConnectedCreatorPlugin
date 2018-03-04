@@ -19,8 +19,8 @@ public:
     ConnectedCreatorPlugin();
     ~ConnectedCreatorPlugin();
 
-    bool initialize(const QStringList &arguments, QString *errorString);
-    void extensionsInitialized();
+    bool initialize(const QStringList &arguments, QString *errorString) override;
+    void extensionsInitialized() override;
     bool delayedInitialize() override;
     ShutdownFlag aboutToShutdown();
 

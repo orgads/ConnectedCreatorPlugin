@@ -107,11 +107,11 @@ template <class NonModalDialog>
 inline void showNonModalDialog(QPointer<NonModalDialog> &dialog)
 {
     if (dialog) {
-        dialog->show();
+        dialog->exec();
         dialog->raise();
     } else {
         dialog = new NonModalDialog(Core::ICore::mainWindow());
-        dialog->show();
+        dialog->exec();
     }
 }
 
