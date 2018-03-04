@@ -3,11 +3,13 @@
 # Project created by QtCreator 2018-03-04T01:57:55
 #
 #-------------------------------------------------
+include(core/qt_KUserFeedbackCore.pri)
 
 QT += core network
 
 TARGET = KUserFeedbackCore
 TEMPLATE = lib
+VERSION = $$QT.KUserFeedbackCore.VERSION
 
 DEFINES += KUSERFEEDBACKCORE_LIBRARY
 
@@ -104,8 +106,6 @@ isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = ../../../qt-creator-debug
 
 message(Source tree: ($$IDE_SOURCE_TREE))
 message(Build tree: ($$IDE_BUILD_TREE))
-
-#USE_USER_DESTDIR = yes
 
 # ${VAR} notation allows to append the contents of the variable to another value
 # without separating the two with a space
