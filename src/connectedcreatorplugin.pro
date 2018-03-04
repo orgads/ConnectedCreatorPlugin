@@ -46,6 +46,9 @@ message(Build tree: ($$IDE_BUILD_TREE))
 ##    "$XDG_DATA_HOME/data/QtProject/qtcreator" or "~/.local/share/data/QtProject/qtcreator" on Linux
 ##    "~/Library/Application Support/QtProject/Qt Creator" on OS X
 #USE_USER_DESTDIR = yes
+
+# ${VAR} notation allows to append the contents of the variable to another value
+# without separating the two with a space
 isEmpty(DESTDIR): DESTDIR = $${IDE_BUILD_TREE}/lib/qtcreator/plugins
 
 message(DESTDIR: ($$DESTDIR))

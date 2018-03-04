@@ -4,3 +4,4 @@ release/*
 /.project
 */build-*/*
 */*debug*/
+Makefile
