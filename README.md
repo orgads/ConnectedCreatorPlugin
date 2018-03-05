@@ -1,4 +1,4 @@
-# ConnectedCreatorPlugin
+﻿# ConnectedCreatorPlugin
 This is a work-in-progress project to create a data analytics plugin for Connected Creator. The plugin collects usage data from Qt Creator users. This data is used to improve Qt user experience.
 
 The Qt Company has an increasing need to better understand, how Qt products and product features are used. Currently, we collect statistics about Qt downloads and Qt web site and online documentation usage. However, we have limited understanding, what user actually install and how they use different features after the installation.
@@ -10,13 +10,13 @@ As the first step, we want to start building the expertise in data mining and an
 # Build
 Assume have following directory structure:
 * `./ConnectedCreatorPlugin/src` - ConnectedCreatorPlugin sources
-* `./ConnectedCreatorPlugin/debug` - ConnectedCreatorPlugin build
+* `./ConnectedCreatorPlugin/3rdparty/kuserfeedback` - KUserFeedback sources
 * `./qt-creator-src` - Qt Creator sources dir
 * `./qt-creator-debug` - Qt Creator build dir
 
 Build instruction until moved to Qt Creator source tree:
-- `cd ConnectedCreatorPlugin/debug`
-- `qmake ../src/connectedcreatorplugin.pro CONFIG+=debug`
+- `cd ./ConnectedCreatorPlugin-Debug` - or other build dir
+- `qmake ../ConnectedCreatorPlugin/ConnectedCreator.pro CONFIG+=debug` -r
 - `make -j4`
 
 Or Build & Run in Qt Creator preserving above directory structure.

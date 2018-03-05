@@ -11,6 +11,10 @@
 #include <coreplugin/coreconstants.h>
 #include <coreplugin/settingsdatabase.h>
 
+#include <kuserfeedback/core/provider.h>
+#include <kuserfeedback/widgets/notificationpopup.h>
+#include <kuserfeedback/widgets/feedbackconfigdialog.h>
+
 #include <QAction>
 #include <QMessageBox>
 #include <QMainWindow>

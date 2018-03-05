@@ -45,7 +45,12 @@ SOURCES += \
     core/selectionratiosource.cpp \
     core/startcountsource.cpp \
     core/surveyinfo.cpp \
-    core/usagetimesource.cpp
+    core/usagetimesource.cpp \
+    common/surveytargetexpression.cpp \
+    common/surveytargetexpressionevaluator.cpp \
+    common/surveytargetexpressionlexer.cpp \
+    common/surveytargetexpressionparser.cpp \
+    common/surveytargetexpressionparser_p.cpp
 
 HEADERS += \
     core/AbstractDataSource \

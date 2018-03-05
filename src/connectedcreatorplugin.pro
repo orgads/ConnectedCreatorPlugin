@@ -6,7 +6,11 @@ DEFINES += CONNECTEDCREATORPLUGIN_LIBRARY
 QT += KUserFeedbackCore KUserFeedbackWidgets
 
 # ConnectedCreatorPlugin files
-INCLUDEPATH += ../3rdparty/kuserfeedback
+INCLUDEPATH += \
+    ../3rdparty \
+    ../3rdparty/kuserfeedback/common \
+    ../3rdparty/kuserfeedback/core \
+    ../3rdparty/kuserfeedback/widgets
 
 SOURCES += \
     connectedcreatorpluginplugin.cpp \
