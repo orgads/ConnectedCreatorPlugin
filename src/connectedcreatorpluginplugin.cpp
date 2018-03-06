@@ -46,17 +46,17 @@ bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *e
 
     // Create plugin menu actions
     Core::Command *cmd1 = addMenuAction(tr("&Control"),
-                                        SLOT(controlAction()),
+                                        &ConnectedCreatorPlugin::controlAction,
                                         Constants::CONTROL_ACTION_ID,
                                         QKeySequence(tr("Ctrl+Alt+Meta+C")));
 
     Core::Command *cmd2 = addMenuAction(tr("View &Statistics"),
-                                        SLOT(statisticsAction()),
+                                        &ConnectedCreatorPlugin::statisticsAction,
                                         Constants::STATISTICS_ACTION_ID,
                                         QKeySequence(tr("Ctrl+Alt+Meta+S")));
 
     Core::Command *cmd3 = addMenuAction(tr("&Provider config"),
-                                        SLOT(configureFeedback()),
+                                        &ConnectedCreatorPlugin::configureFeedback,
                                         Constants::PROVIDER_ACTION_ID,
                                         QKeySequence(tr("Ctrl+Alt+Meta+P")));
 
@@ -95,13 +95,13 @@ bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *e
     return true;
 }
 /// \brief Helper function to create menu action
-Core::Command * ConnectedCreatorPlugin::addMenuAction(const QString &text,
-                                                      const char *method,
-                                                      const char actionId[],
-                                                      const QKeySequence &sequence)
+Core::Command* ConnectedCreatorPlugin::addMenuAction(const QString &text,
+                                                     ConnectedCreatorFunction method,
+                                                     const char actionId[],
+                                                     const QKeySequence &sequence)
 {
     auto action = new QAction(text, this);
-    connect(action, SIGNAL(triggered(bool)), this, method);
+    connect(action, &QAction::triggered, this, method);
     Core::Command *command = Core::ActionManager::registerAction(
                 action, actionId, Core::Context(Core::Constants::C_GLOBAL));
     command->setDefaultKeySequence(sequence);

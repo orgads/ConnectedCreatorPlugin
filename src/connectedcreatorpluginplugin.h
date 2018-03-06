@@ -18,6 +18,8 @@ class ConnectedCreatorPlugin : public ExtensionSystem::IPlugin
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QtCreatorPlugin" FILE "ConnectedCreatorPlugin.json")
 
+typedef void (ConnectedCreatorPlugin:: *ConnectedCreatorFunction)();
+
 public:
     ConnectedCreatorPlugin();
     ~ConnectedCreatorPlugin();
@@ -31,14 +33,13 @@ public:
     StatisticsDialog* statisticsDialog();
     KUserFeedback::Provider* provider();
 
-private slots:
+private:
     void controlAction();
     void statisticsAction();
     void configureFeedback();
 
-private:
     Core::Command* addMenuAction(const QString &text,
-                                 const char *method,
+                                 ConnectedCreatorFunction method,
                                  const char actionId[],
                                  const QKeySequence &sequence);
 
