@@ -7,6 +7,7 @@ namespace Constants {
 
     const char CONTROL_ACTION_ID[] = "ConnectedCreatorPlugin.Control";
     const char STATISTICS_ACTION_ID[] = "ConnectedCreatorPlugin.Statistics";
+    const char PROVIDER_ACTION_ID[] = "ConnectedCreatorPlugin.Provider";
 
     const char FIRST_RUN_KEY[] = "ConnectedCreatorPlugin/FirstRun";
 

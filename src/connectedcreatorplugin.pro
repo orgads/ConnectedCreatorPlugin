@@ -22,7 +22,8 @@ HEADERS += \
     connectedcreatorplugin_global.h \
     connectedcreatorpluginconstants.h \
     controldialog.h \
-    statisticsdialog.h
+    statisticsdialog.h \
+    kuserfeedback_headers.h
 
 FORMS += \
     controldialog.ui \

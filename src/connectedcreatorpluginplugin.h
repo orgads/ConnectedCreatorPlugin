@@ -4,6 +4,9 @@
 
 #include <extensionsystem/iplugin.h>
 
+namespace KUserFeedback { class Provider; }
+namespace Core { class Command; }
+
 namespace ConnectedCreator {
 namespace Internal {
 
@@ -24,12 +27,25 @@ public:
     bool delayedInitialize() override;
     ShutdownFlag aboutToShutdown();
 
-private:
+    ControlDialog* controlDialog();
+    StatisticsDialog* statisticsDialog();
+    KUserFeedback::Provider* provider();
+
+private slots:
     void controlAction();
     void statisticsAction();
+    void configureFeedback();
+
+private:
+    Core::Command* addMenuAction(const QString &text,
+                                 const char *method,
+                                 const char actionId[],
+                                 const QKeySequence &sequence);
 
     QPointer<ControlDialog> m_controlDialog;
     QPointer<StatisticsDialog> m_statDialog;
+
+    QPointer<KUserFeedback::Provider> m_feedbackProvider;
 };
 
 } // namespace Internal
