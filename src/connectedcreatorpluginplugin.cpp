@@ -17,6 +17,7 @@
 #include <QMessageBox>
 #include <QMainWindow>
 #include <QMenu>
+#include <QTimer>
 
 namespace ConnectedCreator {
 namespace Internal {
@@ -94,7 +95,9 @@ bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *e
 
     return true;
 }
+
 /// \brief Helper function to create menu action
+template <typename ConnectedCreatorFunction>
 Core::Command* ConnectedCreatorPlugin::addMenuAction(const QString &text,
                                                      ConnectedCreatorFunction method,
                                                      const char actionId[],
@@ -127,8 +130,10 @@ bool ConnectedCreatorPlugin::delayedInitialize()
 {
     // Show telemetry control dialog to user on first run
     auto settings = Core::ICore::settingsDatabase();
-    if(settings->value(Constants::FIRST_RUN_KEY, true).value<bool>())
-        controlAction();
+    if(settings->value(Constants::FIRST_RUN_KEY, true).value<bool>()) {
+        // The 1st time Control Dialog is opened 30 minutes after the start
+        QTimer::singleShot(30*60*1000, this, &ConnectedCreatorPlugin:: controlAction);
+    }
 
     // Plugin should return true from the function if itactually implements delayedInitialize()
     return true;

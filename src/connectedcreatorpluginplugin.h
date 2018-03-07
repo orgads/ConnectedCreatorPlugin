@@ -18,8 +18,6 @@ class ConnectedCreatorPlugin : public ExtensionSystem::IPlugin
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QtCreatorPlugin" FILE "ConnectedCreatorPlugin.json")
 
-typedef void (ConnectedCreatorPlugin:: *ConnectedCreatorFunction)();
-
 public:
     ConnectedCreatorPlugin();
     ~ConnectedCreatorPlugin();
@@ -27,7 +25,7 @@ public:
     bool initialize(const QStringList &arguments, QString *errorString) override;
     void extensionsInitialized() override;
     bool delayedInitialize() override;
-    ShutdownFlag aboutToShutdown();
+    ShutdownFlag aboutToShutdown() override;
 
     ControlDialog* controlDialog();
     StatisticsDialog* statisticsDialog();
@@ -38,6 +36,7 @@ private:
     void statisticsAction();
     void configureFeedback();
 
+    template <typename ConnectedCreatorFunction>
     Core::Command* addMenuAction(const QString &text,
                                  ConnectedCreatorFunction method,
                                  const char actionId[],
