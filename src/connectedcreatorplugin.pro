@@ -15,7 +15,8 @@ INCLUDEPATH += \
 SOURCES += \
     connectedcreatorpluginplugin.cpp \
     controldialog.cpp \
-    statisticsdialog.cpp
+    statisticsdialog.cpp \
+    pluginsettings.cpp
 
 HEADERS += \
     connectedcreatorpluginplugin.h \
@@ -23,7 +24,8 @@ HEADERS += \
     connectedcreatorpluginconstants.h \
     controldialog.h \
     statisticsdialog.h \
-    kuserfeedback_headers.h
+    kuserfeedback_headers.h \
+    pluginsettings.h
 
 FORMS += \
     controldialog.ui \
