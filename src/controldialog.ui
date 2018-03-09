@@ -6,18 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>584</width>
-    <height>405</height>
+    <width>720</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Analytics control</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page">
       <widget class="QLabel" name="descrLabel1">
@@ -93,7 +93,7 @@
          <property name="checked">
           <bool>false</bool>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_8">
+         <layout class="QVBoxLayout" name="verticalLayout_8" stretch="0,1">
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_1">
             <item>
@@ -147,7 +147,7 @@
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>1</horstretch>
-                <verstretch>0</verstretch>
+                <verstretch>1</verstretch>
                </sizepolicy>
               </property>
               <property name="title">
@@ -158,124 +158,7 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_9">
                <item>
-                <widget class="QCheckBox" name="applicationVersionCheckBox">
-                 <property name="toolTip">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Data source for the application version. The application version is retrieved via &lt;span style=&quot; font-weight:600; color:#aa557f;&quot;&gt;QCoreApplication::applicationVersion.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                 <property name="text">
-                  <string>Application Version</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="compilerInfoCheckBox">
-                 <property name="toolTip">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Data source reporting which compiler was used to build this code. &lt;/p&gt;&lt;blockquote&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;This will report which compiler was used to build the feedback library, which technically does not need to be the same as used for the application code. This is particularly true for compilers that don't break ABI regularly (such as Clang and GCC), so this information is most reliable when this is not the case, e.g. with MSVC.&lt;/span&gt;&lt;/blockquote&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                 <property name="text">
-                  <string>Compiler Info</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="cpuInfoCheckBox">
-                 <property name="toolTip">
-                  <string>Data source reporting the type and amount of CPUs.</string>
-                 </property>
-                 <property name="text">
-                  <string>CPU Info</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="localeInfoCheckBox">
-                 <property name="toolTip">
-                  <string>Data source reporting the region and language settings.</string>
-                 </property>
-                 <property name="text">
-                  <string>Locale Info</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="openGLInfoCheckBox">
-                 <property name="toolTip">
-                  <string>Data source reporting type, version and vendor of the OpenGL stack.</string>
-                 </property>
-                 <property name="text">
-                  <string>OpenGL Info</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="platformInfoCheckBox">
-                 <property name="toolTip">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reports information about the platform the application is running on. This includes two string data fields:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;platform.os: the operating system name&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;platform.version: the operating system or distribution version.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                 <property name="text">
-                  <string>Platform Info</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="qPAInfoCheckBox">
-                 <property name="toolTip">
-                  <string>Reports information about the Qt platform abstraction plugin the application is running on.</string>
-                 </property>
-                 <property name="text">
-                  <string>Qt platform abstraction plugin</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="qtVersionCheckBox">
-                 <property name="toolTip">
-                  <string>Data source reporting the Qt version used at runtime.</string>
-                 </property>
-                 <property name="text">
-                  <string>Qt Version</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="screenInfoCheckBox">
-                 <property name="toolTip">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Data source for information about connected displays. This provides as array of maps containing the following properties:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;height: Height of the corresponding screen in pixel.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;width: Width of the corresponding screen in pixel.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;dpi: Dots per inch of the corresponding screen.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                 <property name="text">
-                  <string>Screen Info</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="startCountCheckBox">
-                 <property name="toolTip">
-                  <string>Data source reporting the total amount of applications starts.</string>
-                 </property>
-                 <property name="text">
-                  <string>Start Count</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="styleInfoCheckBox">
-                 <property name="toolTip">
-                  <string>Data source the widget style and color scheme used by the application. </string>
-                 </property>
-                 <property name="text">
-                  <string>Style Info</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="usageTimeCheckBox">
-                 <property name="toolTip">
-                  <string>Data source reporting the total usage time of the application.</string>
-                 </property>
-                 <property name="text">
-                  <string>Usage Time</string>
-                 </property>
-                </widget>
+                <widget class="QTextBrowser" name="genericTextBrowser"/>
                </item>
               </layout>
              </widget>
@@ -285,7 +168,7 @@
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>1</horstretch>
-                <verstretch>0</verstretch>
+                <verstretch>1</verstretch>
                </sizepolicy>
               </property>
               <property name="title">
@@ -296,7 +179,7 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_10">
                <item>
-                <widget class="QListView" name="listView"/>
+                <widget class="QTextBrowser" name="qtcTextBrowser"/>
                </item>
               </layout>
              </widget>
@@ -359,7 +242,8 @@
          <string>&amp;Ok</string>
         </property>
         <property name="icon">
-         <iconset theme="SP_DialogCancelButton"/>
+         <iconset theme="SP_DialogCancelButton">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="default">
          <bool>true</bool>
@@ -372,7 +256,8 @@
          <string>&amp;Cancel</string>
         </property>
         <property name="icon">
-         <iconset theme="Ok"/>
+         <iconset theme="Ok">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>

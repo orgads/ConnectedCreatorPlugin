@@ -51,11 +51,32 @@ void ControlDialog::setFeedbackProvider(KUserFeedback::Provider* provider)
     m_feedbackProvider = provider;
     ui->groupBox->setChecked(m_feedbackProvider->isEnabled());
 
-    qDebug() << "Sources: ";
-    foreach (auto source, m_feedbackProvider->dataSources()) {
-        qDebug() << ((KUserFeedback::AbstractDataSource*)source)->name()
-                 << ((KUserFeedback::AbstractDataSource*)source)->description();
+    // Generate generic and Qt Creator specific data sources list
+    generateDataSourcesList();
+}
+
+/// \brief Generates and updates generic and Qt Creator specific data sources list
+void ControlDialog::generateDataSourcesList()
+{
+    auto genericText = QStringLiteral("<ul>"),
+            qtcText = QStringLiteral("<ul>");
+    int i = 0;
+
+    foreach (auto src, m_feedbackProvider->dataSources()) {
+        QString description = src->description();
+        if (description.isEmpty()) continue;
+
+        auto element = QStringLiteral("<li>") + description + QStringLiteral("</li>");
+        if(i++ < 12) //src->telemetryMode() < KUserFeedback::Provider::DetailedUsageStatistics)
+            genericText += element;
+        else
+            qtcText += element;
     }
+    genericText += QStringLiteral("</ul>");
+    qtcText += QStringLiteral("</ul>");
+
+    ui->genericTextBrowser->setHtml(genericText);
+    ui->qtcTextBrowser->setHtml(qtcText);
 }
 
 bool ControlDialog::checkEvalLicense()

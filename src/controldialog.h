@@ -29,6 +29,7 @@ private slots:
 private:
     void init();
     bool checkEvalLicense();
+    void generateDataSourcesList();
 
     Ui::ControlDialog *ui;
     KUserFeedback::Provider *m_feedbackProvider = nullptr;
