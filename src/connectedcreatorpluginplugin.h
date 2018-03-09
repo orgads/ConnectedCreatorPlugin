@@ -46,6 +46,7 @@ private:
     QPointer<StatisticsDialog> m_statDialog;
 
     QPointer<KUserFeedback::Provider> m_feedbackProvider;
+    void configureFeedbackProvider();
 };
 
 } // namespace Internal

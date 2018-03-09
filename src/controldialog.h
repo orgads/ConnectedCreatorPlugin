@@ -3,9 +3,8 @@
 
 #include <QDialog>
 
-namespace Ui {
-class ControlDialog;
-}
+namespace Ui            { class ControlDialog; }
+namespace KUserFeedback { class Provider; }
 
 namespace ConnectedCreator {
 namespace Internal {
@@ -18,6 +17,11 @@ public:
     explicit ControlDialog(QWidget *parent = 0);
     ~ControlDialog();
 
+    void setFeedbackProvider(KUserFeedback::Provider* provider);
+
+public slots:
+    void accept() override;
+
 private slots:
     void on_telemetryButton_clicked();
     void goSecondPage();
@@ -25,9 +29,9 @@ private slots:
 private:
     void init();
     bool checkEvalLicense();
-    bool firstRun();
 
     Ui::ControlDialog *ui;
+    KUserFeedback::Provider *m_feedbackProvider = nullptr;
 };
 
 } // namespace Internal

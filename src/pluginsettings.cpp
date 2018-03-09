@@ -32,21 +32,35 @@ namespace ConnectedCreator {
 namespace Internal {
 
 // Static member initialization
-Core::SettingsDatabase* PluginSettings::m_settings = Core::ICore::settingsDatabase();
+Core::SettingsDatabase* PluginSettings::m_settings = nullptr;
+
+Core::SettingsDatabase* PluginSettings::settings()
+{
+    if(!m_settings)
+        m_settings = Core::ICore::settingsDatabase();
+    return m_settings;
+}
 
 bool PluginSettings::firstStart()
 {
-    return m_settings->value(Constants::FIRST_RUN_KEY, true).value<bool>();
+    return settings()->value(Constants::FIRST_RUN_KEY, true).value<bool>();
 }
 
 void PluginSettings::setFirstStart()
 {
-    m_settings->setValue(Constants::FIRST_RUN_KEY, false);
+    settings()->setValue(Constants::FIRST_RUN_KEY, false);
+    settings()->sync();
 }
 
 bool PluginSettings::telemetryEnabled()
 {
-    return m_settings->value(Constants::ENABLED_KEY, true).value<bool>();
+    return settings()->value(Constants::ENABLED_KEY, false).value<bool>();
+}
+
+void PluginSettings::setTelemetryEnabled(bool enabled)
+{
+    settings()->setValue(Constants::ENABLED_KEY, enabled);
+    settings()->sync();
 }
 
 } // namespace Internal

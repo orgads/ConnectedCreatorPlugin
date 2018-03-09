@@ -33,12 +33,16 @@ namespace Internal {
 class PluginSettings
 {
 public:
+    static Core::SettingsDatabase *instance() { return settings(); }
+
     static bool firstStart();
     static void setFirstStart();
 
     static bool telemetryEnabled();
+    static void setTelemetryEnabled(bool enabled);
 
 private:
+    static Core::SettingsDatabase *settings();
     static Core::SettingsDatabase *m_settings;
 };
 

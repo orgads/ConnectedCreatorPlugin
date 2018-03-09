@@ -2,6 +2,7 @@
 #include "connectedcreatorpluginconstants.h"
 #include "controldialog.h"
 #include "statisticsdialog.h"
+#include "pluginsettings.h"
 
 #include <coreplugin/icore.h>
 #include <coreplugin/icontext.h>
@@ -72,28 +73,47 @@ bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *e
     Core::ActionManager::actionContainer(Core::Constants::M_TOOLS)->addMenu(menu);
 
     // Configure KUserFeedback
+    configureFeedbackProvider();
+
+    return true;
+}
+
+/// \brief Configure KUserFeedback
+void ConnectedCreatorPlugin::configureFeedbackProvider()
+{
     provider()->setProductIdentifier(QStringLiteral("io.qt.qtc.analytics"));
     //provider()->setFeedbackServer(QUrl(QStringLiteral("https://qt-creator-userfeedback.com/")));
     provider()->setSubmissionInterval(7);
     provider()->setApplicationStartsUntilEncouragement(5);
     provider()->setEncouragementDelay(30);
+    provider()->setEnabled(PluginSettings::telemetryEnabled());
+
+    // Add generic data sources
     provider()->addDataSource(new KUserFeedback::ApplicationVersionSource);
     provider()->addDataSource(new KUserFeedback::CompilerInfoSource);
-    provider()->addDataSource(new KUserFeedback::PlatformInfoSource);
-    provider()->addDataSource(new KUserFeedback::QtVersionSource);
-    provider()->addDataSource(new KUserFeedback::StartCountSource);
-    provider()->addDataSource(new KUserFeedback::UsageTimeSource);
+    provider()->addDataSource(new KUserFeedback::CpuInfoSource);
+    provider()->addDataSource(new KUserFeedback::LocaleInfoSource);
     provider()->addDataSource(new KUserFeedback::OpenGLInfoSource);
+    provider()->addDataSource(new KUserFeedback::PlatformInfoSource);
+    provider()->addDataSource(new KUserFeedback::QPAInfoSource);
+    provider()->addDataSource(new KUserFeedback::QtVersionSource);
+    provider()->addDataSource(new KUserFeedback::ScreenInfoSource);
+    provider()->addDataSource(new KUserFeedback::StartCountSource);
+    provider()->addDataSource(new KUserFeedback::StyleInfoSource);
+    provider()->addDataSource(new KUserFeedback::UsageTimeSource);
+    provider()->setTelemetryMode(KUserFeedback::Provider::DetailedUsageStatistics);
+
+    // Add Qt Creator specific data sources
 //    auto toolRatioSrc = new KUserFeedback::SelectionRatioSource(ui->toolSelector->selectionModel(), QStringLiteral("toolRatio"));
 //    toolRatioSrc->setDescription(tr("Usage ratio of the Qt Creator tools."));
 //    toolRatioSrc->setRole(ToolModelRole::ToolFeedbackId);
 //    toolRatioSrc->setTelemetryMode(KUserFeedback::Provider::DetailedUsageStatistics);
 //    provider()->addDataSource(toolRatioSrc);
 
+    // Connect Provider to UI
+    controlDialog()->setFeedbackProvider(provider());
     auto popup = new KUserFeedback::NotificationPopup(Core::ICore::mainWindow());
     popup->setFeedbackProvider(provider());
-
-    return true;
 }
 
 /// \brief Helper function to create menu action
@@ -129,8 +149,7 @@ void ConnectedCreatorPlugin::extensionsInitialized()
 bool ConnectedCreatorPlugin::delayedInitialize()
 {
     // Show telemetry control dialog to user on first run
-    auto settings = Core::ICore::settingsDatabase();
-    if(settings->value(Constants::FIRST_RUN_KEY, true).value<bool>()) {
+    if(PluginSettings::firstStart()) {
         // The 1st time Control Dialog is opened 30 minutes after the start
         QTimer::singleShot(30*60*1000, this, &ConnectedCreatorPlugin:: controlAction);
     }
@@ -138,6 +157,7 @@ bool ConnectedCreatorPlugin::delayedInitialize()
     // Plugin should return true from the function if itactually implements delayedInitialize()
     return true;
 }
+
 
 ExtensionSystem::IPlugin::ShutdownFlag ConnectedCreatorPlugin::aboutToShutdown()
 {

@@ -1,6 +1,10 @@
 ﻿#include "controldialog.h"
 #include "ui_controldialog.h"
 #include "connectedcreatorpluginconstants.h"
+#include "pluginsettings.h"
+
+#include <kuserfeedback/core/provider.h>
+#include <kuserfeedback/core/abstractdatasource.h>
 
 #include <coreplugin/icore.h>
 #include <coreplugin/settingsdatabase.h>
@@ -19,9 +23,12 @@ ControlDialog::ControlDialog(QWidget *parent) :
     init();
 
     // Show 2nd dialog page and short description message if not first run or eval license
-    if(!(firstRun() || checkEvalLicense())) {
+    bool first = PluginSettings::firstStart();
+    if(!(first || checkEvalLicense())) {
         goSecondPage();
     }
+    if(first)
+        PluginSettings::setFirstStart();
 }
 
 void ControlDialog::init()
@@ -39,6 +46,18 @@ ControlDialog::~ControlDialog()
     delete ui;
 }
 
+void ControlDialog::setFeedbackProvider(KUserFeedback::Provider* provider)
+{
+    m_feedbackProvider = provider;
+    ui->groupBox->setChecked(m_feedbackProvider->isEnabled());
+
+    qDebug() << "Sources: ";
+    foreach (auto source, m_feedbackProvider->dataSources()) {
+        qDebug() << ((KUserFeedback::AbstractDataSource*)source)->name()
+                 << ((KUserFeedback::AbstractDataSource*)source)->description();
+    }
+}
+
 bool ControlDialog::checkEvalLicense()
 {
     auto plugins = ExtensionSystem::PluginManager::plugins();
@@ -52,14 +71,6 @@ bool ControlDialog::checkEvalLicense()
     return eval;
 }
 
-bool ControlDialog::firstRun()
-{
-    auto settings = Core::ICore::settingsDatabase();
-    bool first = settings->value(Constants::FIRST_RUN_KEY, true).value<bool>();
-    if(first) settings->setValue(Constants::FIRST_RUN_KEY, false);
-    return first;
-}
-
 void ControlDialog::goSecondPage()
 {
     ui->telemetryButton->hide();
@@ -71,6 +82,14 @@ void ControlDialog::on_telemetryButton_clicked()
 {
     goSecondPage();
     ui->groupBox->setChecked(true);
+}
+
+void ControlDialog::accept()
+{
+    m_feedbackProvider->setEnabled(ui->groupBox->isChecked());
+    PluginSettings::setTelemetryEnabled(ui->groupBox->isChecked());
+
+    QDialog::accept();
 }
 
 } // namespace Internal
