@@ -58,16 +58,17 @@ void ControlDialog::setFeedbackProvider(KUserFeedback::Provider* provider)
 /// \brief Generates and updates generic and Qt Creator specific data sources list
 void ControlDialog::generateDataSourcesList()
 {
+    if(!m_feedbackProvider) return;
+
     auto genericText = QStringLiteral("<ul>"),
             qtcText = QStringLiteral("<ul>");
-    int i = 0;
 
     foreach (auto src, m_feedbackProvider->dataSources()) {
         QString description = src->description();
         if (description.isEmpty()) continue;
 
         auto element = QStringLiteral("<li>") + description + QStringLiteral("</li>");
-        if(i++ < 12) //src->telemetryMode() < KUserFeedback::Provider::DetailedUsageStatistics)
+        if(src->telemetryMode() < KUserFeedback::Provider::DetailedUsageStatistics)
             genericText += element;
         else
             qtcText += element;
@@ -107,7 +108,7 @@ void ControlDialog::on_telemetryButton_clicked()
 
 void ControlDialog::accept()
 {
-    m_feedbackProvider->setEnabled(ui->groupBox->isChecked());
+    if(m_feedbackProvider) m_feedbackProvider->setEnabled(ui->groupBox->isChecked());
     PluginSettings::setTelemetryEnabled(ui->groupBox->isChecked());
 
     QDialog::accept();

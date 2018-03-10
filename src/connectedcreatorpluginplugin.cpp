@@ -92,14 +92,18 @@ void ConnectedCreatorPlugin::configureFeedbackProvider()
     provider()->addDataSource(new KUserFeedback::ApplicationVersionSource);
     provider()->addDataSource(new KUserFeedback::CompilerInfoSource);
     provider()->addDataSource(new KUserFeedback::CpuInfoSource);
-    provider()->addDataSource(new KUserFeedback::LocaleInfoSource);
+    auto localeSource = new KUserFeedback::LocaleInfoSource();
+    localeSource->setTelemetryMode(KUserFeedback::Provider::DetailedSystemInformation);
+    provider()->addDataSource(localeSource);
     provider()->addDataSource(new KUserFeedback::OpenGLInfoSource);
     provider()->addDataSource(new KUserFeedback::PlatformInfoSource);
     provider()->addDataSource(new KUserFeedback::QPAInfoSource);
     provider()->addDataSource(new KUserFeedback::QtVersionSource);
     provider()->addDataSource(new KUserFeedback::ScreenInfoSource);
     provider()->addDataSource(new KUserFeedback::StartCountSource);
-    provider()->addDataSource(new KUserFeedback::StyleInfoSource);
+    auto styleSource = new KUserFeedback::StyleInfoSource();
+    styleSource->setTelemetryMode(KUserFeedback::Provider::DetailedSystemInformation);
+    provider()->addDataSource(styleSource);
     provider()->addDataSource(new KUserFeedback::UsageTimeSource);
     provider()->setTelemetryMode(KUserFeedback::Provider::DetailedUsageStatistics);
 
@@ -112,6 +116,7 @@ void ConnectedCreatorPlugin::configureFeedbackProvider()
 
     // Connect Provider to UI
     controlDialog()->setFeedbackProvider(provider());
+    statisticsDialog()->setFeedbackProvider(provider());
     auto popup = new KUserFeedback::NotificationPopup(Core::ICore::mainWindow());
     popup->setFeedbackProvider(provider());
 }
