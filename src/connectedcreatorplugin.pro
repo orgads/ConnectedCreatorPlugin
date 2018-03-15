@@ -7,6 +7,7 @@ QT += KUserFeedbackCore KUserFeedbackWidgets
 
 # ConnectedCreatorPlugin files
 INCLUDEPATH += \
+    ./ \
     ../3rdparty \
     ../3rdparty/kuserfeedback/common \
     ../3rdparty/kuserfeedback/core \
@@ -16,7 +17,8 @@ SOURCES += \
     connectedcreatorpluginplugin.cpp \
     controldialog.cpp \
     statisticsdialog.cpp \
-    pluginsettings.cpp
+    pluginsettings.cpp \
+    qjsonmodel.cpp
 
 HEADERS += \
     connectedcreatorpluginplugin.h \
@@ -25,7 +27,9 @@ HEADERS += \
     controldialog.h \
     statisticsdialog.h \
     kuserfeedback_headers.h \
-    pluginsettings.h
+    pluginsettings.h \
+    qjsonmodel.h \
+    ctreeview.h
 
 FORMS += \
     controldialog.ui \

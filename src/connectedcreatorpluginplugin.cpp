@@ -11,6 +11,7 @@
 #include <coreplugin/actionmanager/actioncontainer.h>
 #include <coreplugin/coreconstants.h>
 #include <coreplugin/settingsdatabase.h>
+#include <coreplugin/designmode.h>
 
 #include "kuserfeedback_headers.h"
 
@@ -19,6 +20,7 @@
 #include <QMainWindow>
 #include <QMenu>
 #include <QTimer>
+#include <algorithm>
 
 namespace ConnectedCreator {
 namespace Internal {
@@ -72,9 +74,6 @@ bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *e
     // Add ConnectedCreatorPlugin menu to Qt Creator "Tools" menu
     Core::ActionManager::actionContainer(Core::Constants::M_TOOLS)->addMenu(menu);
 
-    // Configure KUserFeedback
-    configureFeedbackProvider();
-
     return true;
 }
 
@@ -108,11 +107,14 @@ void ConnectedCreatorPlugin::configureFeedbackProvider()
     provider()->setTelemetryMode(KUserFeedback::Provider::DetailedUsageStatistics);
 
     // Add Qt Creator specific data sources
-//    auto toolRatioSrc = new KUserFeedback::SelectionRatioSource(ui->toolSelector->selectionModel(), QStringLiteral("toolRatio"));
-//    toolRatioSrc->setDescription(tr("Usage ratio of the Qt Creator tools."));
-//    toolRatioSrc->setRole(ToolModelRole::ToolFeedbackId);
-//    toolRatioSrc->setTelemetryMode(KUserFeedback::Provider::DetailedUsageStatistics);
-//    provider()->addDataSource(toolRatioSrc);
+    QList<QWidget *> widgets =  Core::DesignMode::instance()->findChildren<QWidget *>();
+            // Core::ICore::mainWindow()->findChildren<QWidget *>();
+    QList<QWidget *>::iterator it = std::find_if(widgets.begin(), widgets.end(),
+        [](QWidget *widget) -> bool {
+            return QString::fromLatin1(widget->metaObject()->className()) == "DesignModeWidget";
+    });
+    QWidget *designer = (it != widgets.end()) ? *it : nullptr;
+    qDebug() << ((designer) ? designer->metaObject()->className() : "nullptr");
 
     // Connect Provider to UI
     controlDialog()->setFeedbackProvider(provider());
@@ -153,6 +155,10 @@ void ConnectedCreatorPlugin::extensionsInitialized()
  */
 bool ConnectedCreatorPlugin::delayedInitialize()
 {
+    // Configure KUserFeedback after all plugins initialized
+    // to have all the objects available before configuration
+    configureFeedbackProvider();
+
     // Show telemetry control dialog to user on first run
     if(PluginSettings::firstStart()) {
         // The 1st time Control Dialog is opened 30 minutes after the start

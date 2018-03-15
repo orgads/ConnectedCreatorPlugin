@@ -5,6 +5,7 @@
 
 namespace Ui { class StatisticsDialog; }
 namespace KUserFeedback { class Provider; }
+class QJsonModel;
 
 namespace ConnectedCreator {
 namespace Internal {
@@ -23,12 +24,16 @@ protected:
     void  showEvent(QShowEvent *event) override;
 
 private slots:
-    void on_textToolButton_clicked(bool checked);
-    void on_treeToolButton_clicked(bool checked);
+    void on_textToolButton_toggled(bool checked);
+    void on_treeToolButton_toggled(bool checked);
 
 private:
+    void init();
+
     Ui::StatisticsDialog *ui;
     KUserFeedback::Provider *m_feedbackProvider = nullptr;
+    QJsonModel *m_model;
+    void syncScrollbars();
 };
 
 } // namespace Internal

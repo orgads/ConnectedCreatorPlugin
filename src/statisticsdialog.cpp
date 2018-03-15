@@ -2,9 +2,14 @@
 #include <kuserfeedback/core/abstractdatasource.h>
 
 #include "statisticsdialog.h"
+#include "ctreeview.h"
+#include "qjsonmodel.h"
 #include "ui_statisticsdialog.h"
 
 #include <QFontDatabase>
+#include <QScrollBar>
+#include <QHeaderView>
+#include <QDebug>
 
 namespace ConnectedCreator {
 namespace Internal {
@@ -14,7 +19,9 @@ StatisticsDialog::StatisticsDialog(QWidget *parent) :
     ui(new Ui::StatisticsDialog)
 {
     ui->setupUi(this);
-    ui->textBrowser->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
+
+    // Initialize controls
+    init();
 }
 
 StatisticsDialog::~StatisticsDialog()
@@ -22,20 +29,33 @@ StatisticsDialog::~StatisticsDialog()
     delete ui;
 }
 
-void StatisticsDialog::on_textToolButton_clicked(bool checked)
+void StatisticsDialog::init()
 {
-    if(checked)
-        ui->textBrowser->hide();
-    else
-        ui->textBrowser->show();
+    m_model = new QJsonModel(this);
+    ui->treeView->setModel(m_model);
+
+    ui->textBrowser->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
+    ui->treeView->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
+    ui->treeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    QPalette treeViewPalette = ui->treeView->palette();
+    treeViewPalette.setColor(QPalette::AlternateBase, QColor("#e2eef9"));
+    ui->treeView->setPalette(treeViewPalette);
 }
 
-void StatisticsDialog::on_treeToolButton_clicked(bool checked)
+void StatisticsDialog::on_textToolButton_toggled(bool checked)
 {
     if(checked)
-        ui->treeWidget->hide();
+        ui->textBrowser->show();
     else
-        ui->treeWidget->show();
+        ui->textBrowser->hide();
+}
+
+void StatisticsDialog::on_treeToolButton_toggled(bool checked)
+{
+    if(checked)
+        ui->treeView->show();
+    else
+        ui->treeView->hide();
 }
 
 void StatisticsDialog::setFeedbackProvider(KUserFeedback::Provider* provider)
@@ -55,9 +75,37 @@ void StatisticsDialog::showEvent(QShowEvent *event)
 
         // Show JSON statistics
         ui->textBrowser->setPlainText(QString::fromUtf8(jsonData.constData()));
+        m_model->loadJson(jsonData);
+        ui->treeView->expandAll();
+
+        // Adjust scroll bar step for synchronous scrolling
+        syncScrollbars();
     }
 
     QDialog::showEvent(event);
+}
+
+/// \brief StatisticsDialog::syncScrollbars adjusts scroll bar steps for
+/// tree view and text browser synchronous scrolling
+void StatisticsDialog::syncScrollbars()
+{
+    // Get step in pixels for text browser
+    int step = ui->treeView->rowHeight(m_model->index(0, 0));
+    ui->textBrowser->verticalScrollBar()->setSingleStep(step);
+
+    // Disconnect all signal
+    disconnect(ui->textBrowser->verticalScrollBar());
+    disconnect(ui->treeView->verticalScrollBar());
+
+    // Connect new signals with appropriate step scaling
+    connect(ui->textBrowser->verticalScrollBar(), &QScrollBar::valueChanged,
+            [this, step](int value) {
+                ui->treeView->verticalScrollBar()->setValue(value / step);
+            });
+    connect(ui->treeView->verticalScrollBar(), &QScrollBar::valueChanged,
+            [this, step](int value) {
+                ui->textBrowser->verticalScrollBar()->setValue(value * step);
+            });
 }
 
 } // namespace Internal
