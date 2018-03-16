@@ -112,7 +112,7 @@ QJsonTreeItem* QJsonTreeItem::load(const QJsonValue &value, QJsonTreeItem *paren
         }
         // Add bracket close item
         QJsonTreeItem *item = new QJsonTreeItem(rootItem);
-        QString key = (parent) ? QString("},") : QString("}");
+        QString key = "";//(parent) ? QString("},") : QString("}");
         item->setKey(key);
         rootItem->appendChild(item);
     } else if(value.isArray()) {
@@ -127,7 +127,7 @@ QJsonTreeItem* QJsonTreeItem::load(const QJsonValue &value, QJsonTreeItem *paren
         }
         // Add array close item
         QJsonTreeItem *item = new QJsonTreeItem(rootItem);
-        QString key = (parent) ? QString("],") : QString("]");
+        QString key = "";//(parent) ? QString("],") : QString("]");
         item->setKey(key);
         rootItem->appendChild(item);
     } else {
