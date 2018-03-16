@@ -18,7 +18,8 @@ SOURCES += \
     controldialog.cpp \
     statisticsdialog.cpp \
     pluginsettings.cpp \
-    qjsonmodel.cpp
+    qjsonmodel.cpp \
+    jsonsyntaxhighlighter.cpp
 
 HEADERS += \
     connectedcreatorpluginplugin.h \
@@ -29,7 +30,8 @@ HEADERS += \
     kuserfeedback_headers.h \
     pluginsettings.h \
     qjsonmodel.h \
-    ctreeview.h
+    ctreeview.h \
+    jsonsyntaxhighlighter.h
 
 FORMS += \
     controldialog.ui \

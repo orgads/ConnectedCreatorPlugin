@@ -22,21 +22,27 @@
 ** be met: https://www.gnu.org/licenses/gpl-3.0.html.
 **
 ****************************************************************************/
-#ifndef CTREEVIEW_H
-#define CTREEVIEW_H
+#ifndef JSONSYNTAXHIGHLIGHTER_H
+#define JSONSYNTAXHIGHLIGHTER_H
 
-#include <QTreeView>
+#include <QSyntaxHighlighter>
+#include <QTextCharFormat>
 
-class CTreeView : public QTreeView
+class JsonSyntaxHighlighter: public QSyntaxHighlighter
 {
-    Q_OBJECT
-
 public:
-    using QTreeView::QTreeView; // Use inherited constructors (C++11)
+     JsonSyntaxHighlighter(QTextDocument *parent = 0);
 
-    int rowHeight(const QModelIndex &index) const {
-        return QTreeView::rowHeight(index);
-    }
+private:
+     struct HighlightingRule{
+         QRegExp pattern;
+         QTextCharFormat format;
+     };
+
+     QVector<HighlightingRule> rules;
+
+protected:
+    void highlightBlock(const QString &text);
 };
 
-#endif // CTREEVIEW_H
+#endif // JSONSYNTAXHIGHLIGHTER_H

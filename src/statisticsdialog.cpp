@@ -4,6 +4,7 @@
 #include "statisticsdialog.h"
 #include "ctreeview.h"
 #include "qjsonmodel.h"
+#include "jsonsyntaxhighlighter.h"
 #include "ui_statisticsdialog.h"
 
 #include <QFontDatabase>
@@ -31,9 +32,14 @@ StatisticsDialog::~StatisticsDialog()
 
 void StatisticsDialog::init()
 {
+    // Create and apply json tree model
     m_model = new QJsonModel(this);
     ui->treeView->setModel(m_model);
 
+    // Add JSON syntax highlighting
+    new JsonSyntaxHighlighter(ui->textBrowser->document());
+
+    // Initialize UI look and feel
     ui->textBrowser->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
     ui->treeView->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
     ui->treeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -89,11 +95,11 @@ void StatisticsDialog::showEvent(QShowEvent *event)
 /// tree view and text browser synchronous scrolling
 void StatisticsDialog::syncScrollbars()
 {
-    // Get step in pixels for text browser
+    // Get tree view row height in pixels for scroll step in text browser
     int step = ui->treeView->rowHeight(m_model->index(0, 0));
     ui->textBrowser->verticalScrollBar()->setSingleStep(step);
 
-    // Disconnect all signal
+    // Disconnect all signals
     disconnect(ui->textBrowser->verticalScrollBar());
     disconnect(ui->treeView->verticalScrollBar());
 
