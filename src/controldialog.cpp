@@ -3,8 +3,8 @@
 #include "connectedcreatorpluginconstants.h"
 #include "pluginsettings.h"
 
-#include <kuserfeedback/core/provider.h>
-#include <kuserfeedback/core/abstractdatasource.h>
+#include <qtelemetrymanager.h>
+#include <abstractdatasource.h>
 
 #include <coreplugin/icore.h>
 #include <coreplugin/settingsdatabase.h>
@@ -46,10 +46,10 @@ ControlDialog::~ControlDialog()
     delete ui;
 }
 
-void ControlDialog::setFeedbackProvider(KUserFeedback::Provider* provider)
+void ControlDialog::setTelemetryManager(QTelemetry::QTelemetryManager* manager)
 {
-    m_feedbackProvider = provider;
-    ui->groupBox->setChecked(m_feedbackProvider->isEnabled());
+    m_manager = manager;
+    ui->groupBox->setChecked(m_manager->isEnabled());
 
     // Generate generic and Qt Creator specific data sources list
     generateDataSourcesList();
@@ -58,17 +58,17 @@ void ControlDialog::setFeedbackProvider(KUserFeedback::Provider* provider)
 /// \brief Generates and updates generic and Qt Creator specific data sources list
 void ControlDialog::generateDataSourcesList()
 {
-    if(!m_feedbackProvider) return;
+    if(!m_manager) return;
 
     auto genericText = QStringLiteral("<ul>"),
             qtcText = QStringLiteral("<ul>");
 
-    foreach (auto src, m_feedbackProvider->dataSources()) {
-        QString description = src->description();
+    foreach (auto src, m_manager->dataSources()) {
+        QString description = src->description(); //src->name();
         if (description.isEmpty()) continue;
 
         auto element = QStringLiteral("<li>") + description + QStringLiteral("</li>");
-        if(src->telemetryMode() < KUserFeedback::Provider::DetailedUsageStatistics)
+        if(src->telemetryLevel() < QTelemetry::TelemetryLevel::DetailedUsageStatistics)
             genericText += element;
         else
             qtcText += element;
@@ -108,7 +108,7 @@ void ControlDialog::on_telemetryButton_clicked()
 
 void ControlDialog::accept()
 {
-    if(m_feedbackProvider) m_feedbackProvider->setEnabled(ui->groupBox->isChecked());
+    if(m_manager) m_manager->setEnabled(ui->groupBox->isChecked());
     PluginSettings::setTelemetryEnabled(ui->groupBox->isChecked());
 
     QDialog::accept();

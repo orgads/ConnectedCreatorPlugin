@@ -1,5 +1,5 @@
-﻿#include <kuserfeedback/core/provider.h>
-#include <kuserfeedback/core/abstractdatasource.h>
+﻿#include <qtelemetrymanager.h>
+#include <abstractdatasource.h>
 
 #include "statisticsdialog.h"
 #include "ctreeview.h"
@@ -64,20 +64,16 @@ void StatisticsDialog::on_treeToolButton_toggled(bool checked)
         ui->treeView->hide();
 }
 
-void StatisticsDialog::setFeedbackProvider(KUserFeedback::Provider* provider)
+void StatisticsDialog::setTelemetryManager(QTelemetry::QTelemetryManager* manager)
 {
-    m_feedbackProvider = provider;
+    m_manager = manager;
 }
 
 void StatisticsDialog::showEvent(QShowEvent *event)
 {
-    if(m_feedbackProvider) {
-        QByteArray jsonData;
-        QMetaObject::invokeMethod(
-            m_feedbackProvider, "jsonData",
-            Q_RETURN_ARG(QByteArray, jsonData),
-            Q_ARG(KUserFeedback::Provider::TelemetryMode,
-                  KUserFeedback::Provider::DetailedUsageStatistics));
+    if(m_manager) {
+        QByteArray jsonData = m_manager->jsonData(
+                    QTelemetry::TelemetryLevel::DetailedUsageStatistics);
 
         // Show JSON statistics
         ui->textBrowser->setPlainText(QString::fromUtf8(jsonData.constData()));

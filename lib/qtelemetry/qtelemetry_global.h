@@ -1,0 +1,12 @@
+﻿#ifndef QTELEMETRY_GLOBAL_H
+#define QTELEMETRY_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(QTELEMETRY_LIBRARY)
+#  define QTELEMETRYSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define QTELEMETRYSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // QTELEMETRY_GLOBAL_H

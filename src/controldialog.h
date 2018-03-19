@@ -3,8 +3,8 @@
 
 #include <QDialog>
 
-namespace Ui            { class ControlDialog; }
-namespace KUserFeedback { class Provider; }
+namespace Ui         { class ControlDialog; }
+namespace QTelemetry { class QTelemetryManager; }
 
 namespace ConnectedCreator {
 namespace Internal {
@@ -17,7 +17,7 @@ public:
     explicit ControlDialog(QWidget *parent = 0);
     ~ControlDialog();
 
-    void setFeedbackProvider(KUserFeedback::Provider* provider);
+    void setTelemetryManager(QTelemetry::QTelemetryManager* manager);
 
 public slots:
     void accept() override;
@@ -32,7 +32,7 @@ private:
     void generateDataSourcesList();
 
     Ui::ControlDialog *ui;
-    KUserFeedback::Provider *m_feedbackProvider = nullptr;
+    QTelemetry::QTelemetryManager *m_manager = nullptr;
 };
 
 } // namespace Internal

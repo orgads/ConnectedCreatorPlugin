@@ -4,7 +4,7 @@
 
 #include <extensionsystem/iplugin.h>
 
-namespace KUserFeedback { class Provider; }
+namespace QTelemetry { class QTelemetryManager; }
 namespace Core { class Command; }
 
 namespace ConnectedCreator {
@@ -29,12 +29,11 @@ public:
 
     ControlDialog* controlDialog();
     StatisticsDialog* statisticsDialog();
-    KUserFeedback::Provider* provider();
+    QTelemetry::QTelemetryManager* manager();
 
 private:
     void controlAction();
     void statisticsAction();
-    void configureFeedback();
 
     template <typename ConnectedCreatorFunction>
     Core::Command* addMenuAction(const QString &text,
@@ -45,8 +44,8 @@ private:
     QPointer<ControlDialog> m_controlDialog;
     QPointer<StatisticsDialog> m_statDialog;
 
-    QPointer<KUserFeedback::Provider> m_feedbackProvider;
-    void configureFeedbackProvider();
+    QPointer<QTelemetry::QTelemetryManager> m_manager;
+    void configureTelemetryManager();
 };
 
 } // namespace Internal

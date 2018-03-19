@@ -13,7 +13,7 @@
 #include <coreplugin/settingsdatabase.h>
 #include <coreplugin/designmode.h>
 
-#include "kuserfeedback_headers.h"
+#include "qtelemetrymanager.h"
 
 #include <QAction>
 #include <QMessageBox>
@@ -59,17 +59,11 @@ bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *e
                                         Constants::STATISTICS_ACTION_ID,
                                         QKeySequence(tr("Ctrl+Alt+Meta+S")));
 
-    Core::Command *cmd3 = addMenuAction(tr("&Provider config"),
-                                        &ConnectedCreatorPlugin::configureFeedback,
-                                        Constants::PROVIDER_ACTION_ID,
-                                        QKeySequence(tr("Ctrl+Alt+Meta+P")));
-
     // Add actions to ConnectedCreatorPlugin menu
     Core::ActionContainer *menu = Core::ActionManager::createMenu(Constants::MENU_ID);
     menu->menu()->setTitle(tr("&Analytics"));
     menu->addAction(cmd1);
     menu->addAction(cmd2);
-    menu->addAction(cmd3);
 
     // Add ConnectedCreatorPlugin menu to Qt Creator "Tools" menu
     Core::ActionManager::actionContainer(Core::Constants::M_TOOLS)->addMenu(menu);
@@ -77,34 +71,34 @@ bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *e
     return true;
 }
 
-/// \brief Configure KUserFeedback
-void ConnectedCreatorPlugin::configureFeedbackProvider()
+/// \brief Configure QTelemetry
+void ConnectedCreatorPlugin::configureTelemetryManager()
 {
-    provider()->setProductIdentifier(QStringLiteral("io.qt.qtc.analytics"));
-    //provider()->setFeedbackServer(QUrl(QStringLiteral("https://qt-creator-userfeedback.com/")));
-    provider()->setSubmissionInterval(7);
-    provider()->setApplicationStartsUntilEncouragement(5);
-    provider()->setEncouragementDelay(30);
-    provider()->setEnabled(PluginSettings::telemetryEnabled());
+    manager()->setProductIdentifier(QStringLiteral("io.qt.qtc.analytics"));
+    //  TODO: Create scheduler
+    // ..
+    // TODO: Create network object
+    // ..
+    // TODO: Create submission task
+    //
+//    manager()->setSubmissionInterval(7);
+//    manager()->setSettingsDelay(30);
+    manager()->setEnabled(PluginSettings::telemetryEnabled());
 
     // Add generic data sources
-    provider()->addDataSource(new KUserFeedback::ApplicationVersionSource);
-    provider()->addDataSource(new KUserFeedback::CompilerInfoSource);
-    provider()->addDataSource(new KUserFeedback::CpuInfoSource);
-    auto localeSource = new KUserFeedback::LocaleInfoSource();
-    localeSource->setTelemetryMode(KUserFeedback::Provider::DetailedSystemInformation);
-    provider()->addDataSource(localeSource);
-    provider()->addDataSource(new KUserFeedback::OpenGLInfoSource);
-    provider()->addDataSource(new KUserFeedback::PlatformInfoSource);
-    provider()->addDataSource(new KUserFeedback::QPAInfoSource);
-    provider()->addDataSource(new KUserFeedback::QtVersionSource);
-    provider()->addDataSource(new KUserFeedback::ScreenInfoSource);
-    provider()->addDataSource(new KUserFeedback::StartCountSource);
-    auto styleSource = new KUserFeedback::StyleInfoSource();
-    styleSource->setTelemetryMode(KUserFeedback::Provider::DetailedSystemInformation);
-    provider()->addDataSource(styleSource);
-    provider()->addDataSource(new KUserFeedback::UsageTimeSource);
-    provider()->setTelemetryMode(KUserFeedback::Provider::DetailedUsageStatistics);
+//    manager()->addDataSource(new QTelemetry::ApplicationVersionSource);
+//    manager()->addDataSource(new QTelemetry::CompilerInfoSource);
+//    manager()->addDataSource(new QTelemetry::CpuInfoSource);
+//    manager()->addDataSource(new QTelemetry::LocaleInfoSource);
+//    manager()->addDataSource(new QTelemetry::OpenGLInfoSource);
+//    manager()->addDataSource(new QTelemetry::PlatformInfoSource);
+//    manager()->addDataSource(new QTelemetry::QPAInfoSource);
+//    manager()->addDataSource(new QTelemetry::QtVersionSource);
+//    manager()->addDataSource(new QTelemetry::ScreenInfoSource);
+//    manager()->addDataSource(new QTelemetry::StartCountSource);
+//    manager()->addDataSource(new QTelemetry::StyleInfoSource);
+//    manager()->addDataSource(new QTelemetry::UsageTimeSource);
+//    manager()->setTelemetryMode(QTelemetry::QTelemetryManager::DetailedUsageStatistics);
 
     // Add Qt Creator specific data sources
     QList<QWidget *> widgets =  Core::DesignMode::instance()->findChildren<QWidget *>();
@@ -117,10 +111,8 @@ void ConnectedCreatorPlugin::configureFeedbackProvider()
     qDebug() << ((designer) ? designer->metaObject()->className() : "nullptr");
 
     // Connect Provider to UI
-    controlDialog()->setFeedbackProvider(provider());
-    statisticsDialog()->setFeedbackProvider(provider());
-    auto popup = new KUserFeedback::NotificationPopup(Core::ICore::mainWindow());
-    popup->setFeedbackProvider(provider());
+    controlDialog()->setTelemetryManager(manager());
+    statisticsDialog()->setTelemetryManager(manager());
 }
 
 /// \brief Helper function to create menu action
@@ -155,9 +147,9 @@ void ConnectedCreatorPlugin::extensionsInitialized()
  */
 bool ConnectedCreatorPlugin::delayedInitialize()
 {
-    // Configure KUserFeedback after all plugins initialized
+    // Configure QTelemetry after all plugins initialized
     // to have all the objects available before configuration
-    configureFeedbackProvider();
+    configureTelemetryManager();
 
     // Show telemetry control dialog to user on first run
     if(PluginSettings::firstStart()) {
@@ -178,12 +170,12 @@ ExtensionSystem::IPlugin::ShutdownFlag ConnectedCreatorPlugin::aboutToShutdown()
     return SynchronousShutdown;
 }
 
-KUserFeedback::Provider* ConnectedCreatorPlugin::provider()
+QTelemetry::QTelemetryManager* ConnectedCreatorPlugin::manager()
 {
-    if(!m_feedbackProvider) {
-        m_feedbackProvider = new KUserFeedback::Provider(this);
+    if(!m_manager) {
+        m_manager = new QTelemetry::QTelemetryManager(this);
     }
-    return m_feedbackProvider.data();
+    return m_manager.data();
 }
 
 ControlDialog* ConnectedCreatorPlugin::controlDialog()
@@ -210,13 +202,6 @@ void ConnectedCreatorPlugin::controlAction()
 void ConnectedCreatorPlugin::statisticsAction()
 {
     statisticsDialog()->exec();
-}
-
-void ConnectedCreatorPlugin::configureFeedback()
-{
-    KUserFeedback::FeedbackConfigDialog dlg;
-    dlg.setFeedbackProvider(provider());
-    dlg.exec();
 }
 
 } // namespace Internal

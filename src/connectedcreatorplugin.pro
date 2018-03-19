@@ -1,13 +1,13 @@
-include(../3rdparty/kuserfeedback/widgets/qt_KUserFeedbackWidgets.pri)
-include(../3rdparty/kuserfeedback/core/qt_KUserFeedbackCore.pri)
+include(../lib/qtelemetry/qtelemetry.pri)
 
 DEFINES += CONNECTEDCREATORPLUGIN_LIBRARY
 
-QT += KUserFeedbackCore KUserFeedbackWidgets
+QT += QTelemetry
 
 # ConnectedCreatorPlugin files
 INCLUDEPATH += \
     ./ \
+    ../lib/qtelemetry \
     ../3rdparty \
     ../3rdparty/kuserfeedback/common \
     ../3rdparty/kuserfeedback/core \
@@ -27,7 +27,6 @@ HEADERS += \
     connectedcreatorpluginconstants.h \
     controldialog.h \
     statisticsdialog.h \
-    kuserfeedback_headers.h \
     pluginsettings.h \
     qjsonmodel.h \
     ctreeview.h \
@@ -69,7 +68,7 @@ isEmpty(DESTDIR): DESTDIR = $${IDE_BUILD_TREE}/lib/qtcreator/plugins
 
 message(DESTDIR: ($$DESTDIR))
 
-unix|win32: LIBS += -L$${IDE_BUILD_TREE}/lib/qtcreator/plugins/ -lKUserFeedbackCore -lKUserFeedbackWidgets
+unix|win32: LIBS += -L$${IDE_BUILD_TREE}/lib/qtcreator/plugins/ -lQTelemetry
 
 ###### If the plugin can be depended upon by other plugins, this code needs to be outsourced to
 ###### <dirname>_dependencies.pri, where <dirname> is the name of the directory containing the

@@ -4,7 +4,7 @@
 #include <QDialog>
 
 namespace Ui { class StatisticsDialog; }
-namespace KUserFeedback { class Provider; }
+namespace QTelemetry { class QTelemetryManager; }
 class QJsonModel;
 
 namespace ConnectedCreator {
@@ -18,7 +18,7 @@ public:
     explicit StatisticsDialog(QWidget *parent = 0);
     ~StatisticsDialog();
 
-    void setFeedbackProvider(KUserFeedback::Provider* provider);
+    void setTelemetryManager(QTelemetry::QTelemetryManager* manager);
 
 protected:
     void  showEvent(QShowEvent *event) override;
@@ -31,7 +31,7 @@ private:
     void init();
 
     Ui::StatisticsDialog *ui;
-    KUserFeedback::Provider *m_feedbackProvider = nullptr;
+    QTelemetry::QTelemetryManager *m_manager = nullptr;
     QJsonModel *m_model;
     void syncScrollbars();
 };
