@@ -64,13 +64,20 @@ QString QTelemetryManager::productIdentifier() const
 bool QTelemetryManager::isEnabled() const
 {
     d->createSettings(); // Update settings
-    return false;
+
+    // Read enable settings
+    d->settings->beginGroup("Telemetry");
+    return d->settings->value("Enabled", false).toBool();
 }
 
 void QTelemetryManager::setEnabled(bool enabled)
 {
-    d->createSettings(); // Update settings
+    if(enabled == isEnabled()) return;
 
+    // Write enable settings
+    d->settings->beginGroup("Telemetry");
+    d->settings->setValue("Enabled", enabled);
+    d->settings->endGroup();
 }
 
 void QTelemetryManager::addDataSource(QAbstractDataSource *source)
@@ -102,6 +109,8 @@ QAbstractDataSource *QTelemetryManager::dataSource(QString id) const
 
 QByteArray QTelemetryManager::jsonData(TelemetryLevel level)
 {
+    // TODO: add JSON generation
+    Q_UNUSED(level)
     return QByteArray();
 }
 

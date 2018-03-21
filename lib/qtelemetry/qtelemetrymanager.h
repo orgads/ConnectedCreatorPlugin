@@ -14,10 +14,10 @@ class QTelemetryManagerPrivate;
 class QAbstractDataSource;
 
 enum class TelemetryLevel {
-    NoTelemetry = 0x0, ///< Transmit no data at all.
-    BasicSystemInformation = 1 << 1, ///< Transmit basic information about the system.
+    NoTelemetry = 0x0,  ///< Transmit no data at all.
+    BasicSystemInformation = 1 << 1,    ///< Transmit basic information about the system.
     DetailedSystemInformation = 1 << 2, ///< Transmit detailed system information.
-    DetailedUsageStatistics = 1 << 3, ///< Transmit detailed usage statistics.
+    DetailedUsageStatistics = 1 << 3,   ///< Transmit detailed usage statistics.
 };
 
 class QTELEMETRYSHARED_EXPORT QTelemetryManager : public QObject
@@ -69,7 +69,7 @@ public:
 signals:
     /// Emitted after data submission
     void dataSubmitted();
-
+    ///
     void productIdentifierChanged(QString);
 
 private:

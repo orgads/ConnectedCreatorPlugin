@@ -29,16 +29,19 @@ public:
     /// Necessary for QTelemetryManager on initialization
     void setManager(QTelemetryManager *manager);
     QTelemetryManager *manager() const;
-
+    /// Returns data source telemetry level @see TelemetryLevel
     TelemetryLevel telemetryLevel() const;
 
 public slots:
-    virtual void reset() = 0;
+    virtual void reset() {}
+    virtual void load() {}
+    virtual void save() {}
 
 protected:
     explicit QAbstractDataSource(const QString &id, TelemetryLevel level = TelemetryLevel::NoTelemetry);
-    virtual void load() = 0;
-    bool checkManagerInitialized();
+    /// Helper method for load/save/reset methods implementations to check
+    /// delayed QTelemetryManager and settings initialization.
+    bool isManagerInitialized();
 
 private:
     QAbstractDataSourcePrivate *d;

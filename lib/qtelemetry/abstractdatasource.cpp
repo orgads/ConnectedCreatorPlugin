@@ -34,17 +34,17 @@ QTelemetryManager *QAbstractDataSource::manager() const
     return d->manager;
 }
 
-bool QAbstractDataSource::checkManagerInitialized()
+bool QAbstractDataSource::isManagerInitialized()
 {
     if(d->manager && d->manager->settings()) {
         return true;
     } else if (d->manager) {
         qCWarning(Log) << "Telemetry manager was not set (initialized)!"
-                       << "Could not load/reset '" << d->id << "' data source!";
+                       << "Could not load/save/reset '" << d->id << "' data source!";
         return false;
     } else {
         qCWarning(Log) << "Telemetry manager settings were not initialized!"
-                       << "Could not load/reset '" << d->id << "' data source!";
+                       << "Could not load/save/reset '" << d->id << "' data source!";
         return false;
     }
 }
