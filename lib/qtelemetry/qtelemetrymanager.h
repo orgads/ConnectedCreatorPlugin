@@ -66,10 +66,14 @@ public:
     /// Sets current telemetry level @see telemetryLevel
     void setTelemetryLevel(const TelemetryLevel level);
 
+public slots:
+    /// Submits (returns) current telemetry data and resets all data sources
+    QByteArray submit();
+
 signals:
     /// Emitted after data submission
-    void dataSubmitted();
-    ///
+    void dataSubmitted(const QByteArray &);
+    /// Emitted Product Identifier was changed
     void productIdentifierChanged(QString);
 
 private:

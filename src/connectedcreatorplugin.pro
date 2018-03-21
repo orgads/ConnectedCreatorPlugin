@@ -7,11 +7,7 @@ QT += QTelemetry
 # ConnectedCreatorPlugin files
 INCLUDEPATH += \
     ./ \
-    ../lib/qtelemetry \
-    ../3rdparty \
-    ../3rdparty/kuserfeedback/common \
-    ../3rdparty/kuserfeedback/core \
-    ../3rdparty/kuserfeedback/widgets
+    ../lib/qtelemetry
 
 SOURCES += \
     connectedcreatorpluginplugin.cpp \

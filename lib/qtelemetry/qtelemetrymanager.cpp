@@ -114,6 +114,13 @@ QByteArray QTelemetryManager::jsonData(TelemetryLevel level)
     return QByteArray();
 }
 
+QByteArray QTelemetryManager::submit()
+{
+    QByteArray data = jsonData(telemetryLevel());
+    emit dataSubmitted(data);   // Reset in all data sources called automatically here
+    return data;
+}
+
 TelemetryLevel QTelemetryManager::telemetryLevel() const
 {
     return d->level;
