@@ -1,4 +1,7 @@
 ﻿# ConnectedCreatorPlugin
+ 
+> **Note.** This branch was left only for sample reference of `KUserFeedback Framework` usage
+
 <img src="src/images/monitoring-300px.png" alt="Telemetry-Icon" height="125" align="left"> This is a work-in-progress project to create a data analytics plugin for Connected Creator. The plugin collects usage data from Qt Creator users. This data is used to improve Qt user experience.
 
 The Qt Company has an increasing need to better understand, how Qt products and product features are used. Currently, we collect statistics about Qt downloads and Qt web site and online documentation usage. However, we have limited understanding, what user actually install and how they use different features after the installation.
