@@ -75,7 +75,7 @@ bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *e
 void ConnectedCreatorPlugin::configureTelemetryManager()
 {
     manager()->setProductIdentifier(QStringLiteral("io.qt.qtc.analytics"));
-    //  TODO: Create scheduler
+    // TODO: Create scheduler
     // ..
     // TODO: Create network object
     // ..
@@ -98,7 +98,7 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
 //    manager()->addDataSource(new QTelemetry::StartCountSource);
 //    manager()->addDataSource(new QTelemetry::StyleInfoSource);
 //    manager()->addDataSource(new QTelemetry::UsageTimeSource);
-//    manager()->setTelemetryMode(QTelemetry::QTelemetryManager::DetailedUsageStatistics);
+    manager()->setTelemetryLevel(QTelemetry::TelemetryLevel::DetailedUsageStatistics);
 
     // Add Qt Creator specific data sources
     QList<QWidget *> widgets =  Core::DesignMode::instance()->findChildren<QWidget *>();

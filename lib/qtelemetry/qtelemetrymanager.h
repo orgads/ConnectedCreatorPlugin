@@ -6,10 +6,12 @@
 #include <QObject>
 #include <QList>
 
+class QSettings;
+
 namespace QTelemetry {
 
 class QTelemetryManagerPrivate;
-class AbstractDataSource;
+class QAbstractDataSource;
 
 enum class TelemetryLevel {
     NoTelemetry = 0x0, ///< Transmit no data at all.
@@ -30,14 +32,14 @@ public:
 
     /// Adds a data source for telemetry data collection.
     /// @param source The data source to add. The Manager takes ownership of @p source.
-    void addDataSource(AbstractDataSource *source);
+    void addDataSource(QAbstractDataSource *source);
 
     /// Returns all data sources that have been added to this manager.
     /// @see addDataSource
-    QList<AbstractDataSource *> dataSources();
+    QList<QAbstractDataSource *> dataSources() const;
 
     /// Returns data source for given @p id
-    AbstractDataSource *dataSource(QString id) const;
+    QAbstractDataSource *dataSource(QString id) const;
 
     /// Current statistics data
     QByteArray jsonData(TelemetryLevel level);
@@ -55,6 +57,20 @@ public:
     /// If this is not specified, the product identifier is dervied from the application name
     /// organisation domain specified in QCoreApplication.
     void setProductIdentifier(const QString &productId);
+
+    /// Returns global QTelemetry settings object
+    QSettings *settings() const;
+
+    /// Returns current telemetry level @see setTelemetryLevel
+    TelemetryLevel telemetryLevel() const;
+    /// Sets current telemetry level @see telemetryLevel
+    void setTelemetryLevel(const TelemetryLevel level);
+
+signals:
+    /// Emitted after data submission
+    void dataSubmitted();
+
+    void productIdentifierChanged(QString);
 
 private:
     QTelemetryManagerPrivate *d;

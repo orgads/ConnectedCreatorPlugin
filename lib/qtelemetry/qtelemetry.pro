@@ -17,7 +17,9 @@ HEADERS += \
         qtelemetry_global.h \
         qtelemetrymanager.h \
         qtelemetrymanager_p.h \
-        abstractdatasource.h
+        abstractdatasource.h \
+        abstractdatasource_p.h \
+        qtelemetry_logging.h
 
 ## Either set the IDE_SOURCE_TREE when running qmake,
 ## or set the QTC_SOURCE environment variable, to override the default setting

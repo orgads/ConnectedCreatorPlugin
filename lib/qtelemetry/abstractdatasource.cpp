@@ -1,15 +1,52 @@
-﻿#include "abstractdatasource.h"
+﻿#include "qtelemetry_logging.h"
+#include "qtelemetrymanager.h"
+#include "abstractdatasource.h"
+#include "abstractdatasource_p.h"
 
 namespace QTelemetry {
 
-AbstractDataSource::AbstractDataSource(QObject *parent) : QObject(parent)
+QAbstractDataSource::QAbstractDataSource(const QString &id , TelemetryLevel level)
+    : QObject(nullptr)
+    , d(new QAbstractDataSourcePrivate(this))
 {
-
+    d->id = id;
+    d->level = level;
 }
 
-TelemetryLevel AbstractDataSource::telemetryLevel() const
+TelemetryLevel QAbstractDataSource::telemetryLevel() const
 {
+    return d->level;
+}
 
+void QAbstractDataSource::setManager(QTelemetryManager *manager)
+{
+    d->manager = manager;
+    setParent(manager);
+
+    // Connect signals
+    connect(d->manager, &QTelemetryManager::dataSubmitted, this, &QAbstractDataSource::reset);
+    connect(d->manager, &QTelemetryManager::productIdentifierChanged,
+            this, &QAbstractDataSource::load);
+}
+
+QTelemetryManager *QAbstractDataSource::manager() const
+{
+    return d->manager;
+}
+
+bool QAbstractDataSource::checkManagerInitialized()
+{
+    if(d->manager && d->manager->settings()) {
+        return true;
+    } else if (d->manager) {
+        qCWarning(Log) << "Telemetry manager was not set (initialized)!"
+                       << "Could not load/reset '" << d->id << "' data source!";
+        return false;
+    } else {
+        qCWarning(Log) << "Telemetry manager settings were not initialized!"
+                       << "Could not load/reset '" << d->id << "' data source!";
+        return false;
+    }
 }
 
 }   // namespace QTelemetry

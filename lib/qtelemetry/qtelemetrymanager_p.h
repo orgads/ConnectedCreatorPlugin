@@ -1,27 +1,35 @@
 ﻿#ifndef QTELEMETRYMANAGERPRIVATE_H
 #define QTELEMETRYMANAGERPRIVATE_H
 
+#include "qtelemetrymanager.h"
+
+#include <QPointer>
 #include <QList>
 #include <QMap>
+#include <QSettings>
+#include <QCoreApplication>
 
 namespace QTelemetry {
 
 class QTelemetryManager;
-class AbstractDataSource;
+class QAbstractDataSource;
 
 class QTelemetryManagerPrivate
 {
 public:
     QTelemetryManagerPrivate(QTelemetryManager *manager) : q(manager) {}
+    ~QTelemetryManagerPrivate();
+    void createSettings();
 
-private slots:
-    void reset();
+    QList<QAbstractDataSource *> sources;
+    QMap<QString, int> index;
+    QPointer<QSettings> settings;
+    QString productId = QCoreApplication::applicationName();
 
-private:
-    QList<AbstractDataSource *> m_sources;
-    QMap<QString, AbstractDataSource *> m_map;
+    TelemetryLevel level = TelemetryLevel::NoTelemetry;
 
     QTelemetryManager *q;
+    QString organization();
 };
 
 }   // namespace QTelemetry
