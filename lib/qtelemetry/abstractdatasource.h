@@ -21,7 +21,7 @@ public:
 
     /// Returns the id of this data source.
     QString id() const;
-    /// short name which can be shown to user
+    /// Short name which can be shown to user
     virtual QString name() const = 0;
     /// Data source description
     virtual QString description() const = 0;

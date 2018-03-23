@@ -117,6 +117,9 @@ QByteArray QTelemetryManager::jsonData(TelemetryLevel level)
 QByteArray QTelemetryManager::submit()
 {
     QByteArray data = jsonData(telemetryLevel());
+    // TODO: log data to file
+    // ...
+
     emit dataSubmitted(data);   // Reset in all data sources called automatically here
     return data;
 }

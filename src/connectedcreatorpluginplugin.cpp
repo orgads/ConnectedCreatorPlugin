@@ -13,6 +13,7 @@
 #include <coreplugin/settingsdatabase.h>
 #include <coreplugin/designmode.h>
 
+#include "qscheduler.h"
 #include "qtelemetrymanager.h"
 
 #include <QAction>
@@ -75,13 +76,18 @@ bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *e
 void ConnectedCreatorPlugin::configureTelemetryManager()
 {
     manager()->setProductIdentifier(QStringLiteral("io.qt.qtc.analytics"));
-    // TODO: Create scheduler
-    // ..
     // TODO: Create network object
     // ..
-    // TODO: Create submission task
-    //
-//    manager()->setSubmissionInterval(7);
+
+    // Create scheduler
+    QTelemetry::QScheduler *scheduler = new QTelemetry::QScheduler(this);
+    // Add submission task
+    scheduler->addTask(7, QTelemetry::DurationMeasure::Days, [=]() {
+        manager()->submit();
+        // TODO: send data to backend
+        // ...
+    });
+
 //    manager()->setSettingsDelay(30);
     manager()->setEnabled(PluginSettings::telemetryEnabled());
 

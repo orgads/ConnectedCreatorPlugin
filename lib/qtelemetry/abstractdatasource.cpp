@@ -13,6 +13,11 @@ QAbstractDataSource::QAbstractDataSource(const QString &id , TelemetryLevel leve
     d->level = level;
 }
 
+QString QAbstractDataSource::id() const
+{
+    return d->id;
+}
+
 TelemetryLevel QAbstractDataSource::telemetryLevel() const
 {
     return d->level;
