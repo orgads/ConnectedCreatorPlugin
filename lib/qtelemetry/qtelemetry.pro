@@ -12,7 +12,8 @@ DEFINES += QTELEMETRY_LIBRARY QT_DEPRECATED_WARNINGS
 SOURCES += \
         qtelemetrymanager.cpp \
         abstractdatasource.cpp \
-        qscheduler.cpp
+        qscheduler.cpp \
+        applicationversionsource.cpp
 
 HEADERS += \
         qtelemetry_global.h \
@@ -22,7 +23,8 @@ HEADERS += \
         abstractdatasource_p.h \
         qtelemetry_logging.h \
         qscheduler.h \
-        qscheduler_p.h
+        qscheduler_p.h \
+        applicationversionsource.h
 
 ## Either set the IDE_SOURCE_TREE when running qmake,
 ## or set the QTC_SOURCE environment variable, to override the default setting

@@ -20,6 +20,7 @@ public:
     QTelemetryManagerPrivate(QTelemetryManager *manager) : q(manager) {}
     ~QTelemetryManagerPrivate();
     void createSettings();
+    bool isValidSource(QAbstractDataSource *source) const;
 
     QList<QAbstractDataSource *> sources;
     QMap<QString, int> index;

@@ -3,9 +3,19 @@
 
 namespace QTelemetry {
 
-QScheduler::QScheduler(QObject *parent) : QObject(parent)
+QScheduler::QScheduler(QObject *parent)
+    : QObject(parent)
+    , d(new QSchedulerPrivate(this))
 {
+}
 
+QTask::QTask(int duration, DurationMeasure type, std::function<void()> operation)
+    : QObject(nullptr)
+    , d(new QTaskPrivate(this))
+{
+    Q_UNUSED(duration)
+    Q_UNUSED(type)
+    Q_UNUSED(operation)
 }
 
 QTask& QScheduler::addTask(int duration, DurationMeasure measure,

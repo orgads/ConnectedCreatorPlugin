@@ -1,6 +1,8 @@
 ﻿#ifndef QSCHEDULER_H
 #define QSCHEDULER_H
 
+#include "qtelemetry_global.h"
+
 #include <functional>
 #include <QObject>
 

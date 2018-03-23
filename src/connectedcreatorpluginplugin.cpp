@@ -15,6 +15,7 @@
 
 #include "qscheduler.h"
 #include "qtelemetrymanager.h"
+#include "applicationversionsource.h"
 
 #include <QAction>
 #include <QMessageBox>
@@ -92,7 +93,7 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
     manager()->setEnabled(PluginSettings::telemetryEnabled());
 
     // Add generic data sources
-//    manager()->addDataSource(new QTelemetry::ApplicationVersionSource);
+    manager()->addDataSource(new QTelemetry::ApplicationVersionSource);
 //    manager()->addDataSource(new QTelemetry::CompilerInfoSource);
 //    manager()->addDataSource(new QTelemetry::CpuInfoSource);
 //    manager()->addDataSource(new QTelemetry::LocaleInfoSource);
@@ -116,7 +117,7 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
     QWidget *designer = (it != widgets.end()) ? *it : nullptr;
     qDebug() << ((designer) ? designer->metaObject()->className() : "nullptr");
 
-    // Connect Provider to UI
+    // Connect Telemetry Manager to UI
     controlDialog()->setTelemetryManager(manager());
     statisticsDialog()->setTelemetryManager(manager());
 }
