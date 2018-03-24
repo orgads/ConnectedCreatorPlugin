@@ -16,6 +16,7 @@
 #include "qscheduler.h"
 #include "qtelemetrymanager.h"
 #include "applicationversionsource.h"
+#include "compilerinfosource.h"
 
 #include <QAction>
 #include <QMessageBox>
@@ -94,7 +95,7 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
 
     // Add generic data sources
     manager()->addDataSource(new QTelemetry::ApplicationVersionSource);
-//    manager()->addDataSource(new QTelemetry::CompilerInfoSource);
+    manager()->addDataSource(new QTelemetry::CompilerInfoSource);
 //    manager()->addDataSource(new QTelemetry::CpuInfoSource);
 //    manager()->addDataSource(new QTelemetry::LocaleInfoSource);
 //    manager()->addDataSource(new QTelemetry::OpenGLInfoSource);
