@@ -4,7 +4,6 @@
 
 namespace QTelemetry {
 
-
 CompilerInfoSource::CompilerInfoSource()
     : QAbstractDataSource("compiler", TelemetryLevel::BasicSystemInformation)
 {
@@ -48,6 +47,5 @@ QVariant CompilerInfoSource::data()
 
     return m;
 }
-
 
 }   // namespace QTelemetry
