@@ -11,7 +11,7 @@ namespace QTelemetry {
 ///
 /// The default telemetry level for this source is TelemetryLevel::BasicSystemInformation.
 ///
-class QtVersionSource : public QAbstractDataSource
+class QTELEMETRYSHARED_EXPORT QtVersionSource : public QAbstractDataSource
 {
 public:
     QtVersionSource();
