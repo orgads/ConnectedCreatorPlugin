@@ -10,7 +10,7 @@ namespace QTelemetry {
 /// application compiller if built with same compiler as application or together
 /// with application.
 ///
-/// The default telemetry mode for this source is TelemetryLevel::BasicSystemInformation.
+/// The default telemetry level for this source is TelemetryLevel::BasicSystemInformation.
 ///
 class QTELEMETRYSHARED_EXPORT CompilerInfoSource : public QAbstractDataSource
 {

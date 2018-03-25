@@ -3,3 +3,4 @@
 #include "cpuinfosource.h"
 #include "localeinfosource.h"
 #include "openglinfosource.h"
+#include "platforminfosource.h"

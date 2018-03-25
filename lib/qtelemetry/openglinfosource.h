@@ -8,7 +8,7 @@ namespace QTelemetry {
 
 /// Data source reports type, version and vendor of the OpenGL stack.
 ///
-/// The default telemetry mode for this source is TelemetryLevel::DetailedSystemInformation.
+/// The default telemetry level for this source is TelemetryLevel::DetailedSystemInformation.
 ///
 class OpenGLInfoSource : public QAbstractDataSource
 {

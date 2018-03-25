@@ -9,7 +9,7 @@ namespace QTelemetry {
 /// Data source for the application version. The application version is retrieved
 /// via QCoreApplication::applicationVersion.
 ///
-/// The default telemetry mode for this source is TelemetryLevel::BasicSystemInformation.
+/// The default telemetry level for this source is TelemetryLevel::BasicSystemInformation.
 ///
 class QTELEMETRYSHARED_EXPORT ApplicationVersionSource : public QAbstractDataSource
 {
