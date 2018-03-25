@@ -16,7 +16,8 @@ SOURCES += \
         applicationversionsource.cpp \
         compilerinfosource.cpp \
         cpuinfosource.cpp \
-        localeinfosource.cpp
+        localeinfosource.cpp \
+        openglinfosource.cpp
 
 HEADERS += \
         qtelemetry_global.h \
@@ -31,7 +32,8 @@ HEADERS += \
         applicationversionsource.h \
         compilerinfosource.h \
         cpuinfosource.h \
-        localeinfosource.h
+        localeinfosource.h \
+        openglinfosource.h
 
 ## Either set the IDE_SOURCE_TREE when running qmake,
 ## or set the QTC_SOURCE environment variable, to override the default setting

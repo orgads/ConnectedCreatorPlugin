@@ -1,19 +1,19 @@
-﻿#ifndef LOCALEINFOSOURCE_H
-#define LOCALEINFOSOURCE_H
+﻿#ifndef OPENGLINFOSOURCE_H
+#define OPENGLINFOSOURCE_H
 
 #include "qtelemetry_global.h"
 #include "abstractdatasource.h"
 
 namespace QTelemetry {
 
-/// Data source reporting the region and language settings.
+/// Data source reports type, version and vendor of the OpenGL stack.
 ///
 /// The default telemetry mode for this source is TelemetryLevel::DetailedSystemInformation.
 ///
-class QTELEMETRYSHARED_EXPORT LocaleInfoSource : public QAbstractDataSource
+class OpenGLInfoSource : public QAbstractDataSource
 {
 public:
-    LocaleInfoSource();
+    OpenGLInfoSource();
     QString name() const override;
     QString description() const override;
     QVariant data() override;
@@ -21,4 +21,4 @@ public:
 
 }   // namespace QTelemetry
 
-#endif // LOCALEINFOSOURCE_H
+#endif // OPENGLINFOSOURCE_H
