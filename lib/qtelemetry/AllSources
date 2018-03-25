@@ -1,3 +1,4 @@
 ﻿#include "applicationversionsource.h"
 #include "compilerinfosource.h"
 #include "cpuinfosource.h"
+#include "localeinfosource.h"

@@ -6,6 +6,10 @@
 
 namespace QTelemetry {
 
+
+/// \brief The CpuInfoSource class reports CPU type returned by
+/// QSysInfo::currentCpuArchitecture() and number of CPU threads
+///
 class CpuInfoSource : public QAbstractDataSource
 {
 public:

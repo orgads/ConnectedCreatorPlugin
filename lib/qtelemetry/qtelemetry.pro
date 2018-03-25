@@ -15,7 +15,8 @@ SOURCES += \
         qscheduler.cpp \
         applicationversionsource.cpp \
         compilerinfosource.cpp \
-    cpuinfosource.cpp
+        cpuinfosource.cpp \
+        localeinfosource.cpp
 
 HEADERS += \
         qtelemetry_global.h \
@@ -29,7 +30,8 @@ HEADERS += \
         AllSources \
         applicationversionsource.h \
         compilerinfosource.h \
-    cpuinfosource.h
+        cpuinfosource.h \
+        localeinfosource.h
 
 ## Either set the IDE_SOURCE_TREE when running qmake,
 ## or set the QTC_SOURCE environment variable, to override the default setting

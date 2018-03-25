@@ -96,7 +96,7 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
     manager()->addDataSource(new QTelemetry::ApplicationVersionSource);
     manager()->addDataSource(new QTelemetry::CompilerInfoSource);
     manager()->addDataSource(new QTelemetry::CpuInfoSource);
-//    manager()->addDataSource(new QTelemetry::LocaleInfoSource);
+    manager()->addDataSource(new QTelemetry::LocaleInfoSource);
 //    manager()->addDataSource(new QTelemetry::OpenGLInfoSource);
 //    manager()->addDataSource(new QTelemetry::PlatformInfoSource);
 //    manager()->addDataSource(new QTelemetry::QPAInfoSource);

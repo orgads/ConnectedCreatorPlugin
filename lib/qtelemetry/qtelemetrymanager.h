@@ -16,8 +16,9 @@ class QAbstractDataSource;
 enum class TelemetryLevel {
     NoTelemetry = 0x0,  ///< Transmit no data at all.
     BasicSystemInformation = 1 << 1,    ///< Transmit basic information about the system.
-    DetailedSystemInformation = 1 << 2, ///< Transmit detailed system information.
-    DetailedUsageStatistics = 1 << 3,   ///< Transmit detailed usage statistics.
+    BasicUsageStatistics = 1 << 2,      ///< Transmit basic usage statistics.
+    DetailedSystemInformation = 1 << 3, ///< Transmit detailed system information.
+    DetailedUsageStatistics = 1 << 4,   ///< Transmit detailed (application specific) usage statistics.
 };
 
 class QTELEMETRYSHARED_EXPORT QTelemetryManager : public QObject
