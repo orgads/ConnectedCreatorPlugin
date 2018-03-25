@@ -36,12 +36,12 @@ JsonSyntaxHighlighter::JsonSyntaxHighlighter(QTextDocument *parent)
 
    // numbers
    rule.pattern = QRegExp("([-0-9.]+)(?!([^\"]*\"[\\s]*\\:))");
-   rule.format.setForeground(QColor("#00007f"));
+   rule.format.setForeground(QColor("#ff00ff"));
    rules.append(rule);
 
    // key
    rule.pattern = QRegExp ("(\"[^\"]*\")");
-   rule.format.setForeground(QColor("#47c9f0"));
+   rule.format.setForeground(QColor("#2f5ccb"));
    rules.append(rule);
 
    // value

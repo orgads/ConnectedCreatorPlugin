@@ -1,7 +1,6 @@
 include(qtelemetry.pri)
 
-QT       += network
-QT       -= gui
+QT       += network opengl
 
 TARGET = QTelemetry
 TEMPLATE = lib
