@@ -1,20 +1,20 @@
-﻿#ifndef QPAINFOSOURCE_H
-#define QPAINFOSOURCE_H
+﻿#ifndef QTVERSIONSOURCE_H
+#define QTVERSIONSOURCE_H
+
 
 #include "qtelemetry_global.h"
 #include "abstractdatasource.h"
 
 namespace QTelemetry {
 
-/// Reports information about the Qt platform abstraction plugin the application
-/// is running on.
+/// Data source reporting the Qt version used at runtime.
 ///
 /// The default telemetry level for this source is TelemetryLevel::BasicSystemInformation.
 ///
-class QTELEMETRYSHARED_EXPORT QPAInfoSource : public QAbstractDataSource
+class QtVersionSource : public QAbstractDataSource
 {
 public:
-    QPAInfoSource();
+    QtVersionSource();
     QString name() const override;
     QString description() const override;
     QVariant data() override;
@@ -22,4 +22,4 @@ public:
 
 }   // namespace QTelemetry
 
-#endif // QPAINFOSOURCE_H
+#endif // QTVERSIONSOURCE_H

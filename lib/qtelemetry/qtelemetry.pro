@@ -9,34 +9,36 @@ VERSION = $${QT.QTelemetry.VERSION}
 DEFINES += QTELEMETRY_LIBRARY QT_DEPRECATED_WARNINGS
 
 SOURCES += \
-        qtelemetrymanager.cpp \
-        abstractdatasource.cpp \
-        qscheduler.cpp \
-        applicationversionsource.cpp \
-        compilerinfosource.cpp \
-        cpuinfosource.cpp \
-        localeinfosource.cpp \
-        openglinfosource.cpp \
-        platforminfosource.cpp \
-        qpainfosource.cpp
+    qtelemetrymanager.cpp \
+    abstractdatasource.cpp \
+    qscheduler.cpp \
+    applicationversionsource.cpp \
+    compilerinfosource.cpp \
+    cpuinfosource.cpp \
+    localeinfosource.cpp \
+    openglinfosource.cpp \
+    platforminfosource.cpp \
+    qpainfosource.cpp \
+    qtversionsource.cpp
 
 HEADERS += \
-        qtelemetry_global.h \
-        qtelemetrymanager.h \
-        qtelemetrymanager_p.h \
-        abstractdatasource.h \
-        abstractdatasource_p.h \
-        qtelemetry_logging.h \
-        qscheduler.h \
-        qscheduler_p.h \
-        AllSources \
-        applicationversionsource.h \
-        compilerinfosource.h \
-        cpuinfosource.h \
-        localeinfosource.h \
-        openglinfosource.h \
-        platforminfosource.h \
-        qpainfosource.h
+    qtelemetry_global.h \
+    qtelemetrymanager.h \
+    qtelemetrymanager_p.h \
+    abstractdatasource.h \
+    abstractdatasource_p.h \
+    qtelemetry_logging.h \
+    qscheduler.h \
+    qscheduler_p.h \
+    AllSources \
+    applicationversionsource.h \
+    compilerinfosource.h \
+    cpuinfosource.h \
+    localeinfosource.h \
+    openglinfosource.h \
+    platforminfosource.h \
+    qpainfosource.h \
+    qtversionsource.h
 
 ## Either set the IDE_SOURCE_TREE when running qmake,
 ## or set the QTC_SOURCE environment variable, to override the default setting
