@@ -4,3 +4,4 @@
 #include "localeinfosource.h"
 #include "openglinfosource.h"
 #include "platforminfosource.h"
+#include "qpainfosource.h"
