@@ -9,3 +9,4 @@
 #include "screeninfosource.h"
 #include "screeninfosource.h"
 #include "styleinfosource.h"
+#include "startcountsource.h"

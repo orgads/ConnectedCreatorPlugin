@@ -16,6 +16,8 @@ class QTELEMETRYSHARED_EXPORT QAbstractDataSource : public QObject
     Q_OBJECT
 
 public:
+    virtual ~QAbstractDataSource();
+
     /// Data collected by a source
     virtual QVariant data() = 0;
 
@@ -36,6 +38,9 @@ public slots:
     virtual void reset() {}
     virtual void load() {}
     virtual void save() {}
+
+signals:
+    void managerChanged();
 
 protected:
     explicit QAbstractDataSource(const QString &id, TelemetryLevel level = TelemetryLevel::NoTelemetry);

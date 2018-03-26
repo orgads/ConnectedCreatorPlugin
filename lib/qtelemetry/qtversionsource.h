@@ -1,7 +1,6 @@
 ﻿#ifndef QTVERSIONSOURCE_H
 #define QTVERSIONSOURCE_H
 
-
 #include "qtelemetry_global.h"
 #include "abstractdatasource.h"
 

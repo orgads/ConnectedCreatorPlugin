@@ -38,6 +38,7 @@ class QScheduler : public QObject
     Q_OBJECT
 public:
     explicit QScheduler(QObject *parent = nullptr);
+    ~QScheduler();
     QTask& addTask(int duration, DurationMeasure measure,
                    std::function<void()> operation);
 

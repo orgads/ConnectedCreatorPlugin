@@ -20,6 +20,7 @@ class QSchedulerPrivate
 {
 public:
     QSchedulerPrivate(QScheduler *parent) : q(parent) {}
+    ~QSchedulerPrivate();
 
     QList<QTask *> tasks;
 

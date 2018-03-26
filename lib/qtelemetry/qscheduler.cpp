@@ -17,6 +17,15 @@ QTask::QTask(int duration, DurationMeasure type, std::function<void()> operation
     Q_UNUSED(type)
     Q_UNUSED(operation)
 }
+QScheduler::~QScheduler()
+{
+    delete d;
+}
+
+QSchedulerPrivate::~QSchedulerPrivate()
+{
+    qDeleteAll(tasks);
+}
 
 QTask& QScheduler::addTask(int duration, DurationMeasure measure,
                            std::function<void()> operation)

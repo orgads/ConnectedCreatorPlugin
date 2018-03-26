@@ -87,10 +87,14 @@ void QTelemetryManager::addDataSource(QAbstractDataSource *source)
     if(!d->index.contains(source->id())) {
         d->sources.append(source);
         d->index[source->id()] = d->sources.count() - 1;
+        source->setManager(this);
     } else {
         int idx = d->index[source->id()];
-        delete d->sources[idx];
-        d->sources[idx] = source;
+        if(source != d->sources[idx]) { // If not the same - replace source
+            delete d->sources[idx];
+            d->sources[idx] = source;
+            source->setManager(this);
+        }
     }
 }
 

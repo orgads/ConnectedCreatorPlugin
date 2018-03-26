@@ -13,6 +13,11 @@ QAbstractDataSource::QAbstractDataSource(const QString &id , TelemetryLevel leve
     d->level = level;
 }
 
+QAbstractDataSource::~QAbstractDataSource()
+{
+    delete d;
+}
+
 QString QAbstractDataSource::id() const
 {
     return d->id;
@@ -32,6 +37,8 @@ void QAbstractDataSource::setManager(QTelemetryManager *manager)
     connect(d->manager, &QTelemetryManager::dataSubmitted, this, &QAbstractDataSource::reset);
     connect(d->manager, &QTelemetryManager::productIdentifierChanged,
             this, &QAbstractDataSource::load);
+
+    emit managerChanged();
 }
 
 QTelemetryManager *QAbstractDataSource::manager() const
