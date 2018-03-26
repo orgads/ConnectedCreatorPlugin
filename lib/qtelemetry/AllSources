@@ -8,3 +8,4 @@
 #include "qtversionsource.h"
 #include "screeninfosource.h"
 #include "screeninfosource.h"
+#include "styleinfosource.h"

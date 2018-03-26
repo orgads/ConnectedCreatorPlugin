@@ -103,7 +103,7 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
     manager()->addDataSource(new QTelemetry::QtVersionSource);
     manager()->addDataSource(new QTelemetry::ScreenInfoSource);
 //    manager()->addDataSource(new QTelemetry::StartCountSource);
-//    manager()->addDataSource(new QTelemetry::StyleInfoSource);
+    manager()->addDataSource(new QTelemetry::StyleInfoSource);
 //    manager()->addDataSource(new QTelemetry::UsageTimeSource);
     manager()->setTelemetryLevel(QTelemetry::TelemetryLevel::DetailedUsageStatistics);
 
