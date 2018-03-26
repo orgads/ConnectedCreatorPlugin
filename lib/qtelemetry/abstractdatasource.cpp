@@ -11,6 +11,10 @@ QAbstractDataSource::QAbstractDataSource(const QString &id , TelemetryLevel leve
 {
     d->id = id;
     d->level = level;
+
+    // Load settings on manager initialization
+    connect(this, &QAbstractDataSource::managerChanged,
+            this, &QAbstractDataSource::load);
 }
 
 QAbstractDataSource::~QAbstractDataSource()

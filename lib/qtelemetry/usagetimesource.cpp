@@ -10,8 +10,6 @@ UsageTimeSource::UsageTimeSource()
     : QAbstractDataSource("usageTime", TelemetryLevel::BasicUsageStatistics)
     , d(new UsageTimeSourcePrivate(this))
 {
-    // Load settings on manager initialization
-    connect(this, &UsageTimeSource::managerChanged, this, &UsageTimeSource::load);
 }
 
 UsageTimeSource::~UsageTimeSource()
@@ -54,7 +52,7 @@ void UsageTimeSource::load()
 
 void UsageTimeSource::save()
 {
-    // Write startCount settings
+    // Write usageTime settings
     manager()->settings()->setValue("Telemetry/usageTime", d->currentUsageTime());
     manager()->settings()->sync();
 }
