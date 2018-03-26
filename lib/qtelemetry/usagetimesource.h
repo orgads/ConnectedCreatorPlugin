@@ -1,24 +1,25 @@
-﻿#ifndef STARTCOUNTSOURCE_H
-#define STARTCOUNTSOURCE_H
+﻿#ifndef USAGETIMESOURCE_H
+#define USAGETIMESOURCE_H
 
 #include "qtelemetry_global.h"
 #include "abstractdatasource.h"
 
 namespace QTelemetry {
 
-class StartCountSourcePrivate;
+class UsageTimeSourcePrivate;
 
-/// Data source reports the total applications starts count.
+/// Data source reporting total application usage time in seconds.
 ///
 /// The default telemetry level for this source is TelemetryLevel::BasicUsageStatistics.
 ///
-class QTELEMETRYSHARED_EXPORT StartCountSource : public QAbstractDataSource
+class QTELEMETRYSHARED_EXPORT UsageTimeSource : public QAbstractDataSource
 {
 public:
-    /// Creates new applications starts count data source instance
-    StartCountSource();
+    /// Creates new application usage time data source instance
+    UsageTimeSource();
+
     /// Saves source state on exit
-    ~StartCountSource();
+    ~UsageTimeSource();
 
     QString name() const override;
     QString description() const override;
@@ -30,9 +31,9 @@ protected slots:
     void save() override;
 
 private:
-    StartCountSourcePrivate *d;
+    UsageTimeSourcePrivate *d;
 };
 
 }   // namespace QTelemetry
 
-#endif // STARTCOUNTSOURCE_H
+#endif // USAGETIMESOURCE_H

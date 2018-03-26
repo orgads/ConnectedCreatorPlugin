@@ -10,6 +10,7 @@ StartCountSource::StartCountSource()
     : QAbstractDataSource("startCount", TelemetryLevel::BasicUsageStatistics)
     , d(new StartCountSourcePrivate(this))
 {
+    // Load settings on manager initialization
     connect(this, &StartCountSource::managerChanged, this, &StartCountSource::load);
 }
 
