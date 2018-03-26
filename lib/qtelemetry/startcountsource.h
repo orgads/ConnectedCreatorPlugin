@@ -14,6 +14,8 @@ class StartCountSourcePrivate;
 ///
 class QTELEMETRYSHARED_EXPORT StartCountSource : public QAbstractDataSource
 {
+    Q_OBJECT
+
 public:
     /// Creates new applications starts count data source instance
     StartCountSource();

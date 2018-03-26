@@ -20,7 +20,7 @@ UsageTimeSource::~UsageTimeSource()
 
 QString UsageTimeSource::name() const
 {
-    return tr("Application usage time ");
+    return tr("Application usage time");
 }
 
 QString UsageTimeSource::description() const

@@ -8,12 +8,14 @@ namespace QTelemetry {
 
 class UsageTimeSourcePrivate;
 
-/// Data source reporting total application usage time in seconds.
+/// Data source reports total application usage time in seconds.
 ///
 /// The default telemetry level for this source is TelemetryLevel::BasicUsageStatistics.
 ///
 class QTELEMETRYSHARED_EXPORT UsageTimeSource : public QAbstractDataSource
 {
+    Q_OBJECT
+
 public:
     /// Creates new application usage time data source instance
     UsageTimeSource();
