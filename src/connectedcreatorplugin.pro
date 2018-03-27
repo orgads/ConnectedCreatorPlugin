@@ -15,7 +15,8 @@ SOURCES += \
     statisticsdialog.cpp \
     pluginsettings.cpp \
     qjsonmodel.cpp \
-    jsonsyntaxhighlighter.cpp
+    jsonsyntaxhighlighter.cpp \
+    qmldesignerusagetimesource.cpp
 
 HEADERS += \
     connectedcreatorpluginplugin.h \
@@ -26,7 +27,8 @@ HEADERS += \
     pluginsettings.h \
     qjsonmodel.h \
     ctreeview.h \
-    jsonsyntaxhighlighter.h
+    jsonsyntaxhighlighter.h \
+    qmldesignerusagetimesource.h
 
 FORMS += \
     controldialog.ui \
@@ -51,17 +53,11 @@ message(Source tree: ($$IDE_SOURCE_TREE))
 message(Build tree: ($$IDE_BUILD_TREE))
 
 ## uncomment to build plugin into user config directory
-## <localappdata>/plugins/<ideversion>
-##    where <localappdata> is e.g.
-##    "%LOCALAPPDATA%\QtProject\qtcreator" on Windows Vista and later
-##    "$XDG_DATA_HOME/data/QtProject/qtcreator" or "~/.local/share/data/QtProject/qtcreator" on Linux
-##    "~/Library/Application Support/QtProject/Qt Creator" on OS X
 #USE_USER_DESTDIR = yes
 
 # ${VAR} notation allows to append the contents of the variable to another value
 # without separating the two with a space
 isEmpty(DESTDIR): DESTDIR = $${IDE_BUILD_TREE}/lib/qtcreator/plugins
-
 message(DESTDIR: ($$DESTDIR))
 
 unix|win32: LIBS += -L$${IDE_BUILD_TREE}/lib/qtcreator/plugins/ -lQTelemetry

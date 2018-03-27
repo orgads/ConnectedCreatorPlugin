@@ -42,7 +42,7 @@ void QAbstractUsageTimeSource::load()
     if(isManagerInitialized()) {
         d->startTime.start();
         d->usageTime = manager()->settings()->value("Telemetry/" + id(), 0).toInt();
-        d->running = manager()->settings()->value("Telemetry/" + id() + "_running", 0).toInt();
+        d->using_ = manager()->settings()->value("Telemetry/" + id() + "_using", 0).toInt();
     }
 }
 
@@ -50,21 +50,26 @@ void QAbstractUsageTimeSource::save()
 {
     // Write custom usage time settings
     manager()->settings()->setValue("Telemetry/" + id(), d->currentUsageTime());
-    manager()->settings()->setValue("Telemetry/" + id() + "_running", d->running);
+    manager()->settings()->setValue("Telemetry/" + id() + "_using", d->using_);
     manager()->settings()->sync();
 }
 
 void QAbstractUsageTimeSource::start()
 {
     load();
-    d->running = 1;
+    d->using_ = 1;
 }
 
 void QAbstractUsageTimeSource::stop()
 {
     d->usageTime = d->currentUsageTime();
-    d->running = 0;
+    d->using_ = 0;
     save();
+}
+
+bool QAbstractUsageTimeSource::isUsing() const
+{
+    return d->using_;
 }
 
 }   // namespace QTelemetry

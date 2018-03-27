@@ -14,12 +14,12 @@ public:
         : q(parent) {}
 
     int currentUsageTime() {
-        return usageTime + running * (startTime.elapsed() / 1000);
+        return usageTime + using_ * (startTime.elapsed() / 1000);
     }
 
     int usageTime = 0;
     QTime startTime;
-    int running = 0;    // Possible values 0/1
+    int using_ = 0;    // Possible values 0/1
 
     QAbstractUsageTimeSource *q;
 };

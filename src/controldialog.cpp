@@ -64,10 +64,10 @@ void ControlDialog::generateDataSourcesList()
             qtcText = QStringLiteral("<ul>");
 
     foreach (auto src, m_manager->dataSources()) {
-        QString description = src->description(); //src->name();
-        if (description.isEmpty()) continue;
+        QString name = src->name(); // src->description();
+        if (name.isEmpty()) continue;
 
-        auto element = QStringLiteral("<li>") + description + QStringLiteral("</li>");
+        auto element = QStringLiteral("<li>") + name + QStringLiteral("</li>");
         if(src->telemetryLevel() < QTelemetry::TelemetryLevel::DetailedUsageStatistics)
             genericText += element;
         else

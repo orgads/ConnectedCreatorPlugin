@@ -16,6 +16,7 @@
 #include "qscheduler.h"
 #include "qtelemetrymanager.h"
 #include <AllSources>
+#include "qmldesignerusagetimesource.h"
 
 #include <QAction>
 #include <QMessageBox>
@@ -76,7 +77,7 @@ bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *e
 /// \brief Configure QTelemetry
 void ConnectedCreatorPlugin::configureTelemetryManager()
 {
-    manager()->setProductIdentifier(QStringLiteral("io.qt.qtc.analytics"));
+    manager()->setProductIdentifier("io.qt.qtc.analytics");
     // TODO: Create network object
     // ..
 
@@ -105,17 +106,12 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
     manager()->addDataSource(new QTelemetry::StartCountSource);
     manager()->addDataSource(new QTelemetry::StyleInfoSource);
     manager()->addDataSource(new QTelemetry::UsageTimeSource);
-    manager()->setTelemetryLevel(QTelemetry::TelemetryLevel::DetailedUsageStatistics);
 
     // Add Qt Creator specific data sources
-    QList<QWidget *> widgets =  Core::DesignMode::instance()->findChildren<QWidget *>();
-            // Core::ICore::mainWindow()->findChildren<QWidget *>();
-    QList<QWidget *>::iterator it = std::find_if(widgets.begin(), widgets.end(),
-        [](QWidget *widget) -> bool {
-            return QString::fromLatin1(widget->metaObject()->className()) == "DesignModeWidget";
-    });
-    QWidget *designer = (it != widgets.end()) ? *it : nullptr;
-    qDebug() << ((designer) ? designer->metaObject()->className() : "nullptr");
+    manager()->addDataSource(new QmlDesignerUsageTimeSource);
+
+    // Set Telemetry Level
+    manager()->setTelemetryLevel(QTelemetry::TelemetryLevel::DetailedUsageStatistics);
 
     // Connect Telemetry Manager to UI
     controlDialog()->setTelemetryManager(manager());

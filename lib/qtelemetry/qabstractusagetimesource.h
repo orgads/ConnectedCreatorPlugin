@@ -44,6 +44,8 @@ protected slots:
 protected:
     /// Creates new custom object or widget usage time data source instance
     explicit QAbstractUsageTimeSource(const QString &id);
+    /// Returns whether tracked object/widget is currently using or not
+    bool isUsing() const;
 
 private:
     QAbstractUsageTimeSourcePrivate *d;
