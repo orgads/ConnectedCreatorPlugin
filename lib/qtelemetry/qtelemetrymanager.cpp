@@ -103,7 +103,7 @@ QList<QAbstractDataSource *> QTelemetryManager::dataSources() const
     return d->sources;
 }
 
-QAbstractDataSource *QTelemetryManager::dataSource(QString id) const
+QAbstractDataSource *QTelemetryManager::dataSource(const QString& id) const
 {
     if(d->index.contains(id))
         return d->sources[d->index[id]];

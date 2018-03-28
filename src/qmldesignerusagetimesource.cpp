@@ -22,13 +22,16 @@ QString QmlDesignerUsageTimeSource::description() const
 
 void QmlDesignerUsageTimeSource::timerControl(Core::Id mode)
 {
-    bool design = mode.name().toLower() == "design";
-    if(design == isUsing()) // mode was not changed
-        return;             // do nothing
-    else if(design) {
+    bool isDesignMode = mode.name().toLower() == "design";
+    if(isDesignMode == isUsing())   // mode was not changed
+        return;                     // do nothing
+
+    if(isDesignMode) {
+        QString mime = Core::EditorManager::currentDocument()->mimeType().toLower();
         QString extension = Core::EditorManager::currentDocument()->filePath()
                 .toFileInfo().completeSuffix().toLower();
-        if(extension == "qml" || extension == "qml.ui") {
+
+        if(extension == "qml" || extension == "qml.ui" || mime.contains("qml")) {
             emit started();
         }
     } else { // !design

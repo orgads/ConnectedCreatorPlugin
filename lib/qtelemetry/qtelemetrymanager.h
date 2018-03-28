@@ -40,7 +40,7 @@ public:
     QList<QAbstractDataSource *> dataSources() const;
 
     /// Returns data source for given @p id
-    QAbstractDataSource *dataSource(QString id) const;
+    QAbstractDataSource *dataSource(const QString& id) const;
 
     /// Current statistics data
     QByteArray jsonData(TelemetryLevel level);
