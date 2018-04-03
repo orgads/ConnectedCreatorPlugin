@@ -139,9 +139,8 @@ bool QTelemetryManagerPrivate::isValidSource(QAbstractDataSource *source) const
     return true;
 }
 
-QByteArray QTelemetryManager::jsonData(TelemetryLevel level)
+QJsonDocument QTelemetryManager::jsonData(TelemetryLevel level)
 {
-    // JSON-format statistics generation
     QJsonObject object;
     if(isEnabled() && level != TelemetryLevel::NoTelemetry)
     {
@@ -161,17 +160,25 @@ QByteArray QTelemetryManager::jsonData(TelemetryLevel level)
         }
     }
     QJsonDocument doc(object);
+
+    return doc;
+}
+
+QByteArray QTelemetryManager::data(TelemetryLevel level)
+{
+    // JSON-format statistics generation
+    QJsonDocument doc = jsonData(level);
     return doc.toJson();
 }
 
 QByteArray QTelemetryManager::submit()
 {
-    QByteArray data = jsonData(telemetryLevel());
+    QByteArray statisticsData = data(telemetryLevel());
     // TODO: log data to file
     // ...
 
-    emit dataSubmitted(data);   // Reset in all data sources called automatically here
-    return data;
+    emit dataSubmitted(statisticsData);   // Reset in all data sources called automatically here
+    return statisticsData;
 }
 
 TelemetryLevel QTelemetryManager::telemetryLevel() const

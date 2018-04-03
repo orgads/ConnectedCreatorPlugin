@@ -42,8 +42,10 @@ public:
     /// Returns data source for given @p id
     QAbstractDataSource *dataSource(const QString& id) const;
 
-    /// Current statistics data
-    QByteArray jsonData(TelemetryLevel level);
+    /// Current statistics data as QByteArray
+    QByteArray data(TelemetryLevel level);
+    /// Current statistics data as QJsonDocument
+    QJsonDocument jsonData(TelemetryLevel level);
 
     /// Returns whether telemetry functionality is enabled on this system.
     bool isEnabled() const;

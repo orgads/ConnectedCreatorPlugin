@@ -72,12 +72,12 @@ void StatisticsDialog::setTelemetryManager(QTelemetry::QTelemetryManager* manage
 void StatisticsDialog::showEvent(QShowEvent *event)
 {
     if(m_manager) {
-        QByteArray jsonData = m_manager->jsonData(
+        QByteArray statisticsData = m_manager->data(
                     QTelemetry::TelemetryLevel::DetailedUsageStatistics);
 
         // Show JSON statistics
-        ui->textBrowser->setPlainText(QString::fromUtf8(jsonData.constData()));
-        m_model->loadJson(jsonData);
+        ui->textBrowser->setPlainText(QString::fromUtf8(statisticsData.constData()));
+        m_model->loadJson(statisticsData);
         ui->treeView->expandAll();
 
         // Adjust scroll bar step for synchronous scrolling
