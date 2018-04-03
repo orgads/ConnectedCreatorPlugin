@@ -24,7 +24,8 @@ SOURCES += \
     styleinfosource.cpp \
     startcountsource.cpp \
     usagetimesource.cpp \
-    qabstractusagetimesource.cpp
+    qabstractusagetimesource.cpp \
+    quuidsource.cpp
 
 HEADERS += \
     qtelemetry_global.h \
@@ -51,7 +52,9 @@ HEADERS += \
     usagetimesource.h \
     usagetimesource_p.h \
     qabstractusagetimesource.h \
-    qabstractusagetimesource_p.h
+    qabstractusagetimesource_p.h \
+    quuidsource.h \
+    quuidsource_p.h
 
 ## Either set the IDE_SOURCE_TREE when running qmake,
 ## or set the QTC_SOURCE environment variable, to override the default setting

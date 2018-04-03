@@ -11,3 +11,4 @@
 #include "styleinfosource.h"
 #include "startcountsource.h"
 #include "usagetimesource.h"
+#include "quuidsource.h"

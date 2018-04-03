@@ -106,6 +106,7 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
     manager()->addDataSource(new QTelemetry::StartCountSource);
     manager()->addDataSource(new QTelemetry::StyleInfoSource);
     manager()->addDataSource(new QTelemetry::UsageTimeSource);
+    manager()->addDataSource(new QTelemetry::QUuidSource);
 
     // Add Qt Creator specific data sources
     manager()->addDataSource(new QmlDesignerUsageTimeSource);
