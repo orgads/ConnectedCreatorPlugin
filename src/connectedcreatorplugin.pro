@@ -55,11 +55,6 @@ message(Build tree: ($$IDE_BUILD_TREE))
 ## uncomment to build plugin into user config directory
 #USE_USER_DESTDIR = yes
 
-# ${VAR} notation allows to append the contents of the variable to another value
-# without separating the two with a space
-isEmpty(DESTDIR): DESTDIR = $${IDE_BUILD_TREE}/lib/qtcreator/plugins
-message(DESTDIR: ($$DESTDIR))
-
 unix|win32: LIBS += -L$${IDE_BUILD_TREE}/lib/qtcreator/plugins/ -lQTelemetry
 
 ###### If the plugin can be depended upon by other plugins, this code needs to be outsourced to

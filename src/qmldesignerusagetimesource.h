@@ -16,7 +16,7 @@ public:
     QmlDesignerUsageTimeSource();
 
     QString name() const override;
-    QString description() const;
+    QString description() const override;
 
 protected slots:
     void timerControl(Core::Id mode);

@@ -1,7 +1,10 @@
 ﻿#ifndef QSCHEDULERPRIVATE_H
 #define QSCHEDULERPRIVATE_H
 
+#include "qscheduler.h"
+
 #include <QList>
+#include <QtConcurrent/QtConcurrent>
 
 namespace QTelemetry {
 
@@ -12,6 +15,12 @@ class QTaskPrivate
 {
 public:
     QTaskPrivate(QTask *parent) : q(parent) {}
+
+    FunctionType function;
+    bool async;
+
+    QFuture<void> future;
+    QFutureWatcher<void> watcher;
 
     QTask *q;
 };
