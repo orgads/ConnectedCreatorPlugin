@@ -41,16 +41,16 @@ void QAbstractUsageTimeSource::load()
 {
     if(isManagerInitialized()) {
         d->startTime.start();
-        d->usageTime = manager()->settings()->value("Telemetry/" + id(), 0).toInt();
-        d->using_ = manager()->settings()->value("Telemetry/" + id() + "_using", 0).toInt();
+        d->usageTime = manager()->settings()->value("Sources/" + id(), 0).toInt();
+        d->using_ = manager()->settings()->value("Sources/" + id() + "_using", 0).toInt();
     }
 }
 
 void QAbstractUsageTimeSource::save()
 {
     // Write custom usage time settings
-    manager()->settings()->setValue("Telemetry/" + id(), d->currentUsageTime());
-    manager()->settings()->setValue("Telemetry/" + id() + "_using", d->using_);
+    manager()->settings()->setValue("Sources/" + id(), d->currentUsageTime());
+    manager()->settings()->setValue("Sources/" + id() + "_using", d->using_);
     manager()->settings()->sync();
 }
 

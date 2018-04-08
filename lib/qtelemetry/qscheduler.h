@@ -6,6 +6,8 @@
 #include <functional>
 #include <QObject>
 
+class QSettings;
+
 namespace QTelemetry {
 
 class QTaskPrivate;
@@ -22,12 +24,16 @@ enum class DurationMeasure
     Month
 };
 
-/// Helper class representing execution context for QScheduler
+///
+/// \brief The QTask class helper class representing execution context for QScheduler
+///
 class QTask : public QObject {
     Q_OBJECT
 
 public:
-    /// Creates new task
+    /// \brief QTask Creates new task
+    /// \param function
+    /// \param async
     explicit QTask(FunctionType function = nullptr, bool async = false);
 
     /// Set execution function explicitly
@@ -54,14 +60,42 @@ private:
     QTaskPrivate *d;
 };
 
+///
+/// \brief The QScheduler class
+///
 class QScheduler : public QObject
 {
     Q_OBJECT
 public:
-    explicit QScheduler(QObject *parent = nullptr);
+    explicit QScheduler(QSettings *settings, QObject *parent = nullptr);
     ~QScheduler();
-    QTask& addTask(int duration, DurationMeasure measure, FunctionType operation);
-    QTask& addTask(QDateTime shotTime, FunctionType operation);
+
+    /// \brief addTask Creates new task for periodic execution
+    /// QScheduler takes ownership on the task and frees it on oject destroying
+    /// \param name unique task name. If name is not uniquie task won't be added
+    /// \param operation task function (or lambda expression)
+    /// \param duration timer interval duration value
+    /// \param measure timer interval duration measure @default DurationMeasure::Days
+    /// \return
+    QTask *addTask(const QString &name, FunctionType operation,
+                   int duration, DurationMeasure measure = DurationMeasure::Minutes);
+    /// Adds preliminary prepared task for periodic execution
+    /// QScheduler takes ownership on the task and frees it on oject destroying
+    void addTask(const QString &name, QTask *task,
+                 int duration, DurationMeasure measure = DurationMeasure::Minutes);
+
+    /// \brief addSingleShotTask Adds single time shot task
+    /// QScheduler takes ownership on the task and frees it on oject destroying
+    QTask* addSingleShotTask(const QString &name, FunctionType operation, QDateTime shotTime);
+    /// \brief addSingleShotTask Adds single time shot task
+    /// QScheduler takes ownership on the task and frees it on oject destroying
+    QTask* addSingleShotTask(const QString &name, FunctionType operation,
+                             int duration, DurationMeasure measure = DurationMeasure::Minutes);
+
+    /// \brief task Retrieves taks for given @name
+    /// \param name Task name
+    /// \return task with given @name if found, nullptr otherwise
+    QTask* task(const QString &name) const;
 
 signals:
 

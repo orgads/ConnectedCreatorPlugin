@@ -3,8 +3,11 @@
 
 #include "qscheduler.h"
 
-#include <QList>
+#include <QMap>
+#include <QSharedPointer>
 #include <QtConcurrent/QtConcurrent>
+
+class QSettings;
 
 namespace QTelemetry {
 
@@ -25,15 +28,40 @@ public:
     QTask *q;
 };
 
-class QSchedulerPrivate
+/// Timer info data struct
+struct TimerInfo {
+    QString name;       /// Timer name
+    int duration = 0;
+    DurationMeasure measure = DurationMeasure::Minutes;
+    bool isPeriodic = true;
+    QSharedPointer<QTask> task;
+    QDateTime nextShot;
+
+    void calcNextShot(QDateTime startDate);
+};
+
+typedef QSharedPointer<TimerInfo> TimerInfoPointer;
+
+class QSchedulerPrivate : public QObject
 {
+    Q_OBJECT
 public:
-    QSchedulerPrivate(QScheduler *parent) : q(parent) {}
+    QSchedulerPrivate(QScheduler *parent);
     ~QSchedulerPrivate();
 
-    QList<QTask *> tasks;
+    bool isTaskExists(const QString &name);
+    bool taskCouldBeAdded(const QString &name);
+
+    void scheduleNextShot();
+    void execTask();
+    void save(); // Saves timers state
 
     QScheduler *q;
+    QTimer *timer;   // Scheduler timer
+    QSettings *settings;
+
+    QMap<QString, TimerInfoPointer> tasks;      // Tasks list
+    QMap<QDateTime, TimerInfoPointer> queue;    // Tasks queue ordered by time
 };
 
 }   // namespace QTelemetry

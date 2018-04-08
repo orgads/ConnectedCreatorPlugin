@@ -4,7 +4,12 @@
 
 #include <extensionsystem/iplugin.h>
 
-namespace QTelemetry { class QTelemetryManager; }
+namespace QTelemetry
+{
+    class QTelemetryManager;
+    class QScheduler;
+}
+
 namespace Core { class Command; }
 
 namespace ConnectedCreator {
@@ -44,7 +49,8 @@ private:
     QPointer<ControlDialog> m_controlDialog;
     QPointer<StatisticsDialog> m_statDialog;
 
-    QPointer<QTelemetry::QTelemetryManager> m_manager;
+    QTelemetry::QTelemetryManager *m_manager = nullptr;
+    QTelemetry::QScheduler *m_scheduler = nullptr;
     void configureTelemetryManager();
 };
 

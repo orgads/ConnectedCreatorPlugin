@@ -36,7 +36,10 @@ ConnectedCreatorPlugin::ConnectedCreatorPlugin()
 ConnectedCreatorPlugin::~ConnectedCreatorPlugin()
 {
     // Unregister objects from the plugin manager's object pool
+
     // Delete members
+    delete m_scheduler; // Delete scheduler first as manager contains settings
+    delete m_manager;
 }
 
 bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *errorString)
@@ -82,13 +85,13 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
     // ..
 
     // Create scheduler
-    QTelemetry::QScheduler *scheduler = new QTelemetry::QScheduler(this);
+    m_scheduler = new QTelemetry::QScheduler(manager()->settings(), this);
     // Add submission task
-    scheduler->addTask(7, QTelemetry::DurationMeasure::Days, [=]() {
+    m_scheduler->addTask("SubmitData", [=]() {
         manager()->submit();
         // TODO: send data to backend
         // ...
-    });
+    }, 7, QTelemetry::DurationMeasure::Days);
 
 //    manager()->setSettingsDelay(30);
     manager()->setEnabled(PluginSettings::telemetryEnabled());
@@ -179,7 +182,7 @@ QTelemetry::QTelemetryManager* ConnectedCreatorPlugin::manager()
     if(!m_manager) {
         m_manager = new QTelemetry::QTelemetryManager(this);
     }
-    return m_manager.data();
+    return m_manager;
 }
 
 ControlDialog* ConnectedCreatorPlugin::controlDialog()

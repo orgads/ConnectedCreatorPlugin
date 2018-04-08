@@ -46,14 +46,14 @@ void UsageTimeSource::load()
 {
     if(isManagerInitialized()) {
         d->startTime.start();
-        d->usageTime = manager()->settings()->value("Telemetry/usageTime", 0).toInt();
+        d->usageTime = manager()->settings()->value("Sources/usageTime", 0).toInt();
     }
 }
 
 void UsageTimeSource::save()
 {
     // Write usageTime settings
-    manager()->settings()->setValue("Telemetry/usageTime", d->currentUsageTime());
+    manager()->settings()->setValue("Sources/usageTime", d->currentUsageTime());
     manager()->settings()->sync();
 }
 

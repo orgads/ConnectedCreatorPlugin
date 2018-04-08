@@ -44,7 +44,7 @@ void StartCountSource::reset()
 void StartCountSource::load()
 {
     if(isManagerInitialized()) {
-        d->startCount = manager()->settings()->value("Telemetry/startCount", 0).toInt();
+        d->startCount = manager()->settings()->value("Sources/startCount", 0).toInt();
         d->startCount++;
     }
 }
@@ -52,7 +52,7 @@ void StartCountSource::load()
 void StartCountSource::save()
 {
     // Write startCount settings
-    manager()->settings()->setValue("Telemetry/startCount", d->startCount);
+    manager()->settings()->setValue("Sources/startCount", d->startCount);
     manager()->settings()->sync();
 }
 

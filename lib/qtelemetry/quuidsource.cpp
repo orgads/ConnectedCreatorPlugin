@@ -38,7 +38,7 @@ QVariant QUuidSource::data()
 void QUuidSource::load()
 {
     if(isManagerInitialized()) {
-        d->uuid = manager()->settings()->value("Telemetry/uuid", QUuid()).toUuid();
+        d->uuid = manager()->settings()->value("Sources/uuid", QUuid()).toUuid();
         if(d->uuid.isNull()) {  // On first start
             d->uuid = QUuid::createUuid();
         }
@@ -48,7 +48,7 @@ void QUuidSource::load()
 void QUuidSource::save()
 {
     // Write startCount settings
-    manager()->settings()->setValue("Telemetry/uuid", d->uuid);
+    manager()->settings()->setValue("Sources/uuid", d->uuid);
     manager()->settings()->sync();
 }
 
