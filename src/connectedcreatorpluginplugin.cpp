@@ -23,6 +23,7 @@
 #include <QMainWindow>
 #include <QMenu>
 #include <QTimer>
+#include <QDateTime>
 #include <algorithm>
 
 namespace ConnectedCreator {
@@ -80,14 +81,13 @@ bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *e
 /// \brief Configure QTelemetry
 void ConnectedCreatorPlugin::configureTelemetryManager()
 {
+    // Create and init telemetry manager
     manager()->setProductIdentifier("io.qt.qtc.analytics");
     // TODO: Create network object
     // ..
 
-    // Create scheduler
-    m_scheduler = new QTelemetry::QScheduler(manager()->settings(), this);
-    // Add submission task
-    m_scheduler->addTask("SubmitData", [=]() {
+    // Create scheduler and add submission task to it
+    scheduler()->addTask("SubmitData", [=]() {
         manager()->submit();
         // TODO: send data to backend
         // ...
@@ -183,6 +183,14 @@ QTelemetry::QTelemetryManager* ConnectedCreatorPlugin::manager()
         m_manager = new QTelemetry::QTelemetryManager(this);
     }
     return m_manager;
+}
+
+QTelemetry::QScheduler* ConnectedCreatorPlugin::scheduler()
+{
+    if(!m_scheduler) {
+        m_scheduler = new QTelemetry::QScheduler(manager()->settings(), this);
+    }
+    return m_scheduler;
 }
 
 ControlDialog* ConnectedCreatorPlugin::controlDialog()

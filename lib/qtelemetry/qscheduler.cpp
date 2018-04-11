@@ -84,6 +84,7 @@ void QSchedulerPrivate::save()
     foreach (auto info, tasks) {
         settings->setValue("Timers/" + info->name, info->nextShot);
     }
+    settings->sync();
 }
 
 QTask* QScheduler::addTask(const QString &name, FunctionType operation,

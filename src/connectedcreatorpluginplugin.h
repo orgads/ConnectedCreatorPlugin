@@ -35,6 +35,7 @@ public:
     ControlDialog* controlDialog();
     StatisticsDialog* statisticsDialog();
     QTelemetry::QTelemetryManager* manager();
+    QTelemetry::QScheduler* scheduler();
 
 private:
     void controlAction();
