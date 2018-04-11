@@ -2,8 +2,9 @@ TEMPLATE = subdirs
 
 # sub-project names
 SUBDIRS += \
-        QTelemetry \
-        ConnectedCreatorPlugin
+    QTelemetry \
+    ConnectedCreatorPlugin \
+    tests
 
 # where to find the sub projects - give the folders
 QTelemetry.file = lib/qtelemetry/qtelemetry.pro
