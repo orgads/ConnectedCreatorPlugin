@@ -3,13 +3,22 @@
 
 #include "qtelemetry_global.h"
 
+#include <QObject>
+
 namespace QTelemetry {
 
-class INetworkManager
+class INetworkManager : public QObject
 {
+    Q_OBJECT
+
 public:
-    void setBackend(const QString & url, const QString & path = "") = 0;
-    void sendData(const QByteArray &data) = 0;
+    explicit INetworkManager(QObject *parent = Q_NULLPTR) : QObject(parent) {}
+
+    virtual void setBackend(const QString & url, const QString & path = "") = 0;
+    virtual void sendData(const QByteArray &data) = 0;
+
+signals:
+    void finished(bool success);
 };
 
 }   // namespace QTelemetry

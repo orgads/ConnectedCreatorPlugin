@@ -57,7 +57,7 @@ void QTelemetryTest::scheduler_test_case1()
         qDebug() << QDateTime::currentDateTime().toString(Qt::ISODate) << ": TestTask2 executed...";
     }, 5, QTelemetry::DurationMeasure::Minutes);
 
-    QObject().thread()->sleep(60*12);
+    //QObject().thread()->sleep(60*12);
 }
 
 QTEST_MAIN(QTelemetryTest)
