@@ -136,7 +136,10 @@ void QSchedulerPrivate::scheduleNextShot()
 
     QDateTime nextShot = queue[queue.uniqueKeys()[0]]->nextShot;
     QDateTime now = QDateTime::currentDateTime();
-    timer->start(std::min((qint64)std::numeric_limits<int>::max(), now.msecsTo(nextShot)));
+    qint64 period = std::min((qint64)std::numeric_limits<int>::max(), now.msecsTo(nextShot));
+    period = (period < 0) ? 1 : period; // Protect from negative values
+
+    timer->start(period);
 }
 
 void QSchedulerPrivate::execTask()

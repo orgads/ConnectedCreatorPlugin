@@ -20,3 +20,18 @@ Build instruction until moved to Qt Creator source tree:
 - `make -j4`
 
 Or Build & Run in Qt Creator preserving above directory structure.
+
+To build sample REST-server (dummy for now) based on [QttpServer](https://github.com/supamii/QttpServer) execute:
+- `git submodule update --init --recursive`
+- `cd ./ConnectedCreatorPlugin/server/qttpserver`
+- `qmake qttpserver.pro`
+- `make -j4`
+- `cd ..`
+- `qmake server.pro`
+- `make -j4`
+
+To build in Qt Creator disable "Shadow build" for qttpserver. After build you may find executable in 
+- `./ConnectedCreatorPlugin/server/qttpserver/build/qtrelease` or 
+- `ConnectedCreatorPlugin/server/qttpserver/build/qtdebug` 
+
+directories. By default `qttpserver`, `libuv`, `node_native`, `http_parser` libraries are linked statically into the server.

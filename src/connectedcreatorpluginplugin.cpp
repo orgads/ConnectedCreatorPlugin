@@ -13,8 +13,9 @@
 #include <coreplugin/settingsdatabase.h>
 #include <coreplugin/designmode.h>
 
-#include "qscheduler.h"
 #include "qtelemetrymanager.h"
+#include "qscheduler.h"
+#include "qnetworkmanager.h"
 #include <AllSources>
 #include "qmldesignerusagetimesource.h"
 
@@ -83,14 +84,13 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
 {
     // Create and init telemetry manager
     manager()->setProductIdentifier("io.qt.qtc.analytics");
-    // TODO: Create network object
-    // ..
+    network()->setBackend("http://localhost:8080", "/analytics");
 
     // Create scheduler and add submission task to it
     scheduler()->addTask("SubmitData", [=]() {
-        manager()->submit();
-        // TODO: send data to backend
-        // ...
+        QByteArray data = manager()->submit();
+        network()->sendData(data);
+        qDebug() << QDateTime::currentDateTime().toString(Qt::ISODate) << ": SubmitData executed...";
     }, 7, QTelemetry::DurationMeasure::Days);
 
 //    manager()->setSettingsDelay(30);
@@ -191,6 +191,14 @@ QTelemetry::QScheduler* ConnectedCreatorPlugin::scheduler()
         m_scheduler = new QTelemetry::QScheduler(manager()->settings(), this);
     }
     return m_scheduler;
+}
+
+QTelemetry::QNetworkManager* ConnectedCreatorPlugin::network()
+{
+    if(!m_network) {
+        m_network = new QTelemetry::QNetworkManager(this);
+    }
+    return m_network;
 }
 
 ControlDialog* ConnectedCreatorPlugin::controlDialog()

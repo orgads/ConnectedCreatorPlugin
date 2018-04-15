@@ -23,6 +23,9 @@ void QNetworkManager::setBackend(const QString & url, const QString & path)
 {
     d->m_url = QUrl(url);
     d->m_url.setPath(path);
+    if(d->m_url.isEmpty() || !d->m_url.isValid())
+        qCWarning(Log) << "Error: backend URL is empty or invalid!";
+    qDebug() << d->m_url;
 }
 
 void QNetworkManager::sendData(const QByteArray &data)

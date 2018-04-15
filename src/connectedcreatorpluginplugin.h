@@ -8,6 +8,7 @@ namespace QTelemetry
 {
     class QTelemetryManager;
     class QScheduler;
+    class QNetworkManager;
 }
 
 namespace Core { class Command; }
@@ -36,6 +37,7 @@ public:
     StatisticsDialog* statisticsDialog();
     QTelemetry::QTelemetryManager* manager();
     QTelemetry::QScheduler* scheduler();
+    QTelemetry::QNetworkManager* network();
 
 private:
     void controlAction();
@@ -52,6 +54,7 @@ private:
 
     QTelemetry::QTelemetryManager *m_manager = nullptr;
     QTelemetry::QScheduler *m_scheduler = nullptr;
+    QTelemetry::QNetworkManager *m_network = nullptr;
     void configureTelemetryManager();
 };
 
