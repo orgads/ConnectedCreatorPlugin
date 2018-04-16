@@ -141,25 +141,42 @@ bool QTelemetryManagerPrivate::isValidSource(QAbstractDataSource *source) const
 
 QJsonDocument QTelemetryManager::jsonData(TelemetryLevel level)
 {
-    QJsonObject object;
+    // Separate generic & analytics properties
+    QJsonObject complete, environment, analytics;
+
     if(isEnabled() && level != TelemetryLevel::NoTelemetry)
     {
         foreach(auto source, d->sources)
         {
-            if(!d->isValidSource(source))
+            if(!d->isValidSource(source) || level < source->telemetryLevel())
                 continue;
-            if(level < source->telemetryLevel())
-                continue;
+
+            // Get data source JSON value
+            QJsonValue object;
             QVariant data = source->data();
             if(data.canConvert<QVariantMap>())
-                object.insert(source->id(), QJsonObject::fromVariantMap(data.toMap()));
+                object = QJsonObject::fromVariantMap(data.toMap());
             else if(data.canConvert<QVariantList>())
-                object.insert(source->id(), QJsonArray::fromVariantList(data.value<QVariantList>()));
-            else
+                object = QJsonArray::fromVariantList(data.value<QVariantList>());
+            else {
                 qCWarning(Log) << "wrong type for" << source->id() << data;
+                continue;
+            }
+
+            // Separate properties
+            if(source->telemetryLevel() == TelemetryLevel::BasicSystemInformation ||
+               source->telemetryLevel() == TelemetryLevel::DetailedSystemInformation)
+            {
+                environment.insert(source->id(), object);
+            } else {
+                analytics.insert(source->id(), object);
+            }
         }
     }
-    QJsonDocument doc(object);
+    // Concatenate properties' scopes in single JSON object
+    complete.insert("environment", environment);
+    complete.insert("analytics", analytics);
+    QJsonDocument doc(complete);
 
     return doc;
 }

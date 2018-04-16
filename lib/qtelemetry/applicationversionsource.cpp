@@ -6,7 +6,7 @@
 namespace QTelemetry {
 
 ApplicationVersionSource::ApplicationVersionSource() :
-    QAbstractDataSource("applicationVersion", TelemetryLevel::BasicSystemInformation)
+    QAbstractDataSource("application", TelemetryLevel::BasicSystemInformation)
 {
 }
 
@@ -25,8 +25,13 @@ QVariant ApplicationVersionSource::data()
     if (QCoreApplication::applicationVersion().isEmpty())
         return QVariant();
 
+    // Get application name
+    QString appName = (!QCoreApplication::applicationName().isEmpty()) ?
+        QCoreApplication::applicationName() : manager()->productIdentifier();
+
     QVariantMap m;  // JSON key-value pair
-    m.insert("value", QCoreApplication::applicationVersion());
+    m.insert("name", appName);
+    m.insert("version", QCoreApplication::applicationVersion());
     return m;
 }
 

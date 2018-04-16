@@ -8,12 +8,17 @@ This project us about collecting and analyzing usage data to better understand, 
 As the first step, we want to start building the expertise in data mining and analytics. Before we become experts in data mining, we will need some usage data, which is the main objective of this project. 
 
 # Build
+
+## Directory structure
 Assume have following directory structure:
 * `./ConnectedCreatorPlugin/src` - ConnectedCreatorPlugin sources
 * `./ConnectedCreatorPlugin/3rdparty/kuserfeedback` - KUserFeedback sources
 * `./qt-creator-src` - Qt Creator sources dir
 * `./qt-creator-debug` - Qt Creator build dir
 
+Need to build Qt Creator first into `./qt-creator-debug`.
+
+## Plugin build instructions
 Build instruction until moved to Qt Creator source tree:
 - `cd ./ConnectedCreatorPlugin-build` - or other build dir
 - `qmake ../ConnectedCreatorPlugin/ConnectedCreator.pro CONFIG+=debug` -r
@@ -21,10 +26,12 @@ Build instruction until moved to Qt Creator source tree:
 
 Or Build & Run in Qt Creator preserving above directory structure.
 
+## REST-server build instructions
 To build sample REST-server (dummy for now) based on [QttpServer](https://github.com/supamii/QttpServer) execute:
+- `cd ./ConnectedCreatorPlugin`
 - `git submodule update --init --recursive`
-- `cd ./ConnectedCreatorPlugin/server/qttpserver`
-- `qmake qttpserver.pro`
+- `cd ./server/qttpserver`
+- `qmake qttpserver.pro -r`
 - `make -j4`
 - `cd ..`
 - `qmake server.pro`
@@ -32,6 +39,6 @@ To build sample REST-server (dummy for now) based on [QttpServer](https://github
 
 To build in Qt Creator disable "Shadow build" for qttpserver. After build you may find executable in 
 - `./ConnectedCreatorPlugin/server/qttpserver/build/qtrelease` or 
-- `ConnectedCreatorPlugin/server/qttpserver/build/qtdebug` 
+- `./ConnectedCreatorPlugin/server/qttpserver/build/qtdebug` 
 
 directories. By default `qttpserver`, `libuv`, `node_native`, `http_parser` libraries are linked statically into the server.

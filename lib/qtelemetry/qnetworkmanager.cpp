@@ -4,6 +4,7 @@
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QRegExp>
 
 namespace QTelemetry {
 
@@ -21,8 +22,9 @@ QNetworkManager::~QNetworkManager()
 
 void QNetworkManager::setBackend(const QString & url, const QString & path)
 {
-    d->m_url = QUrl(url);
-    d->m_url.setPath(path);
+    d->m_url = QUrl(url.trimmed().remove(QRegExp("[/]+$")));
+    if(!path.trimmed().isEmpty())
+        d->m_url.setPath("/" + path.trimmed().remove(QRegExp("^[/]+")));
     if(d->m_url.isEmpty() || !d->m_url.isValid())
         qCWarning(Log) << "Error: backend URL is empty or invalid!";
     qDebug() << d->m_url;

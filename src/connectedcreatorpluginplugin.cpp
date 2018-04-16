@@ -84,7 +84,7 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
 {
     // Create and init telemetry manager
     manager()->setProductIdentifier("io.qt.qtc.analytics");
-    network()->setBackend("http://localhost:8080", "/analytics");
+    network()->setBackend("http://localhost:8080", "analytics");
 
     // Create scheduler and add submission task to it
     scheduler()->addTask("SubmitData", [=]() {
