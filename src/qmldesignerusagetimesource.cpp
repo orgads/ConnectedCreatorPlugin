@@ -4,7 +4,7 @@
 #include <QDebug>
 
 QmlDesignerUsageTimeSource::QmlDesignerUsageTimeSource()
-    : QTelemetry::QAbstractUsageTimeSource("qmlDesignerUsageTime")
+    : QTelemetry::QAbstractUsageTimeSource("qmlDesigner")
 {
     connect(Core::ModeManager::instance(), &Core::ModeManager::currentModeChanged,
             this, &QmlDesignerUsageTimeSource::timerControl);

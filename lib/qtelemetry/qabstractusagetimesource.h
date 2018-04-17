@@ -8,7 +8,8 @@ namespace QTelemetry {
 
 class QAbstractUsageTimeSourcePrivate;
 
-/// Abstract Data source reports custom object or widget usage time in seconds.
+/// Abstract Data source reports custom object or widget usage time in seconds
+/// & start count.
 /// @see QmlDesignerUsageTimeSource from ConnectedCreatorPlugin example
 ///
 /// The default telemetry level for this source is TelemetryLevel::DetailedUsageStatistics.

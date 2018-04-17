@@ -17,9 +17,11 @@ public:
         return usageTime + using_ * (startTime.elapsed() / 1000);
     }
 
-    int usageTime = 0;
-    QTime startTime;
+    int usageTime = 0,
+        startCount = 0;
     int using_ = 0;    // Possible values 0/1
+
+    QTime startTime;
 
     QAbstractUsageTimeSource *q;
 };

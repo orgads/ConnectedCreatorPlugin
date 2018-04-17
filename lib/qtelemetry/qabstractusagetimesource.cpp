@@ -26,38 +26,46 @@ QAbstractUsageTimeSource::~QAbstractUsageTimeSource()
 QVariant QAbstractUsageTimeSource::data()
 {
     QVariantMap m;  // JSON key-value pairs
-    m.insert("value", d->currentUsageTime());
+    m.insert("usageTime", d->currentUsageTime());
+    m.insert("startCount", d->startCount);
     return m;
 }
 
 void QAbstractUsageTimeSource::reset()
 {
     d->usageTime = 0;
+    d->startCount = 0;
     d->startTime.restart();
     save();
 }
 
 void QAbstractUsageTimeSource::load()
 {
+    // Load custom usage time & start count settings
     if(isManagerInitialized()) {
         d->startTime.start();
-        d->usageTime = manager()->settings()->value("Sources/" + id(), 0).toInt();
+        d->usageTime = manager()->settings()->value("Sources/" + id() + ".usageTime", 0).toInt();
+        d->startCount = manager()->settings()->value("Sources/" + id() + ".startCount", 0).toInt();
         d->using_ = manager()->settings()->value("Sources/" + id() + "_using", 0).toInt();
     }
 }
 
 void QAbstractUsageTimeSource::save()
 {
-    // Write custom usage time settings
-    manager()->settings()->setValue("Sources/" + id(), d->currentUsageTime());
-    manager()->settings()->setValue("Sources/" + id() + "_using", d->using_);
-    manager()->settings()->sync();
+    // Write custom usage time & start count settings
+    if(isManagerInitialized()) {
+        manager()->settings()->setValue("Sources/" + id() + ".usageTime", d->currentUsageTime());
+        manager()->settings()->setValue("Sources/" + id() + ".startCount", d->startCount);
+        manager()->settings()->setValue("Sources/" + id() + "_using", d->using_);
+        manager()->settings()->sync();
+    }
 }
 
 void QAbstractUsageTimeSource::start()
 {
     load();
     d->using_ = 1;
+    d->startCount++;
 }
 
 void QAbstractUsageTimeSource::stop()

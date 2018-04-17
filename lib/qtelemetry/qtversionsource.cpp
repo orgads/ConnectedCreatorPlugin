@@ -5,7 +5,7 @@
 namespace QTelemetry {
 
 QtVersionSource::QtVersionSource()
-    : QAbstractDataSource("qtVersion", TelemetryLevel::BasicSystemInformation)
+    : QAbstractDataSource("qt", TelemetryLevel::BasicSystemInformation)
 {
 }
 
@@ -22,7 +22,8 @@ QString QtVersionSource::description() const
 QVariant QtVersionSource::data()
 {
     QVariantMap m;  // JSON key-value pairs
-    m.insert("value", QString::fromLatin1(qVersion()));
+    m.insert("version", QString::fromLatin1(qVersion()));
+    m.insert("license", "unknown");
     return m;
 }
 
