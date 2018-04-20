@@ -1,5 +1,6 @@
 ﻿#include <qtelemetrymanager.h>
 #include <abstractdatasource.h>
+#include <statisticsmodel.h>
 
 #include "statisticsdialog.h"
 #include "ctreeview.h"
@@ -67,18 +68,35 @@ void StatisticsDialog::on_treeToolButton_toggled(bool checked)
 void StatisticsDialog::setTelemetryManager(QTelemetry::QTelemetryManager* manager)
 {
     m_manager = manager;
+    ui->comboBox->setModel(m_manager->statisticsModel());
+    ui->comboBox->setCurrentIndex(0);
+
+    // Connect combobox with statistics model
+    connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(loadStatistics()));
+    connect(m_manager->statisticsModel(), &QAbstractItemModel::modelReset, [=]() {
+        if(ui->comboBox->currentIndex() < 0)    // If log file(s) was removed
+            ui->comboBox->setCurrentIndex(0);
+    });
+}
+
+void StatisticsDialog::loadStatistics()
+{
+    QModelIndex index = m_manager->statisticsModel()->index(
+                ui->comboBox->currentIndex(), 0);
+    QByteArray statisticsData = m_manager->statisticsModel()->data(
+                index, (int)QTelemetry::StatisticsModel::JsonRole
+    ).toJsonDocument().toJson();
+
+    // Show JSON statistics
+    ui->textBrowser->setPlainText(QString::fromUtf8(statisticsData.constData()));
+    m_model->loadJson(statisticsData);
+    ui->treeView->expandAll();
 }
 
 void StatisticsDialog::showEvent(QShowEvent *event)
 {
     if(m_manager) {
-        QByteArray statisticsData = m_manager->data(
-                    QTelemetry::TelemetryLevel::DetailedUsageStatistics);
-
-        // Show JSON statistics
-        ui->textBrowser->setPlainText(QString::fromUtf8(statisticsData.constData()));
-        m_model->loadJson(statisticsData);
-        ui->treeView->expandAll();
+        loadStatistics();
 
         // Adjust scroll bar step for synchronous scrolling
         syncScrollbars();

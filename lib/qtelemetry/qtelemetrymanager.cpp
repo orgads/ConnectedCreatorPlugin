@@ -2,6 +2,7 @@
 #include "qtelemetrymanager.h"
 #include "qtelemetrymanager_p.h"
 #include "abstractdatasource.h"
+#include "statisticsmodel.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -19,6 +20,7 @@ QTelemetryManager::QTelemetryManager(QObject *parent)
     : QObject(parent)
     , d(new QTelemetryManagerPrivate(this))
 {
+    d->model = new StatisticsModel(this);
 }
 
 QTelemetryManager::~QTelemetryManager()
@@ -254,6 +256,12 @@ TelemetryLevel QTelemetryManager::telemetryLevel() const
 void QTelemetryManager::setTelemetryLevel(const TelemetryLevel level)
 {
     d->level = level;
+    emit telemetryLevelChanged(d->level);
+}
+
+QAbstractItemModel *QTelemetryManager::statisticsModel() const
+{
+    return d->model;
 }
 
 }   // namespace QTelemetry

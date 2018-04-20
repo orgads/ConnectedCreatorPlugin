@@ -84,6 +84,9 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
 {
     // Create and init telemetry manager
     manager()->setProductIdentifier("io.qt.qtc.analytics");
+    // Set Telemetry Level
+    manager()->setTelemetryLevel(QTelemetry::TelemetryLevel::DetailedUsageStatistics);
+    // Create and init network manager
     network()->setBackend("http://localhost:8080", "analytics");
 
     // Create scheduler and add submission task to it
@@ -113,9 +116,6 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
 
     // Add Qt Creator specific data sources
     manager()->addDataSource(new QmlDesignerUsageTimeSource);
-
-    // Set Telemetry Level
-    manager()->setTelemetryLevel(QTelemetry::TelemetryLevel::DetailedUsageStatistics);
 
     // Connect Telemetry Manager to UI
     controlDialog()->setTelemetryManager(manager());

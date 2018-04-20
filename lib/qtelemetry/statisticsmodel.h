@@ -31,6 +31,12 @@ public slots:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+    /// Sets current telemetry level for the model @see telemetryLevel
+    void setTelemetryLevel(const TelemetryLevel level);
+
+    /// Resets current telemetry level to telemetry manager's level @see telemetryLevel
+    void resetTelemetryLevel();
+
 private:
     StatisticsModelPrivate *d;
 };

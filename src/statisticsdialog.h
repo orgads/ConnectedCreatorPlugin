@@ -26,6 +26,7 @@ protected:
 private slots:
     void on_textToolButton_toggled(bool checked);
     void on_treeToolButton_toggled(bool checked);
+    void loadStatistics();
 
 private:
     void init();

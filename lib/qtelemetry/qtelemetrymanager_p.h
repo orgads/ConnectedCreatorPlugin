@@ -9,6 +9,8 @@
 #include <QSettings>
 #include <QCoreApplication>
 
+class QAbstractItemModel;
+
 namespace QTelemetry {
 
 class QTelemetryManager;
@@ -30,6 +32,7 @@ public:
 
     TelemetryLevel level = TelemetryLevel::NoTelemetry;
 
+    QAbstractItemModel *model;
     QTelemetryManager *q;
     QString organization();
 };

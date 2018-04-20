@@ -7,6 +7,7 @@
 #include <QList>
 
 class QSettings;
+class QAbstractItemModel;
 
 namespace QTelemetry {
 
@@ -77,6 +78,10 @@ public:
     /// Sets current telemetry level @see telemetryLevel
     void setTelemetryLevel(const TelemetryLevel level);
 
+    /// Statistics log model for current telemetry and archived logs
+    /// see @StatisticsModel
+    QAbstractItemModel *statisticsModel() const;
+
 public slots:
     /// Submits (returns) current telemetry data and resets all data sources
     QByteArray submit();
@@ -86,6 +91,8 @@ signals:
     void dataSubmitted(const QJsonDocument &);
     /// Emitted Product Identifier was changed
     void productIdentifierChanged(QString);
+    /// Emitted when Telemetry Level changed
+    void telemetryLevelChanged(const TelemetryLevel level);
 
 private:
     QTelemetryManagerPrivate *d;

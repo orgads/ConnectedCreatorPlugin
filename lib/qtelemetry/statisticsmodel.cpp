@@ -16,10 +16,13 @@ StatisticsModel::StatisticsModel(QTelemetryManager *parent)
     d->manager = parent;
     d->logWatcher.addPath(d->manager->logPath());
 
+    resetTelemetryLevel();
     resetModel();
 
     connect(d->manager, &QTelemetryManager::dataSubmitted, this,
             &StatisticsModel::resetModel);
+    connect(d->manager, SIGNAL(telemetryLevelChanged(TelemetryLevel)),
+            this, SLOT(setTelemetryLevel(TelemetryLevel)));
     connect(&d->logWatcher, &QFileSystemWatcher::directoryChanged,
             this, &StatisticsModel::resetModel);
 }
@@ -120,6 +123,20 @@ int StatisticsModel::rowCount(const QModelIndex &parent) const
         return 0;
 
     return d->items.count();
+}
+
+void StatisticsModel::setTelemetryLevel(const TelemetryLevel level)
+{
+    beginResetModel();
+    d->level = level;
+    endResetModel();
+}
+
+void StatisticsModel::resetTelemetryLevel()
+{
+    beginResetModel();
+    d->level = d->manager->telemetryLevel();
+    endResetModel();
 }
 
 }   // namespace QTelemetry

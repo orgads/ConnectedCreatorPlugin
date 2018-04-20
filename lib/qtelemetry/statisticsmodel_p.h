@@ -1,6 +1,8 @@
 ﻿#ifndef STATISTICSMODELPRIVATE_H
 #define STATISTICSMODELPRIVATE_H
 
+#include "qtelemetrymanager.h"
+
 #include <QObject>
 #include <QFileSystemWatcher>
 #include <QList>
@@ -21,6 +23,7 @@ public:
     bool isTransferred(const QJsonDocument &doc) const;
 
     QTelemetryManager *manager;
+    TelemetryLevel level;
     StatisticsModel *q;
 };
 
