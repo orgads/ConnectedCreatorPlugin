@@ -48,7 +48,7 @@ QVariant OpenGLInfoSource::data()
         m.insert("glslVersion", (const char*)funcs.glGetString(GL_SHADING_LANGUAGE_VERSION));
         //m.insert("extensions", (const char*)funcs.glGetString(GL_EXTENSIONS));
     } else {
-        m.insert(QStringLiteral("type"), QStringLiteral("none"));
+        m.insert("type", "none");
     }
     return m;
 }

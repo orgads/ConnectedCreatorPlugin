@@ -38,12 +38,13 @@ void QNetworkManager::sendData(const QByteArray &data)
 
     QNetworkReply *reply = d->m_manager->post(request, data);
 
-    connect(reply, &QNetworkReply::readyRead, [this, data, reply]() {
+    connect(reply, &QNetworkReply::finished, [this, data, reply]() {
         if (reply->error() == QNetworkReply::NoError) {
             qCInfo(Log) << "Success data submission: " << reply->readAll();
             emit finished(true);
         } else {
-            qCWarning(Log) << "Error sending data to backend: " << reply->errorString();
+            qCWarning(Log) << "Error sending data to backend: "
+                           << reply->errorString() << reply->readAll();
             emit finished(false);
             // TODO: retry 3 times on error
             // ...

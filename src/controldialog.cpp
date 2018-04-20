@@ -60,21 +60,21 @@ void ControlDialog::generateDataSourcesList()
 {
     if(!m_manager) return;
 
-    auto genericText = QStringLiteral("<ul>"),
-            qtcText = QStringLiteral("<ul>");
+    QString genericText = "<ul>",
+            qtcText = "<ul>";
 
     foreach (auto src, m_manager->dataSources()) {
         QString name = src->name(); // src->description();
         if (name.isEmpty()) continue;
 
-        auto element = QStringLiteral("<li>") + name + QStringLiteral("</li>");
+        QString element = QString("<li>") + name + "</li>";
         if(src->telemetryLevel() < QTelemetry::TelemetryLevel::DetailedUsageStatistics)
             genericText += element;
         else
             qtcText += element;
     }
-    genericText += QStringLiteral("</ul>");
-    qtcText += QStringLiteral("</ul>");
+    genericText += "</ul>";
+    qtcText += "</ul>";
 
     ui->genericTextBrowser->setHtml(genericText);
     ui->qtcTextBrowser->setHtml(qtcText);

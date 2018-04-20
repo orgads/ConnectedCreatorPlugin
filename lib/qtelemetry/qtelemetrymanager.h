@@ -47,6 +47,14 @@ public:
     /// Current statistics data as QJsonDocument
     QJsonDocument jsonData(TelemetryLevel level);
 
+    /// Current statistics data as QByteArray (overloaded: current telemetry level used)
+    QByteArray data();
+    /// Current statistics data as QJsonDocument (overloaded: current telemetry level used)
+    QJsonDocument jsonData();
+
+    /// Submitted statistics log files storage path
+    QString logPath() const;
+
     /// Returns whether telemetry functionality is enabled on this system.
     bool isEnabled() const;
     /// Set the global (user-wide) activation state for telemetry functionality
@@ -75,7 +83,7 @@ public slots:
 
 signals:
     /// Emitted after data submission
-    void dataSubmitted(const QByteArray &);
+    void dataSubmitted(const QJsonDocument &);
     /// Emitted Product Identifier was changed
     void productIdentifierChanged(QString);
 

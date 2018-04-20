@@ -31,11 +31,11 @@ QVariant StyleInfoSource::data()
         // QStyleFactory sets the object name to the style name
         QString style = (!qApp->style()->objectName().isEmpty()) ?
             qApp->style()->objectName() : qApp->style()->metaObject()->className();
-        m.insert(QStringLiteral("style"), style);
+        m.insert("style", style);
 
         //qDebug() << qApp->activeWindow()->styleSheet();
     }
-    m.insert(QStringLiteral("dark"), qApp->palette().color(QPalette::Background).lightness() < 128);
+    m.insert("dark", qApp->palette().color(QPalette::Background).lightness() < 128);
     return m;
 }
 

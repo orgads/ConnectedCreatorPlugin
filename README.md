@@ -37,7 +37,7 @@ To build sample REST-server (dummy for now) based on [QttpServer](https://github
 - `qmake server.pro`
 - `make -j4`
 
-To build in Qt Creator disable "Shadow build" for qttpserver. After build you may find executable in 
+To build in Qt Creator disable "Shadow build" for `qttpserver`. After build you may find executable in 
 - `./ConnectedCreatorPlugin/server/qttpserver/build/qtrelease` or 
 - `./ConnectedCreatorPlugin/server/qttpserver/build/qtdebug` 
 

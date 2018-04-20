@@ -23,7 +23,7 @@ QString QPAInfoSource::description() const
 QVariant QPAInfoSource::data()
 {
     QVariantMap m;  // JSON key-value pairs
-    m.insert(QStringLiteral("name"), QGuiApplication::platformName());
+    m.insert("name", QGuiApplication::platformName());
     return m;
 }
 

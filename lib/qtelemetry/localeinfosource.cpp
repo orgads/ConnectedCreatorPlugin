@@ -24,8 +24,8 @@ QVariant LocaleInfoSource::data()
 {
     QLocale l;
     QVariantMap m;
-    m.insert(QStringLiteral("region"), QLocale::countryToString(l.country()));
-    m.insert(QStringLiteral("language"), QLocale::languageToString(l.language()));
+    m.insert("region", QLocale::countryToString(l.country()));
+    m.insert("language", QLocale::languageToString(l.language()));
     return m;
 }
 

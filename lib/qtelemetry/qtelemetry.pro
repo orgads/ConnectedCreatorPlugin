@@ -26,7 +26,8 @@ SOURCES += \
     usagetimesource.cpp \
     qabstractusagetimesource.cpp \
     quuidsource.cpp \
-    qnetworkmanager.cpp
+    qnetworkmanager.cpp \
+    statisticsmodel.cpp
 
 HEADERS += \
     qtelemetry_global.h \
@@ -58,7 +59,9 @@ HEADERS += \
     quuidsource_p.h \
     inetworkmanager.h \
     qnetworkmanager.h \
-    qnetworkmanager_p.h
+    qnetworkmanager_p.h \
+    statisticsmodel.h \
+    statisticsmodel_p.h
 
 ## Either set the IDE_SOURCE_TREE when running qmake,
 ## or set the QTC_SOURCE environment variable, to override the default setting

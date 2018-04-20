@@ -26,9 +26,9 @@ QVariant ScreenInfoSource::data()
     QVariantList l;
     foreach (auto screen, QGuiApplication::screens()) {
         QVariantMap m;
-        m.insert(QStringLiteral("width"), screen->size().width());
-        m.insert(QStringLiteral("height"), screen->size().height());
-        m.insert(QStringLiteral("dpi"), qRound(screen->physicalDotsPerInch()));
+        m.insert("width", screen->size().width());
+        m.insert("height", screen->size().height());
+        m.insert("dpi", qRound(screen->physicalDotsPerInch()));
         l.push_back(m);
     }
     return l;

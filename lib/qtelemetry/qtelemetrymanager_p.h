@@ -21,6 +21,7 @@ public:
     ~QTelemetryManagerPrivate();
     void createSettings();
     bool isValidSource(QAbstractDataSource *source) const;
+    void writeStatistics(const QJsonDocument &data);
 
     QList<QAbstractDataSource *> sources;
     QMap<QString, int> index;

@@ -115,10 +115,10 @@ void QScheduler::addTask(const QString &name, QTask *task,
     // Read timer settings
     timerInfo->nextShot = d->settings->value("Timers/" + name, QDateTime()).toDateTime();
     if(!timerInfo->nextShot.isValid())  // First start
-        timerInfo->calcNextShot(QDateTime::currentDateTime());
+        timerInfo->calcNextShot(QDateTime::currentDateTimeUtc());
 
     // Execute task if schedule time passed
-    if(timerInfo->nextShot < QDateTime::currentDateTime()) {
+    if(timerInfo->nextShot < QDateTime::currentDateTimeUtc()) {
         task->exec();
         timerInfo->calcNextShot(timerInfo->nextShot);
     }
@@ -135,7 +135,7 @@ void QSchedulerPrivate::scheduleNextShot()
     timer->stop();
 
     QDateTime nextShot = queue[queue.uniqueKeys()[0]]->nextShot;
-    QDateTime now = QDateTime::currentDateTime();
+    QDateTime now = QDateTime::currentDateTimeUtc();
     qint64 period = std::min((qint64)std::numeric_limits<int>::max(), now.msecsTo(nextShot));
     period = (period < 0) ? 1 : period; // Protect from negative values
 
@@ -148,7 +148,7 @@ void QSchedulerPrivate::execTask()
     QDateTime firstDateTime = queue.uniqueKeys()[0];
 
     // Check for big timers > 24 days (REMOVE: for qint64)
-    if(firstDateTime <= QDateTime::currentDateTime()) {
+    if(firstDateTime <= QDateTime::currentDateTimeUtc()) {
         TimerInfoPointer info = queue.take(firstDateTime);
         // Execute task
         info->task->exec();
