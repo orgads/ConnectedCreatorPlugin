@@ -26,6 +26,8 @@ protected:
 private slots:
     void on_textToolButton_toggled(bool checked);
     void on_treeToolButton_toggled(bool checked);
+    void on_saveToolButton_clicked();
+
     void loadStatistics();
 
 private:
@@ -35,6 +37,7 @@ private:
     QTelemetry::QTelemetryManager *m_manager = nullptr;
     QJsonModel *m_model;
     void syncScrollbars();
+    QByteArray getStatisticsData();
 };
 
 } // namespace Internal

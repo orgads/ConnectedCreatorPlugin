@@ -21,8 +21,8 @@ StatisticsModel::StatisticsModel(QTelemetryManager *parent)
 
     connect(d->manager, &QTelemetryManager::dataSubmitted, this,
             &StatisticsModel::resetModel);
-    connect(d->manager, SIGNAL(telemetryLevelChanged(TelemetryLevel)),
-            this, SLOT(setTelemetryLevel(TelemetryLevel)));
+    connect(d->manager, &QTelemetryManager::telemetryLevelChanged,
+            this, &StatisticsModel::setTelemetryLevel);
     connect(&d->logWatcher, &QFileSystemWatcher::directoryChanged,
             this, &StatisticsModel::resetModel);
 }
@@ -60,7 +60,7 @@ void StatisticsModel::resetModel()
 QVariant StatisticsModel::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
-    if(row > rowCount() - 1) return QVariant();
+    if(!index.isValid() || row > rowCount() - 1) return QVariant();
 
     // Prepare file content
     QJsonDocument content = (role >= JsonRole) ? d->logFileContent(row) : QJsonDocument();

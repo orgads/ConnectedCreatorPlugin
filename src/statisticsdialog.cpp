@@ -11,6 +11,8 @@
 #include <QFontDatabase>
 #include <QScrollBar>
 #include <QHeaderView>
+#include <QFileDialog>
+#include <QDateTime>
 #include <QDebug>
 
 namespace ConnectedCreator {
@@ -79,13 +81,20 @@ void StatisticsDialog::setTelemetryManager(QTelemetry::QTelemetryManager* manage
     });
 }
 
-void StatisticsDialog::loadStatistics()
+QByteArray StatisticsDialog::getStatisticsData()
 {
     QModelIndex index = m_manager->statisticsModel()->index(
                 ui->comboBox->currentIndex(), 0);
-    QByteArray statisticsData = m_manager->statisticsModel()->data(
-                index, (int)QTelemetry::StatisticsModel::JsonRole
-    ).toJsonDocument().toJson();
+    QByteArray data = m_manager->statisticsModel()->data(index,
+        (int)QTelemetry::StatisticsModel::JsonRole).toJsonDocument().toJson();
+
+    return data;
+}
+
+void StatisticsDialog::loadStatistics()
+{
+    // Get data
+    QByteArray statisticsData = getStatisticsData();
 
     // Show JSON statistics
     ui->textBrowser->setPlainText(QString::fromUtf8(statisticsData.constData()));
@@ -130,3 +139,32 @@ void StatisticsDialog::syncScrollbars()
 
 } // namespace Internal
 } // namespace ConnectedCreatorPlugin
+
+void ConnectedCreator::Internal::StatisticsDialog::on_saveToolButton_clicked()
+{
+    // Get data
+    QByteArray statisticsData = getStatisticsData();
+
+    QString defaultFileName = ((ui->comboBox->currentIndex() == 0) ?
+        QDateTime::currentDateTimeUtc().toString("yyyyMMdd-hhmmss") :
+        QDateTime::fromString(ui->comboBox->currentText(), "yyyy-MM-dd hh:mm:ss")
+        .toString("yyyyMMdd-hhmmss")) + ".log";
+
+    // Open file save dialog
+    QString filter = tr("Logs (*.log)");
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Save Statistics Log File"),
+                                                    defaultFileName,
+                                                    filter, &filter);
+    if(!fileName.isEmpty()) {
+        // Save to file
+        fileName = (fileName.endsWith(".log")) ? fileName : fileName + ".log";
+        QFile file(fileName);
+        if(!file.open(QFile::WriteOnly)) {
+            qWarning() << "Unable to open file to write statistics:"
+                       << file.fileName() << file.errorString();
+            return;
+        }
+        file.write(statisticsData);
+    }
+}
