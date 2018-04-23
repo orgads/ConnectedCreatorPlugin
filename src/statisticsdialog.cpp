@@ -70,14 +70,31 @@ void StatisticsDialog::on_treeToolButton_toggled(bool checked)
 void StatisticsDialog::setTelemetryManager(QTelemetry::QTelemetryManager* manager)
 {
     m_manager = manager;
+    telemetryEnum = QMetaEnum::fromType<QTelemetry::TelemetryLevel>();
+
+    // Setup UI
     ui->comboBox->setModel(m_manager->statisticsModel());
     ui->comboBox->setCurrentIndex(0);
+    ui->slider->setMaximum(0);
+    ui->slider->setMaximum(telemetryEnum.keyCount() - 1);
+    ui->slider->setValue(telemetryEnum.keyCount() - 1);
 
     // Connect combobox with statistics model
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(loadStatistics()));
     connect(m_manager->statisticsModel(), &QAbstractItemModel::modelReset, [=]() {
         if(ui->comboBox->currentIndex() < 0)    // If log file(s) was removed
             ui->comboBox->setCurrentIndex(0);
+    });
+    // Connect model data chnaged signal to reload statistics
+    connect(m_manager->statisticsModel(),
+            SIGNAL(dataChanged(QModelIndex, QModelIndex, QVector<int>)),
+            this, SLOT(loadStatistics()));
+    // Connect slider to telemetry level
+    connect(ui->slider, &QSlider::valueChanged, [=]() {
+        // Get TelemetryLevel enum value
+        int level = telemetryEnum.value(ui->slider->value());
+        ((QTelemetry::StatisticsModel*)m_manager->statisticsModel())->setTelemetryLevel(
+            static_cast<QTelemetry::TelemetryLevel>(level));
     });
 }
 

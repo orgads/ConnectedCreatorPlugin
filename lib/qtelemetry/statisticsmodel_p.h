@@ -19,11 +19,15 @@ public:
     QFileSystemWatcher logWatcher;
 
     QList<QString> items;
+    /// Log file content for given model row (datetime)
     QJsonDocument logFileContent(int row);
+    /// Returns whether log was sent to backend
     bool isTransferred(const QJsonDocument &doc) const;
+    /// Filter JSON according to current model telemetry level
+    QJsonDocument filterContent(const QJsonDocument &content);
 
     QTelemetryManager *manager;
-    TelemetryLevel level;
+    TelemetryLevel telemetryLevel;
     StatisticsModel *q;
 };
 

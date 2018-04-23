@@ -10,8 +10,11 @@ namespace QTelemetry {
 class QTelemetryManager;
 class StatisticsModelPrivate;
 
-///
-/// \brief The StatisticsModel class
+/// \brief The StatisticsModel class represents model which contains data -
+/// statistics logs list with current telemetry item and respective JSON data.
+/// This model could be utilized by UI controls like combo boxes, text browsers,
+/// JSON treeviews, etc and by service classes like QScheduler,  QNetworkManager
+/// to send left behind data to backend.
 ///
 class StatisticsModel : public QAbstractListModel
 {
@@ -28,9 +31,18 @@ public slots:
     /// Reloads model from disk
     void resetModel();
 
+    /// Returns the number of logs stored on a disk + 1 for current data.
+    /// When the parent is valid returns 0 (QAbstractListModel).
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    ///< For Qt::DisplayRole returns time string itemsfor every log
+    ///< For JsonRole returns statistics JSON log for current or archived telemetry
+    ///< For SubmitTimeRole returns submission time
+    ///< For TransferredRole returns whether log was transferred to backend true/false
+    ///< Otherwise returns QVariant()
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+    /// Returns current telemetry level for the model @see setTelemetryLevel
+    TelemetryLevel telemetryLevel() const;
     /// Sets current telemetry level for the model @see telemetryLevel
     void setTelemetryLevel(const TelemetryLevel level);
 

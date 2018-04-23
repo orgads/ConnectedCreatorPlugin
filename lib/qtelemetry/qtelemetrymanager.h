@@ -11,24 +11,26 @@ class QAbstractItemModel;
 
 namespace QTelemetry {
 
+Q_NAMESPACE
+
 class QTelemetryManagerPrivate;
 class QAbstractDataSource;
 
 enum class TelemetryLevel {
-    NoTelemetry = 0x0,  ///< Transmit no data at all.
+    NoTelemetry = 0x0,                  ///< Transmit no data at all.
     BasicSystemInformation = 1 << 1,    ///< Transmit basic information about the system.
     BasicUsageStatistics = 1 << 2,      ///< Transmit basic usage statistics.
     DetailedSystemInformation = 1 << 3, ///< Transmit detailed system information.
     DetailedUsageStatistics = 1 << 4,   ///< Transmit detailed (application specific) usage statistics.
 };
 
+Q_ENUM_NS(TelemetryLevel)
+
 class QTELEMETRYSHARED_EXPORT QTelemetryManager : public QObject
 {
     Q_OBJECT
 
 public:
-    Q_ENUM(TelemetryLevel)
-
     QTelemetryManager(QObject *parent = nullptr);
     ~QTelemetryManager();
 

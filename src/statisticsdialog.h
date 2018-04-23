@@ -2,6 +2,7 @@
 #define STATISTICSDIALOG_H
 
 #include <QDialog>
+#include <QMetaEnum>
 
 namespace Ui { class StatisticsDialog; }
 namespace QTelemetry { class QTelemetryManager; }
@@ -38,6 +39,7 @@ private:
     QJsonModel *m_model;
     void syncScrollbars();
     QByteArray getStatisticsData();
+    QMetaEnum telemetryEnum;
 };
 
 } // namespace Internal

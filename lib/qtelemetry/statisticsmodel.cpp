@@ -2,10 +2,13 @@
 #include "qtelemetrymanager.h"
 #include "statisticsmodel.h"
 #include "statisticsmodel_p.h"
+#include "abstractdatasource.h"
 
 #include <QDir>
 #include <QDateTime>
 #include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
 
 namespace QTelemetry {
 
@@ -64,17 +67,19 @@ QVariant StatisticsModel::data(const QModelIndex &index, int role) const
 
     // Prepare file content
     QJsonDocument content = (role >= JsonRole) ? d->logFileContent(row) : QJsonDocument();
-    // TODO: Filter content by telemetry level
-    // ...
+    // Filter content by telemetry level
+    QJsonDocument filteredContent =
+        (d->telemetryLevel == TelemetryLevel::DetailedUsageStatistics) ?
+        content : d->filterContent(content);
 
     switch (role) {
         case Qt::DisplayRole:
             return d->items[row];
         case JsonRole:
             if(row == 0)
-                return d->manager->jsonData();
+                return d->manager->jsonData(d->telemetryLevel);
             else
-                return content;
+                return filteredContent;
         case SubmitTimeRole:
             if(row == 0)
                 return QDateTime::currentDateTimeUtc();
@@ -108,6 +113,38 @@ QJsonDocument StatisticsModelPrivate::logFileContent(int row)
     return QJsonDocument();
 }
 
+QJsonDocument StatisticsModelPrivate::filterContent(const QJsonDocument &content)
+{
+    // TODO: Filter content by telemetry level
+    QJsonValue environment = content["environment"];
+    QJsonValue analytics = content["analytics"];
+    QJsonObject complete, environmentFiltered, analyticsFiltered;
+
+    // Filter environment section
+    if(!environment.isUndefined()) {
+        foreach (QString key, environment.toObject().keys()) {
+            auto object = environment.toObject();
+            if(telemetryLevel >= manager->dataSource(key)->telemetryLevel())
+                environmentFiltered.insert(key, object[key]);
+        }
+    }
+
+    // Filter analytics section
+    if(!analytics.isUndefined()) {
+        foreach (QString key, analytics.toObject().keys()) {
+            auto object = analytics.toObject();
+            if(telemetryLevel >= manager->dataSource(key)->telemetryLevel())
+                analyticsFiltered.insert(key, object[key]);
+        }
+    }
+
+    // Concatenate filtered sections JSON object
+    complete.insert("environment", environmentFiltered);
+    complete.insert("analytics", analyticsFiltered);
+
+    return QJsonDocument(complete);
+}
+
 bool StatisticsModelPrivate::isTransferred(const QJsonDocument &doc) const
 {
     QJsonValue value = doc["submitted"]["transferred"];
@@ -127,16 +164,23 @@ int StatisticsModel::rowCount(const QModelIndex &parent) const
 
 void StatisticsModel::setTelemetryLevel(const TelemetryLevel level)
 {
-    beginResetModel();
-    d->level = level;
-    endResetModel();
+    d->telemetryLevel = level;
+    QVector<int> roles;
+    roles << JsonRole;
+    emit dataChanged(index(0, 0), index(rowCount() - 1, 0), roles);
+}
+
+TelemetryLevel StatisticsModel::telemetryLevel() const
+{
+    return d->telemetryLevel;
 }
 
 void StatisticsModel::resetTelemetryLevel()
 {
-    beginResetModel();
-    d->level = d->manager->telemetryLevel();
-    endResetModel();
+    d->telemetryLevel = d->manager->telemetryLevel();
+    QVector<int> roles;
+    roles << JsonRole;
+    emit dataChanged(index(0, 0), index(rowCount() - 1, 0), roles);
 }
 
 }   // namespace QTelemetry
