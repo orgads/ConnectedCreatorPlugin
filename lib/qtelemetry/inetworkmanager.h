@@ -2,6 +2,7 @@
 #define INETWORKMANAGER_H
 
 #include "qtelemetry_global.h"
+#include "qtelemetrymanager.h"
 
 #include <QObject>
 
@@ -12,10 +13,10 @@ class INetworkManager : public QObject
     Q_OBJECT
 
 public:
-    explicit INetworkManager(QObject *parent = Q_NULLPTR) : QObject(parent) {}
+    explicit INetworkManager(QTelemetryManager *parent) : QObject(parent) {}
 
     virtual void setBackend(const QString & url, const QString & path = "") = 0;
-    virtual void sendData(const QByteArray &data) = 0;
+    virtual void sendData() = 0;
 
 signals:
     void finished(bool success);

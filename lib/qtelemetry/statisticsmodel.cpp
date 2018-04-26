@@ -113,9 +113,9 @@ QJsonDocument StatisticsModelPrivate::logFileContent(int row)
     return QJsonDocument();
 }
 
+/// Filters content by telemetry level
 QJsonDocument StatisticsModelPrivate::filterContent(const QJsonDocument &content)
 {
-    // TODO: Filter content by telemetry level
     QJsonValue environment = content["environment"];
     QJsonValue analytics = content["analytics"];
     QJsonObject complete, environmentFiltered, analyticsFiltered;

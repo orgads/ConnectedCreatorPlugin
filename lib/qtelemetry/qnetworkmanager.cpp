@@ -8,11 +8,12 @@
 
 namespace QTelemetry {
 
-QNetworkManager::QNetworkManager(QObject *parent)
+QNetworkManager::QNetworkManager(QTelemetryManager *parent)
     : INetworkManager(parent)
     , d(new QNetworkManagerPrivate(this))
 {
-    d->m_manager = new QNetworkAccessManager(this);
+    d->telemetryManager = parent;
+    d->networkManager = new QNetworkAccessManager(this);
 }
 
 QNetworkManager::~QNetworkManager()
@@ -29,13 +30,16 @@ void QNetworkManager::setBackend(const QString & url, const QString & path)
         qCWarning(Log) << "Error: backend URL is empty or invalid!";
 }
 
-void QNetworkManager::sendData(const QByteArray &data)
+void QNetworkManager::sendData()
 {
     QNetworkRequest request;
     request.setUrl(d->m_url);
     request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
 
-    QNetworkReply *reply = d->m_manager->post(request, data);
+    // Get data from Telemetry Manager and send it
+    QByteArray data = d->telemetryManager->submit();
+    // TODO: send submission time and telemetryManager->productIdentifier() as request parameters
+    QNetworkReply *reply = d->networkManager->post(request, data);
 
     connect(reply, &QNetworkReply::finished, [this, data, reply]() {
         if (reply->error() == QNetworkReply::NoError) {

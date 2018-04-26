@@ -8,6 +8,7 @@ class QNetworkAccessManager;
 
 namespace QTelemetry {
 
+class QTelemetryManager;
 class QNetworkManager;
 
 class QNetworkManagerPrivate : public QObject
@@ -17,9 +18,10 @@ class QNetworkManagerPrivate : public QObject
 public:
     QNetworkManagerPrivate(QNetworkManager *parent) : q(parent) {}
 
-    QNetworkAccessManager *m_manager;
+    QNetworkAccessManager *networkManager;
     QUrl m_url;
 
+    QTelemetryManager *telemetryManager;
     QNetworkManager *q;
 };
 

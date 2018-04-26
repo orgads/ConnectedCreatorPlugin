@@ -91,8 +91,7 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
 
     // Create scheduler and add submission task to it
     scheduler()->addTask("SubmitData", [=]() {
-        QByteArray data = manager()->submit();
-        network()->sendData(data);
+        network()->sendData();
         qDebug() << QDateTime::currentDateTime().toString(Qt::ISODate) << ": SubmitData executed...";
     }, 7, QTelemetry::DurationMeasure::Days);
 
@@ -196,7 +195,7 @@ QTelemetry::QScheduler* ConnectedCreatorPlugin::scheduler()
 QTelemetry::QNetworkManager* ConnectedCreatorPlugin::network()
 {
     if(!m_network) {
-        m_network = new QTelemetry::QNetworkManager(this);
+        m_network = new QTelemetry::QNetworkManager(manager());
     }
     return m_network;
 }

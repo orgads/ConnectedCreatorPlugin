@@ -5,6 +5,7 @@
 
 namespace QTelemetry {
 
+class QTelemetryManager;
 class QNetworkManagerPrivate;
 
 class QNetworkManager : public INetworkManager
@@ -12,11 +13,11 @@ class QNetworkManager : public INetworkManager
     Q_OBJECT
 
 public:
-    QNetworkManager(QObject *parent = Q_NULLPTR);
+    QNetworkManager(QTelemetryManager *parent);
     ~QNetworkManager();
 
-    virtual void setBackend(const QString & url, const QString & path = "");
-    virtual void sendData(const QByteArray &data);
+    virtual void setBackend(const QString & url, const QString & path = "") override;
+    virtual void sendData() override;
 
 private:
     QNetworkManagerPrivate *d;
