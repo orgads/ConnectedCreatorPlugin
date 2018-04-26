@@ -10,6 +10,7 @@
 #include <coreplugin/settingsdatabase.h>
 #include <extensionsystem/pluginmanager.h>
 #include <extensionsystem/pluginspec.h>
+#include <extensionsystem/iplugin.h>
 
 namespace ConnectedCreator {
 namespace Internal {
@@ -86,7 +87,8 @@ bool ControlDialog::checkEvalLicense()
     bool eval = false;
     foreach (ExtensionSystem::PluginSpec *spec, plugins) {
         if(spec->name().contains("LicenseChecker")) {
-            eval = true;
+            metaObject()->invokeMethod(spec->plugin(), "evaluationLicense",
+                                       Q_RETURN_ARG(bool, eval));
             break;
         }
     }
