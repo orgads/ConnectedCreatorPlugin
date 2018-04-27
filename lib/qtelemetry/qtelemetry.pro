@@ -4,7 +4,8 @@ QT       += network opengl
 
 TARGET = QTelemetry
 TEMPLATE = lib
-unix|mac:VERSION = $${QT.QTelemetry.VERSION}
+VERSION = $${QT.QTelemetry.VERSION}
+win32:TARGET_EXT = .dll #Setting the output filename without the major version number on Windows
 
 DEFINES += QTELEMETRY_LIBRARY QT_DEPRECATED_WARNINGS
 
