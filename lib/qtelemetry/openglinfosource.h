@@ -10,7 +10,7 @@ namespace QTelemetry {
 ///
 /// The default telemetry level for this source is TelemetryLevel::DetailedSystemInformation.
 ///
-class OpenGLInfoSource : public QAbstractDataSource
+class QTELEMETRYSHARED_EXPORT OpenGLInfoSource : public QAbstractDataSource
 {
 public:
     OpenGLInfoSource();

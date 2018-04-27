@@ -4,7 +4,7 @@ QT       += network opengl
 
 TARGET = QTelemetry
 TEMPLATE = lib
-VERSION = $${QT.QTelemetry.VERSION}
+unix|mac:VERSION = $${QT.QTelemetry.VERSION}
 
 DEFINES += QTELEMETRY_LIBRARY QT_DEPRECATED_WARNINGS
 

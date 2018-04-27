@@ -87,8 +87,8 @@ bool ControlDialog::checkEvalLicense()
     bool eval = false;
     foreach (ExtensionSystem::PluginSpec *spec, plugins) {
         if(spec->name().contains("LicenseChecker")) {
-            metaObject()->invokeMethod(spec->plugin(), "evaluationLicense",
-                                       Q_RETURN_ARG(bool, eval));
+            metaObject()->invokeMethod(
+                spec->plugin(), "evaluationLicense", Q_RETURN_ARG(bool, eval));
             break;
         }
     }

@@ -6,6 +6,7 @@
 
 namespace Ui { class StatisticsDialog; }
 namespace QTelemetry { class QTelemetryManager; }
+
 class QJsonModel;
 
 namespace ConnectedCreator {

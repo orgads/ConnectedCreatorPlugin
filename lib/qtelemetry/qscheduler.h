@@ -27,7 +27,7 @@ enum class DurationMeasure
 ///
 /// \brief The QTask class helper class representing execution context for QScheduler
 ///
-class QTask : public QObject {
+class QTELEMETRYSHARED_EXPORT QTask : public QObject {
     Q_OBJECT
 
 public:
@@ -63,7 +63,7 @@ private:
 ///
 /// \brief The QScheduler class
 ///
-class QScheduler : public QObject
+class QTELEMETRYSHARED_EXPORT QScheduler : public QObject
 {
     Q_OBJECT
 public:

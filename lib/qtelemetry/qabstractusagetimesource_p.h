@@ -1,13 +1,15 @@
 ﻿#ifndef QABSTRACTUSAGETIMESOURCE_P_H
 #define QABSTRACTUSAGETIMESOURCE_P_H
 
+#include "qtelemetry_global.h"
+
 #include <QTime>
 
 namespace QTelemetry {
 
 class QAbstractUsageTimeSource;
 
-class QAbstractUsageTimeSourcePrivate
+class QTELEMETRYSHARED_EXPORT QAbstractUsageTimeSourcePrivate
 {
 public:
     QAbstractUsageTimeSourcePrivate(QAbstractUsageTimeSource *parent)

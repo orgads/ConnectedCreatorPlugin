@@ -1,6 +1,7 @@
 ﻿#ifndef QNETWORKMANAGER_H
 #define QNETWORKMANAGER_H
 
+#include "qtelemetry_global.h"
 #include "inetworkmanager.h"
 
 namespace QTelemetry {
@@ -8,7 +9,7 @@ namespace QTelemetry {
 class QTelemetryManager;
 class QNetworkManagerPrivate;
 
-class QNetworkManager : public INetworkManager
+class QTELEMETRYSHARED_EXPORT QNetworkManager : public INetworkManager
 {
     Q_OBJECT
 

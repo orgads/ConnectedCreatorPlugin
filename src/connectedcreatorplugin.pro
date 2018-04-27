@@ -55,7 +55,7 @@ message(Build tree: ($$IDE_BUILD_TREE))
 ## uncomment to build plugin into user config directory
 #USE_USER_DESTDIR = yes
 
-unix|win32: LIBS += -L$${IDE_BUILD_TREE}/lib/qtcreator/plugins/ -lQTelemetry
+LIBS += -L$${IDE_BUILD_TREE}/lib/qtcreator/plugins -lQTelemetry
 
 ###### If the plugin can be depended upon by other plugins, this code needs to be outsourced to
 ###### <dirname>_dependencies.pri, where <dirname> is the name of the directory containing the

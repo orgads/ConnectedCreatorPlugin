@@ -16,7 +16,7 @@ class StatisticsModelPrivate;
 /// JSON treeviews, etc and by service classes like QScheduler,  QNetworkManager
 /// to send left behind data to backend.
 ///
-class StatisticsModel : public QAbstractListModel
+class QTELEMETRYSHARED_EXPORT StatisticsModel : public QAbstractListModel
 {
 public:
     enum StatisticsRole {

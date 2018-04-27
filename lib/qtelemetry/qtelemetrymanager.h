@@ -9,14 +9,14 @@
 class QSettings;
 class QAbstractItemModel;
 
-namespace QTelemetry {
-
+namespace QTelemetry
+{
 Q_NAMESPACE
 
 class QTelemetryManagerPrivate;
 class QAbstractDataSource;
 
-enum class TelemetryLevel {
+enum class QTELEMETRYSHARED_EXPORT TelemetryLevel {
     NoTelemetry = 0x0,                  ///< Transmit no data at all.
     BasicSystemInformation = 1 << 1,    ///< Transmit basic information about the system.
     BasicUsageStatistics = 1 << 2,      ///< Transmit basic usage statistics.

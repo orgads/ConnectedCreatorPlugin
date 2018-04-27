@@ -12,7 +12,7 @@ namespace QTelemetry {
 class StatisticsModel;
 class QTelemetryManager;
 
-class StatisticsModelPrivate : public QObject
+class QTELEMETRYSHARED_EXPORT StatisticsModelPrivate : public QObject
 {
 public:
     StatisticsModelPrivate(StatisticsModel *parent);

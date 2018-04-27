@@ -14,7 +14,7 @@ class QAbstractUsageTimeSourcePrivate;
 ///
 /// The default telemetry level for this source is TelemetryLevel::DetailedUsageStatistics.
 ///
-class QAbstractUsageTimeSource : public QAbstractDataSource
+class QTELEMETRYSHARED_EXPORT QAbstractUsageTimeSource : public QAbstractDataSource
 {
     Q_OBJECT
 
