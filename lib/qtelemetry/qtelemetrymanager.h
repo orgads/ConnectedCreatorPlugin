@@ -11,7 +11,7 @@ class QAbstractItemModel;
 
 namespace QTelemetry
 {
-Q_NAMESPACE
+QTELEMETRYSHARED_EXPORT Q_NAMESPACE
 
 class QTelemetryManagerPrivate;
 class QAbstractDataSource;
