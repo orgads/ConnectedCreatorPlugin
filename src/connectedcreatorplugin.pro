@@ -38,24 +38,12 @@ RESOURCES += \
     plugin.qrc
 
 # Qt Creator linking
-
-## Either set the IDE_SOURCE_TREE when running qmake,
-## or set the QTC_SOURCE environment variable, to override the default setting
-isEmpty(IDE_SOURCE_TREE): IDE_SOURCE_TREE = $$(QTC_SOURCE)
-isEmpty(IDE_SOURCE_TREE): IDE_SOURCE_TREE = ../../qt-creator-src
-
-## Either set the IDE_BUILD_TREE when running qmake,
-## or set the QTC_BUILD environment variable, to override the default setting
-isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = $$(QTC_BUILD)
-isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = ../../qt-creator-debug
-
-message(Source tree: ($$IDE_SOURCE_TREE))
-message(Build tree: ($$IDE_BUILD_TREE))
+include(../qtc.pri)
 
 ## uncomment to build plugin into user config directory
 #USE_USER_DESTDIR = yes
 
-LIBS += -L$${IDE_BUILD_TREE}/lib/qtcreator/plugins -lQTelemetry
+LIBS += -L$${IDE_LIB_PATH} -lQTelemetry
 
 ###### If the plugin can be depended upon by other plugins, this code needs to be outsourced to
 ###### <dirname>_dependencies.pri, where <dirname> is the name of the directory containing the
