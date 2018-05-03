@@ -1,3 +1,5 @@
+include(qtc.pri)
+
 #TARGET = $$qtLibraryTarget($$TARGET)
 
 TEMPLATE = lib

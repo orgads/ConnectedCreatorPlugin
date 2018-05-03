@@ -64,5 +64,4 @@ HEADERS += \
     statisticsmodel.h \
     statisticsmodel_p.h
 
-include(../../qtc.pri)
 include(../../qtc_pluginlibrary.pri)
