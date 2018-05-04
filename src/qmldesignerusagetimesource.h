@@ -10,7 +10,7 @@
 ///
 /// The default telemetry level for this source is TelemetryLevel::DetailedUsageStatistics.
 ///
-class QmlDesignerUsageTimeSource : public QTelemetry::QAbstractUsageTimeSource
+class QTELEMETRYSHARED_EXPORT QmlDesignerUsageTimeSource : public QTelemetry::QAbstractUsageTimeSource
 {
 public:
     QmlDesignerUsageTimeSource();
