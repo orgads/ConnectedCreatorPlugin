@@ -10,10 +10,10 @@ INCLUDEPATH += \
     ./ \
     ../lib/qtelemetry
 
-isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = $$(QTC_BUILD)
-isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = ../../qt-creator-debug
+# Qt Creator linking
+include(../qtc.pri)
 
 ## uncomment to build plugin into user config directory
 #USE_USER_DESTDIR = yes
 
-unix|win32: LIBS += -L$${IDE_BUILD_TREE}/lib/qtcreator/plugins/ -lQTelemetry
+LIBS += -L$${IDE_LIB_PATH} -lQTelemetry
