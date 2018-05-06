@@ -191,7 +191,7 @@ bool QJsonModel::loadJson(const QByteArray &json)
         return true;
     }
 
-    qDebug()<<Q_FUNC_INFO<<"cannot load json";
+    qDebug()<< Q_FUNC_INFO << "cannot load json";
     return false;
 }
 

@@ -13,5 +13,5 @@ namespace Constants {
     const char FIRST_RUN_KEY[] = "ConnectedCreatorPlugin/FirstRun";
     const char ENABLED_KEY[] = "ConnectedCreatorPlugin/TelemetryEnabled";
 
-} // namespace ConnectedCreatorPlugin
 } // namespace Constants
+} // namespace ConnectedCreatorPlugin

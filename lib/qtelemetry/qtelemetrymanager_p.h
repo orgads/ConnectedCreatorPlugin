@@ -8,6 +8,7 @@
 #include <QMap>
 #include <QSettings>
 #include <QCoreApplication>
+#include <QDateTime>
 
 class QAbstractItemModel;
 
@@ -23,7 +24,7 @@ public:
     ~QTelemetryManagerPrivate();
     void createSettings();
     bool isValidSource(QAbstractDataSource *source) const;
-    void writeStatistics(const QJsonDocument &data);
+    QDateTime writeStatistics(const QJsonDocument &data);
 
     QList<QAbstractDataSource *> sources;
     QMap<QString, int> index;

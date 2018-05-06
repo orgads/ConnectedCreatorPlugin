@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QFileSystemWatcher>
 #include <QList>
+#include <QMap>
 
 namespace QTelemetry {
 
@@ -19,6 +20,8 @@ public:
     QFileSystemWatcher logWatcher;
 
     QList<QString> items;
+    QMap<QDateTime, int> index;
+
     /// Log file content for given model row (datetime)
     QJsonDocument logFileContent(int row);
     /// Returns whether log was sent to backend

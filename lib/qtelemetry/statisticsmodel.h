@@ -40,6 +40,9 @@ public slots:
     ///< For TransferredRole returns whether log was transferred to backend true/false
     ///< Otherwise returns QVariant()
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    /// \brief logData
+    /// \return JSON statistics for given \param date
+    QByteArray logData(const QDateTime &date);
 
     /// Returns current telemetry level for the model @see setTelemetryLevel
     TelemetryLevel telemetryLevel() const;

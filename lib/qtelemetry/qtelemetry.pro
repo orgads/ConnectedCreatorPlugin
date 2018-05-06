@@ -62,6 +62,7 @@ HEADERS += \
     qnetworkmanager.h \
     qnetworkmanager_p.h \
     statisticsmodel.h \
-    statisticsmodel_p.h
+    statisticsmodel_p.h \
+    qtelemetryconstants.h
 
 include(../../qtc_pluginlibrary.pri)

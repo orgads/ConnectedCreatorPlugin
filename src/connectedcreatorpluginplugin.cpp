@@ -86,14 +86,6 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
     manager()->setProductIdentifier("io.qt.qtc.analytics");
     // Set Telemetry Level
     manager()->setTelemetryLevel(QTelemetry::TelemetryLevel::DetailedUsageStatistics);
-    // Create and init network manager
-    network()->setBackend("http://localhost:8080", "analytics");
-
-    // Create scheduler and add submission task to it
-    scheduler()->addTask("SubmitData", [=]() {
-        network()->sendData();
-        qDebug() << QDateTime::currentDateTime().toString(Qt::ISODate) << ": SubmitData executed...";
-    }, 7, QTelemetry::DurationMeasure::Days);
 
 //    manager()->setSettingsDelay(30);
     manager()->setEnabled(PluginSettings::telemetryEnabled());
@@ -119,6 +111,19 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
     // Connect Telemetry Manager to UI
     controlDialog()->setTelemetryManager(manager());
     statisticsDialog()->setTelemetryManager(manager());
+}
+
+void ConnectedCreatorPlugin::configureScheduler()
+{
+    // Create scheduler and add submission task to it
+    scheduler()->addTask("SubmitData", [=]() {
+        network()->sendData();
+        qDebug() << QDateTime::currentDateTime().toString(Qt::ISODate)
+                 << ": SubmitData executed...";
+    }, 7, QTelemetry::DurationMeasure::Days);
+
+    // TODO: Add tasks to the scheduler
+    // ...
 }
 
 /// \brief Helper function to create menu action
@@ -157,6 +162,13 @@ bool ConnectedCreatorPlugin::delayedInitialize()
     // to have all the objects available before configuration
     configureTelemetryManager();
 
+    // Create and init network manager
+    network()->setBackend("http://localhost:8080", "analytics");
+
+    // NOTE. Init scheduler after telemetry manager and all the data sources
+    // to prevent sending empty statistics
+    configureScheduler();
+
     // Show telemetry control dialog to user on first run
     if(PluginSettings::firstStart()) {
         // The 1st time Control Dialog is opened 30 minutes after the start
@@ -166,7 +178,6 @@ bool ConnectedCreatorPlugin::delayedInitialize()
     // Plugin should return true from the function if itactually implements delayedInitialize()
     return true;
 }
-
 
 ExtensionSystem::IPlugin::ShutdownFlag ConnectedCreatorPlugin::aboutToShutdown()
 {

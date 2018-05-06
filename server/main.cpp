@@ -1,10 +1,16 @@
 ﻿#include <httpserver.h>
 #include <QDebug>
+#include <QUrlQuery>
 
 void receiveAnalytics(qttp::HttpData& data)
 {
     // Get and print request
     QJsonDocument doc(data.getRequest().getJson());
+
+    // Output debug info
+    QUrlQuery query = data.getRequest().getQuery();
+    qDebug() << "productIdentifier: " << query.queryItemValue("productIdentifier");
+    qDebug() << "submissionTime: " << query.queryItemValue("submissionTime");
     qDebug().noquote() << doc.toJson();
 
     // Create responce

@@ -3,6 +3,7 @@
 #include "qtelemetrymanager_p.h"
 #include "abstractdatasource.h"
 #include "statisticsmodel.h"
+#include "qtelemetryconstants.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -204,26 +205,31 @@ QJsonDocument QTelemetryManager::jsonData()
     return jsonData(telemetryLevel());
 }
 
-QByteArray QTelemetryManager::submit()
+QByteArray QTelemetryManager::logData(const QDateTime &date)
+{
+    return ((StatisticsModel *)d->model)->logData(date);
+}
+
+QDateTime QTelemetryManager::submit()
 {
     QJsonDocument statisticsData = jsonData();
 
     // Log data to file
-    d->writeStatistics(statisticsData);
+    QDateTime submissionTime = d->writeStatistics(statisticsData);
 
     // Reset in all data sources called automatically here
-    emit dataSubmitted(statisticsData);
-    return statisticsData.toJson();
+    emit dataSubmitted(submissionTime);
+    return submissionTime;
 }
 
-void QTelemetryManagerPrivate::writeStatistics(const QJsonDocument &data)
+QDateTime QTelemetryManagerPrivate::writeStatistics(const QJsonDocument &data)
 {
     QDateTime dt = QDateTime::currentDateTimeUtc();
 
     // Insert submitted date time to log file
     QJsonObject root = data.object();
     root.insert("submitted",
-                QJsonObject({{"time", dt.toString("yyyy-MM-dd hh:mm:ss")}}));
+                QJsonObject({{"time", dt.toString(Constants::ItemDtFormat)}}));
     QJsonDocument doc(root);
 
     // Get path to store statistics data logs
@@ -231,16 +237,18 @@ void QTelemetryManagerPrivate::writeStatistics(const QJsonDocument &data)
     QDir().mkpath(path);    // Create dir if not exists
 
     // Open statistics data log file for writing
-    QFile file(path + "/" + dt.toString("yyyyMMdd-hhmmss") + ".log");
+    QString fileName = dt.toString(Constants::FileNameDtFormat);
+    QFile file(path + "/" + fileName + ".log");
     if (!file.open(QFile::WriteOnly)) {
         qCWarning(Log) << "Unable to open file for statistics:"
                        << file.fileName() << file.errorString();
-        return;
+        return QDateTime();
     }
 
     // Save statistics data log to file
     file.write(doc.toJson());
     qDebug() << "Statistics log written:" << file.fileName();
+    return QDateTime::fromString(fileName, Constants::FileNameDtFormat);
 }
 
 QString QTelemetryManager::logPath() const

@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QList>
+#include <QDateTime>
 
 class QSettings;
 class QAbstractItemModel;
@@ -55,6 +56,10 @@ public:
     /// Current statistics data as QJsonDocument (overloaded: current telemetry level used)
     QJsonDocument jsonData();
 
+    /// \brief logData
+    /// \return JSON statistics for given \param date
+    QByteArray logData(const QDateTime &date);
+
     /// Submitted statistics log files storage path
     QString logPath() const;
 
@@ -85,12 +90,13 @@ public:
     QAbstractItemModel *statisticsModel() const;
 
 public slots:
-    /// Submits (returns) current telemetry data and resets all data sources
-    QByteArray submit();
+    /// Submits current telemetry data, returns submission time and
+    /// resets all data sources
+    QDateTime submit();
 
 signals:
     /// Emitted after data submission
-    void dataSubmitted(const QJsonDocument &);
+    void dataSubmitted(const QDateTime &);
     /// Emitted Product Identifier was changed
     void productIdentifierChanged(QString);
     /// Emitted when Telemetry Level changed

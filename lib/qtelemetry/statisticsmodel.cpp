@@ -3,6 +3,7 @@
 #include "statisticsmodel.h"
 #include "statisticsmodel_p.h"
 #include "abstractdatasource.h"
+#include "qtelemetryconstants.h"
 
 #include <QDir>
 #include <QDateTime>
@@ -41,6 +42,7 @@ void StatisticsModel::resetModel()
     beginResetModel();
 
     d->items.clear();
+    d->index.clear();
     d->items.append("Current telemetry");   // Add first fixed item
 
     // Get log files list
@@ -52,9 +54,11 @@ void StatisticsModel::resetModel()
     // Add item to model for every file
     foreach (QString file, list) {
         file.chop(4);
-        QDateTime dt = QDateTime::fromString(file, "yyyyMMdd-hhmmss");
-        if (dt.isValid())
-            d->items.append(dt.toString("yyyy-MM-dd hh:mm:ss"));
+        QDateTime dt = QDateTime::fromString(file, Constants::FileNameDtFormat);
+        if (dt.isValid()) {
+            d->index.insert(dt, list.count());
+            d->items.append(dt.toString(Constants::ItemDtFormat));
+        }
     }
 
     endResetModel();
@@ -84,7 +88,7 @@ QVariant StatisticsModel::data(const QModelIndex &index, int role) const
             if(row == 0)
                 return QDateTime::currentDateTimeUtc();
             else
-                return QDateTime::fromString(d->items[row], "yyyy-MM-dd hh:mm:ss");
+                return QDateTime::fromString(d->items[row], Constants::ItemDtFormat);
         case TransferredRole:
             if(row == 0)
                 return false;
@@ -94,12 +98,17 @@ QVariant StatisticsModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+QByteArray StatisticsModel::logData(const QDateTime &date)
+{
+    return d->logFileContent(d->index[date]).toJson();
+}
+
 QJsonDocument StatisticsModelPrivate::logFileContent(int row)
 {
     if(row > 0) {
         // Restore correct file name
-        QString fileName = QDateTime::fromString(items[row], "yyyy-MM-dd hh:mm:ss")
-                .toString("yyyyMMdd-hhmmss") + ".log";
+        QString fileName = QDateTime::fromString(items[row], Constants::ItemDtFormat)
+                .toString(Constants::FileNameDtFormat) + ".log";
         // Open file
         QFile file(manager->logPath() + "/" + fileName);
         if (!file.open(QFile::ReadOnly)) {

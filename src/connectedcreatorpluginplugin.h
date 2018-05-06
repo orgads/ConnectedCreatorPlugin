@@ -42,6 +42,8 @@ public:
 private:
     void controlAction();
     void statisticsAction();
+    void configureTelemetryManager();
+    void configureScheduler();
 
     template <typename ConnectedCreatorFunction>
     Core::Command* addMenuAction(const QString &text,
@@ -55,7 +57,6 @@ private:
     QTelemetry::QTelemetryManager *m_manager = nullptr;
     QTelemetry::QScheduler *m_scheduler = nullptr;
     QTelemetry::QNetworkManager *m_network = nullptr;
-    void configureTelemetryManager();
 };
 
 } // namespace Internal

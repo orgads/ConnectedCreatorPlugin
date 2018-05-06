@@ -1,10 +1,12 @@
 ﻿#include "qtelemetry_logging.h"
 #include "qnetworkmanager.h"
 #include "qnetworkmanager_p.h"
+#include "qtelemetryconstants.h"
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QRegExp>
+#include <QUrlQuery>
 
 namespace QTelemetry {
 
@@ -23,22 +25,29 @@ QNetworkManager::~QNetworkManager()
 
 void QNetworkManager::setBackend(const QString & url, const QString & path)
 {
-    d->m_url = QUrl(url.trimmed().remove(QRegExp("[/]+$")));
+    d->url = QUrl(url.trimmed().remove(QRegExp("[/]+$")));
     if(!path.trimmed().isEmpty())
-        d->m_url.setPath("/" + path.trimmed().remove(QRegExp("^[/]+")));
-    if(d->m_url.isEmpty() || !d->m_url.isValid())
+        d->url.setPath("/" + path.trimmed().remove(QRegExp("^[/]+")));
+    if(d->url.isEmpty() || !d->url.isValid())
         qCWarning(Log) << "Error: backend URL is empty or invalid!";
 }
 
 void QNetworkManager::sendData()
 {
+    // Add product identifier and submission time as request parameters to URL
+    QUrlQuery query;
+    QDateTime submissionTime = d->telemetryManager->submit();
+    query.addQueryItem("productIdentifier", d->telemetryManager->productIdentifier());
+    query.addQueryItem("submissionTime", submissionTime.toString(Constants::FileNameDtFormat));
+    d->url.setQuery(query);
+
+    // Compose request
     QNetworkRequest request;
-    request.setUrl(d->m_url);
+    request.setUrl(d->url);
     request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
 
     // Get data from Telemetry Manager and send it
-    QByteArray data = d->telemetryManager->submit();
-    // TODO: send submission time and telemetryManager->productIdentifier() as request parameters
+    QByteArray data = d->telemetryManager->logData(submissionTime);
     QNetworkReply *reply = d->networkManager->post(request, data);
 
     connect(reply, &QNetworkReply::finished, [this, data, reply]() {

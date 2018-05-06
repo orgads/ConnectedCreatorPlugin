@@ -19,7 +19,7 @@ public:
     QNetworkManagerPrivate(QNetworkManager *parent) : q(parent) {}
 
     QNetworkAccessManager *networkManager;
-    QUrl m_url;
+    QUrl url;
 
     QTelemetryManager *telemetryManager;
     QNetworkManager *q;
