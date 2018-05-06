@@ -10,10 +10,11 @@ class QSettings;
 
 namespace QTelemetry {
 
+class QTelemetryManager;
 class QTaskPrivate;
 class QSchedulerPrivate;
 
-typedef std::function<void()> FunctionType;
+using FunctionType = std::function<void ()>;
 
 enum class DurationMeasure
 {
@@ -67,7 +68,7 @@ class QTELEMETRYSHARED_EXPORT QScheduler : public QObject
 {
     Q_OBJECT
 public:
-    explicit QScheduler(QSettings *settings, QObject *parent = nullptr);
+    explicit QScheduler(QTelemetryManager *manager, QObject *parent = nullptr);
     ~QScheduler();
 
     /// \brief addTask Creates new task for periodic execution

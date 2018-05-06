@@ -13,6 +13,7 @@ namespace QTelemetry {
 
 class QTask;
 class QScheduler;
+class QTelemetryManager;
 
 class QTaskPrivate
 {
@@ -59,6 +60,7 @@ public:
     QScheduler *q;
     QTimer *timer;   // Scheduler timer
     QSettings *settings;
+    QTelemetryManager *manager;
 
     QMap<QString, TimerInfoPointer> tasks;      // Tasks list
     QMap<QDateTime, TimerInfoPointer> queue;    // Tasks queue ordered by time

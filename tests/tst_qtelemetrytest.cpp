@@ -41,7 +41,7 @@ void QTelemetryTest::initTestCase()
 {
     m_manager = new QTelemetry::QTelemetryManager(this);
     m_manager->setProductIdentifier("io.qt.qtc.analytics");
-    m_scheduler = new QTelemetry::QScheduler(m_manager->settings(), this);
+    m_scheduler = new QTelemetry::QScheduler(m_manager, this);
     m_model = new QTelemetry::StatisticsModel(m_manager);
 }
 

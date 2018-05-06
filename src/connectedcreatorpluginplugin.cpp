@@ -187,7 +187,7 @@ QTelemetry::QTelemetryManager* ConnectedCreatorPlugin::manager()
 QTelemetry::QScheduler* ConnectedCreatorPlugin::scheduler()
 {
     if(!m_scheduler) {
-        m_scheduler = new QTelemetry::QScheduler(manager()->settings(), this);
+        m_scheduler = new QTelemetry::QScheduler(manager(), this);
     }
     return m_scheduler;
 }

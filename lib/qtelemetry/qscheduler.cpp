@@ -1,6 +1,7 @@
 ﻿#include "qscheduler.h"
 #include "qscheduler_p.h"
 #include "qtelemetry_logging.h"
+#include "qtelemetrymanager.h"
 
 #include <QSettings>
 #include <limits>
@@ -54,11 +55,12 @@ void QTask::execAsync()
     d->watcher.setFuture(d->future);
 }
 
-QScheduler::QScheduler(QSettings *settings, QObject *parent)
+QScheduler::QScheduler(QTelemetryManager *manager, QObject *parent)
     : QObject(parent)
     , d(new QSchedulerPrivate(this))
 {
-    d->settings = settings;
+    d->settings = manager->settings();
+    d->manager = manager;
 }
 
 QScheduler::~QScheduler()
