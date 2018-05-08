@@ -20,7 +20,9 @@ Need to build Qt Creator first into `./qt-creator-debug`.
 
 ## Plugin build instructions
 Build instruction until moved to Qt Creator source tree:
-- `cd ./ConnectedCreatorPlugin-build` - or other build dir
+- `cd ./ConnectedCreatorPlugin
+- `git submodule update --init --recursive`
+- `cd ../ConnectedCreatorPlugin-build` - or other build dir
 - `qmake ../ConnectedCreatorPlugin/ConnectedCreator.pro CONFIG+=debug` -r
 - `make -j4`
 
