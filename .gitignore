@@ -6,3 +6,4 @@ release/*
 */*debug*/
 Makefile
 */.qmake.stash
+**/.DS_Store
