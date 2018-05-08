@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Analytics control</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
