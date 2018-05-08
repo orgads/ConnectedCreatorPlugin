@@ -56,7 +56,7 @@ public:
     /// Current statistics data as QJsonDocument (overloaded: current telemetry level used)
     QJsonDocument jsonData();
 
-    /// \brief logData
+    /// \brief logData Logged statistics data as QByteArray
     /// \return JSON statistics for given \param date
     QByteArray logData(const QDateTime &date);
 
