@@ -279,6 +279,12 @@
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>19</height>
+      </size>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
