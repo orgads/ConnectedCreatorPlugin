@@ -45,7 +45,7 @@ include(../qtc.pri)
 
 QTC_PLUGIN_NAME = ConnectedCreatorPlugin
 QTC_LIB_DEPENDS += \
-    #qtelemetry
+    qtelemetry
 
 QTC_PLUGIN_DEPENDS += \
     coreplugin
@@ -56,7 +56,5 @@ QTC_PLUGIN_RECOMMENDS += \
 ###### End _dependencies.pri contents ######
 
 include($$IDE_SOURCE_TREE/src/qtcreatorplugin.pri)
-
-LIBS *= -l$$qtLibraryName(QTelemetry)
 
 DISTFILES +=
