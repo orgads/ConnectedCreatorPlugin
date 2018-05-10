@@ -16,4 +16,4 @@ include(../qtc.pri)
 ## uncomment to build plugin into user config directory
 #USE_USER_DESTDIR = yes
 
-LIBS += -L$${IDE_LIB_PATH} -lQTelemetry
+LIBS *= -l$$qtLibraryName(QTelemetry)

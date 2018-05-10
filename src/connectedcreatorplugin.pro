@@ -1,8 +1,4 @@
-include(../lib/qtelemetry/qtelemetry.pri)
-
 DEFINES += CONNECTEDCREATORPLUGIN_LIBRARY
-
-QT += QTelemetry
 
 # ConnectedCreatorPlugin files
 INCLUDEPATH += \
@@ -43,15 +39,13 @@ include(../qtc.pri)
 ## uncomment to build plugin into user config directory
 #USE_USER_DESTDIR = yes
 
-LIBS += -L$${IDE_LIB_PATH} -lQTelemetry
-
 ###### If the plugin can be depended upon by other plugins, this code needs to be outsourced to
 ###### <dirname>_dependencies.pri, where <dirname> is the name of the directory containing the
 ###### plugin's sources.
 
 QTC_PLUGIN_NAME = ConnectedCreatorPlugin
 QTC_LIB_DEPENDS += \
-    # nothing here at this time
+    #qtelemetry
 
 QTC_PLUGIN_DEPENDS += \
     coreplugin
@@ -62,5 +56,7 @@ QTC_PLUGIN_RECOMMENDS += \
 ###### End _dependencies.pri contents ######
 
 include($$IDE_SOURCE_TREE/src/qtcreatorplugin.pri)
+
+LIBS *= -l$$qtLibraryName(QTelemetry)
 
 DISTFILES +=
