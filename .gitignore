@@ -2,7 +2,7 @@
 debug/*
 release/*
 /.project
-*/build-*/*
+**/build-*/*
 */*debug*/
 Makefile
 */.qmake.stash
