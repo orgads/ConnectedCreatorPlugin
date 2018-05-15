@@ -25,7 +25,8 @@ ControlDialog::ControlDialog(QWidget *parent) :
 
     // Show 2nd dialog page and short description message if not first run or eval license
     bool first = PluginSettings::firstStart();
-    if(!(first || checkEvalLicense())) {
+    // Run the dialog on first run for all users: open source, commercial, evaluation
+    if(!(first /*|| checkEvalLicense()*/)) {
         goSecondPage();
     }
     if(first)
