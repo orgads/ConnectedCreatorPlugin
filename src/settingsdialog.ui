@@ -34,7 +34,7 @@
       </font>
      </property>
      <property name="text">
-      <string>If enabled, the analytics can be disabled at any time.</string>
+      <string>If enabled, the telemetry gathering can be disabled at any time.</string>
      </property>
     </widget>
    </item>

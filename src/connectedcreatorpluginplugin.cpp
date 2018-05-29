@@ -97,7 +97,7 @@ bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *e
 void ConnectedCreatorPlugin::configureTelemetryManager()
 {
     // Create and init telemetry manager
-    manager()->setProductIdentifier("io.qt.qtc.analytics");
+    manager()->setProductIdentifier("io.qt.qtc.telemetry");
     // Set Telemetry Level
     manager()->setTelemetryLevel(QTelemetry::TelemetryLevel::DetailedUsageStatistics);
 
@@ -115,7 +115,7 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
     manager()->addDataSource(new QTelemetry::QtVersionSource);
     manager()->addDataSource(new QTelemetry::ScreenInfoSource);
     manager()->addDataSource(new QTelemetry::StartCountSource);
-    manager()->addDataSource(new QTelemetry::StyleInfoSource);
+    //manager()->addDataSource(new QTelemetry::StyleInfoSource);
     manager()->addDataSource(new QTelemetry::UsageTimeSource);
     manager()->addDataSource(new QTelemetry::QUuidSource);
 
@@ -179,7 +179,7 @@ bool ConnectedCreatorPlugin::delayedInitialize()
     configureTelemetryManager();
 
     // Create and init network manager
-    network()->setBackend("http://localhost:8080", "analytics");
+    network()->setBackend("http://localhost:8080", "telemetry");
 
     // NOTE. Init scheduler after telemetry manager and all the data sources
     // to prevent sending empty statistics
