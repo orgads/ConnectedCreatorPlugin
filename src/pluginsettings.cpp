@@ -54,12 +54,26 @@ void PluginSettings::setFirstStart()
 
 bool PluginSettings::telemetryEnabled()
 {
-    return settings()->value(Constants::ENABLED_KEY, false).value<bool>();
+    // Enable by default cause already selected as option in installer
+    return settings()->value(Constants::ENABLED_KEY, true).value<bool>();
 }
 
 void PluginSettings::setTelemetryEnabled(bool enabled)
 {
     settings()->setValue(Constants::ENABLED_KEY, enabled);
+    settings()->sync();
+}
+
+int PluginSettings::expirePeriod()
+{
+    return settings()->value(Constants::LOGEXPIRE_KEY, -1).value<int>();
+}
+
+void PluginSettings::setExpirePeriod(int period)
+{
+    if(period > 365)
+        period = -1;
+    settings()->setValue(Constants::LOGEXPIRE_KEY, period);
     settings()->sync();
 }
 

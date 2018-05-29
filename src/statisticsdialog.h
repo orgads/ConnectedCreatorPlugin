@@ -22,6 +22,9 @@ public:
 
     void setTelemetryManager(QTelemetry::QTelemetryManager* manager);
 
+public slots:
+    void embed(bool embedded = true);
+
 protected:
     void  showEvent(QShowEvent *event) override;
 

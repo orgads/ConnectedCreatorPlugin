@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TelemetryDialog</class>
+ <widget class="QDialog" name="TelemetryDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>688</width>
+    <height>460</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="ConnectedCreator::Internal::SettingsDialog" name="settingsPage">
+      <attribute name="title">
+       <string>Options</string>
+      </attribute>
+     </widget>
+     <widget class="ConnectedCreator::Internal::DataSourcesDialog" name="dataSourcesPage">
+      <attribute name="title">
+       <string>Data sources</string>
+      </attribute>
+     </widget>
+     <widget class="ConnectedCreator::Internal::StatisticsDialog" name="statisticsPage">
+      <attribute name="title">
+       <string>Statistics</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>19</height>
+      </size>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ConnectedCreator::Internal::StatisticsDialog</class>
+   <extends>QWidget</extends>
+   <header>statisticsdialog.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ConnectedCreator::Internal::DataSourcesDialog</class>
+   <extends>QWidget</extends>
+   <header>datasourcesdialog.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ConnectedCreator::Internal::SettingsDialog</class>
+   <extends>QWidget</extends>
+   <header>settingsdialog.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>TelemetryDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>343</x>
+     <y>446</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>343</x>
+     <y>229</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>TelemetryDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>343</x>
+     <y>446</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>343</x>
+     <y>229</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

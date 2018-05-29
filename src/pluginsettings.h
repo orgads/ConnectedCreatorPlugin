@@ -40,6 +40,12 @@ public:
 
     static bool telemetryEnabled();
     static void setTelemetryEnabled(bool enabled);
+    /// \return Log expiration period in days
+    static int expirePeriod();
+    /// \brief setExpirePeriod Log expiration period settings
+    /// \param period -1 - never expires; 0 - expires right after tramsmission;
+    /// 1...365 expires after period in days
+    static void setExpirePeriod(int period);
 
 private:
     static Core::SettingsDatabase *settings();

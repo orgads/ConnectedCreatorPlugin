@@ -131,6 +131,14 @@ void StatisticsDialog::showEvent(QShowEvent *event)
     QDialog::showEvent(event);
 }
 
+void StatisticsDialog::embed(bool embedded)
+{
+    if(embedded)
+        ui->buttonBox->hide();
+    else
+        ui->buttonBox->show();
+}
+
 /// \brief StatisticsDialog::syncScrollbars adjusts scroll bar steps for
 /// tree view and text browser synchronous scrolling
 void StatisticsDialog::syncScrollbars()
@@ -154,10 +162,7 @@ void StatisticsDialog::syncScrollbars()
             });
 }
 
-} // namespace Internal
-} // namespace ConnectedCreatorPlugin
-
-void ConnectedCreator::Internal::StatisticsDialog::on_saveToolButton_clicked()
+void StatisticsDialog::on_saveToolButton_clicked()
 {
     // Get data
     QByteArray statisticsData = getStatisticsData();
@@ -185,3 +190,6 @@ void ConnectedCreator::Internal::StatisticsDialog::on_saveToolButton_clicked()
         file.write(statisticsData);
     }
 }
+
+} // namespace Internal
+} // namespace ConnectedCreatorPlugin

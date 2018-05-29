@@ -1,6 +1,8 @@
 ﻿#include "connectedcreatorpluginplugin.h"
 #include "connectedcreatorpluginconstants.h"
-#include "controldialog.h"
+#include "telemetrydialog.h"
+#include "settingsdialog.h"
+#include "datasourcesdialog.h"
 #include "statisticsdialog.h"
 #include "pluginsettings.h"
 
@@ -57,21 +59,33 @@ bool ConnectedCreatorPlugin::initialize(const QStringList &arguments, QString *e
     Q_UNUSED(errorString)
 
     // Create plugin menu actions
-    Core::Command *cmd1 = addMenuAction(tr("&Control"),
-                                        &ConnectedCreatorPlugin::controlAction,
-                                        Constants::CONTROL_ACTION_ID,
-                                        QKeySequence(tr("Ctrl+Alt+Meta+C")));
+    Core::Command *cmd = addMenuAction(tr("&Options"),
+                                        &ConnectedCreatorPlugin::telemetryAction,
+                                        Constants::TELEMETRY_ACTION_ID,
+                                        QKeySequence(tr("Ctrl+Alt+Meta+T")));
 
-    Core::Command *cmd2 = addMenuAction(tr("View &Statistics"),
-                                        &ConnectedCreatorPlugin::statisticsAction,
-                                        Constants::STATISTICS_ACTION_ID,
-                                        QKeySequence(tr("Ctrl+Alt+Meta+S")));
+//    Core::Command *cmd1 = addMenuAction(tr("&Options"),
+//                                        &ConnectedCreatorPlugin::settingsAction,
+//                                        Constants::SETTINGS_ACTION_ID,
+//                                        QKeySequence(tr("Ctrl+Alt+Meta+O")));
+
+//    Core::Command *cmd2 = addMenuAction(tr("&Data Sources"),
+//                                        &ConnectedCreatorPlugin::dataSourcesAction,
+//                                        Constants::DATASOURCES_ACTION_ID,
+//                                        QKeySequence(tr("Ctrl+Alt+Meta+D")));
+
+//    Core::Command *cmd3 = addMenuAction(tr("View &Statistics"),
+//                                        &ConnectedCreatorPlugin::statisticsAction,
+//                                        Constants::STATISTICS_ACTION_ID,
+//                                        QKeySequence(tr("Ctrl+Alt+Meta+S")));
 
     // Add actions to ConnectedCreatorPlugin menu
     Core::ActionContainer *menu = Core::ActionManager::createMenu(Constants::MENU_ID);
-    menu->menu()->setTitle(tr("&Analytics"));
-    menu->addAction(cmd1);
-    menu->addAction(cmd2);
+    menu->menu()->setTitle(tr("&Telemetry"));
+    menu->addAction(cmd);
+//    menu->addAction(cmd1);
+//    menu->addAction(cmd2);
+//    menu->addAction(cmd3);
 
     // Add ConnectedCreatorPlugin menu to Qt Creator "Tools" menu
     Core::ActionManager::actionContainer(Core::Constants::M_TOOLS)->addMenu(menu);
@@ -109,8 +123,10 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
     manager()->addDataSource(new QmlDesignerUsageTimeSource);
 
     // Connect Telemetry Manager to UI
-    controlDialog()->setTelemetryManager(manager());
-    statisticsDialog()->setTelemetryManager(manager());
+    telemetryDialog()->setTelemetryManager(manager());
+//    settginsDialog()->setTelemetryManager(manager());
+//    dataSourcesDialog()->setTelemetryManager(manager());
+//    statisticsDialog()->setTelemetryManager(manager());
 }
 
 void ConnectedCreatorPlugin::configureScheduler()
@@ -172,7 +188,7 @@ bool ConnectedCreatorPlugin::delayedInitialize()
     // Show telemetry control dialog to user on first run
     if(PluginSettings::firstStart()) {
         // The 1st time Control Dialog is opened 30 minutes after the start
-        QTimer::singleShot(30*60*1000, this, &ConnectedCreatorPlugin:: controlAction);
+        QTimer::singleShot(30*60*1000, this, &ConnectedCreatorPlugin:: dataSourcesAction);
     }
 
     // Plugin should return true from the function if itactually implements delayedInitialize()
@@ -211,12 +227,28 @@ QTelemetry::QNetworkManager* ConnectedCreatorPlugin::network()
     return m_network;
 }
 
-ControlDialog* ConnectedCreatorPlugin::controlDialog()
+SettingsDialog* ConnectedCreatorPlugin::settginsDialog()
 {
-    if (!m_controlDialog) {
-        m_controlDialog = new ControlDialog(Core::ICore::mainWindow());
+    if(!m_settingsDialog) {
+        m_settingsDialog = new SettingsDialog(Core::ICore::mainWindow());
     }
-    return m_controlDialog.data();
+    return m_settingsDialog.data();
+}
+
+TelemetryDialog* ConnectedCreatorPlugin::telemetryDialog()
+{
+    if (!m_telemetryDialog) {
+        m_telemetryDialog = new TelemetryDialog(Core::ICore::mainWindow());
+    }
+    return m_telemetryDialog.data();
+}
+
+DataSourcesDialog* ConnectedCreatorPlugin::dataSourcesDialog()
+{
+    if (!m_sourcesDialog) {
+        m_sourcesDialog = new DataSourcesDialog(Core::ICore::mainWindow());
+    }
+    return m_sourcesDialog.data();
 }
 
 StatisticsDialog* ConnectedCreatorPlugin::statisticsDialog()
@@ -227,9 +259,19 @@ StatisticsDialog* ConnectedCreatorPlugin::statisticsDialog()
     return m_statDialog.data();
 }
 
-void ConnectedCreatorPlugin::controlAction()
+void ConnectedCreatorPlugin::telemetryAction()
 {
-    controlDialog()->exec();
+    telemetryDialog()->exec();
+}
+
+void ConnectedCreatorPlugin::settingsAction()
+{
+    settginsDialog()->exec();
+}
+
+void ConnectedCreatorPlugin::dataSourcesAction()
+{
+    dataSourcesDialog()->exec();
 }
 
 void ConnectedCreatorPlugin::statisticsAction()

@@ -16,7 +16,9 @@ namespace Core { class Command; }
 namespace ConnectedCreator {
 namespace Internal {
 
-class ControlDialog;
+class TelemetryDialog;
+class SettingsDialog;
+class DataSourcesDialog;
 class StatisticsDialog;
 
 class ConnectedCreatorPlugin : public ExtensionSystem::IPlugin
@@ -33,14 +35,18 @@ public:
     bool delayedInitialize() override;
     ShutdownFlag aboutToShutdown() override;
 
-    ControlDialog* controlDialog();
+    TelemetryDialog *telemetryDialog();
+    SettingsDialog *settginsDialog();
+    DataSourcesDialog* dataSourcesDialog();
     StatisticsDialog* statisticsDialog();
     QTelemetry::QTelemetryManager* manager();
     QTelemetry::QScheduler* scheduler();
     QTelemetry::QNetworkManager* network();
 
 private:
-    void controlAction();
+    void telemetryAction();
+    void settingsAction();
+    void dataSourcesAction();
     void statisticsAction();
     void configureTelemetryManager();
     void configureScheduler();
@@ -51,7 +57,9 @@ private:
                                  const char actionId[],
                                  const QKeySequence &sequence);
 
-    QPointer<ControlDialog> m_controlDialog;
+    QPointer<TelemetryDialog> m_telemetryDialog;
+    QPointer<SettingsDialog> m_settingsDialog;
+    QPointer<DataSourcesDialog> m_sourcesDialog;
     QPointer<StatisticsDialog> m_statDialog;
 
     QTelemetry::QTelemetryManager *m_manager = nullptr;

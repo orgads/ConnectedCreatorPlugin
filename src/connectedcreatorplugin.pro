@@ -2,33 +2,40 @@ DEFINES += CONNECTEDCREATORPLUGIN_LIBRARY
 
 # ConnectedCreatorPlugin files
 INCLUDEPATH += \
-    ./ \
-    ../lib/qtelemetry
+    $$PWD \
+    ../lib/qtelemetry \
+    $$OUT_PWD
 
 SOURCES += \
     connectedcreatorpluginplugin.cpp \
-    controldialog.cpp \
     statisticsdialog.cpp \
     pluginsettings.cpp \
     qjsonmodel.cpp \
     jsonsyntaxhighlighter.cpp \
-    qmldesignerusagetimesource.cpp
+    qmldesignerusagetimesource.cpp \
+    telemetrydialog.cpp \
+    datasourcesdialog.cpp \
+    settingsdialog.cpp
 
 HEADERS += \
     connectedcreatorpluginplugin.h \
     connectedcreatorplugin_global.h \
     connectedcreatorpluginconstants.h \
-    controldialog.h \
     statisticsdialog.h \
     pluginsettings.h \
     qjsonmodel.h \
     ctreeview.h \
     jsonsyntaxhighlighter.h \
-    qmldesignerusagetimesource.h
+    qmldesignerusagetimesource.h \
+    telemetrydialog.h \
+    settingsdialog.h \
+    datasourcesdialog.h
 
 FORMS += \
-    controldialog.ui \
-    statisticsdialog.ui
+    statisticsdialog.ui \
+    telemetrydialog.ui \
+    datasourcesdialog.ui \
+    settingsdialog.ui
 
 RESOURCES += \
     plugin.qrc

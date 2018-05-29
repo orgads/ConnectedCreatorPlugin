@@ -1,5 +1,5 @@
-﻿#include "controldialog.h"
-#include "ui_controldialog.h"
+﻿#include "datasourcesdialog.h"
+#include "ui_datasourcesdialog.h"
 #include "connectedcreatorpluginconstants.h"
 #include "pluginsettings.h"
 
@@ -15,50 +15,28 @@
 namespace ConnectedCreator {
 namespace Internal {
 
-ControlDialog::ControlDialog(QWidget *parent) :
+DataSourcesDialog::DataSourcesDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ControlDialog)
+    ui(new Ui::DataSourcesDialog)
 {
     ui->setupUi(this);
-
-    init();
-
-    // Show 2nd dialog page and short description message if not first run or eval license
-    bool first = PluginSettings::firstStart();
-    // Run the dialog on first run for all users: open source, commercial, evaluation
-    if(!(first /*|| checkEvalLicense()*/)) {
-        goSecondPage();
-    }
-    if(first)
-        PluginSettings::setFirstStart();
 }
 
-void ControlDialog::init()
-{
-    ui->okButton->setIcon(style()->standardIcon(QStyle::SP_DialogOkButton));
-    ui->cancelButton->setIcon(style()->standardIcon(QStyle::SP_DialogCancelButton));
-    ui->helpButton->setIcon(style()->standardIcon(QStyle::SP_DialogHelpButton));
-
-    ui->stackedWidget->setCurrentIndex(0);  // Go to 1st page
-    ui->okButton->hide();
-}
-
-ControlDialog::~ControlDialog()
+DataSourcesDialog::~DataSourcesDialog()
 {
     delete ui;
 }
 
-void ControlDialog::setTelemetryManager(QTelemetry::QTelemetryManager* manager)
+void DataSourcesDialog::setTelemetryManager(QTelemetry::QTelemetryManager* manager)
 {
     m_manager = manager;
-    ui->groupBox->setChecked(m_manager->isEnabled());
 
     // Generate generic and Qt Creator specific data sources list
     generateDataSourcesList();
 }
 
 /// \brief Generates and updates generic and Qt Creator specific data sources list
-void ControlDialog::generateDataSourcesList()
+void DataSourcesDialog::generateDataSourcesList()
 {
     if(!m_manager) return;
 
@@ -82,7 +60,7 @@ void ControlDialog::generateDataSourcesList()
     ui->qtcTextBrowser->setHtml(qtcText);
 }
 
-bool ControlDialog::checkEvalLicense()
+bool DataSourcesDialog::checkEvalLicense()
 {
     auto plugins = ExtensionSystem::PluginManager::plugins();
     bool eval = false;
@@ -96,25 +74,12 @@ bool ControlDialog::checkEvalLicense()
     return eval;
 }
 
-void ControlDialog::goSecondPage()
+void DataSourcesDialog::embed(bool embedded)
 {
-    ui->telemetryButton->hide();
-    ui->okButton->show();
-    ui->stackedWidget->setCurrentIndex(1);  // Go to 2nd page
-}
-
-void ControlDialog::on_telemetryButton_clicked()
-{
-    goSecondPage();
-    ui->groupBox->setChecked(true);
-}
-
-void ControlDialog::accept()
-{
-    if(m_manager) m_manager->setEnabled(ui->groupBox->isChecked());
-    PluginSettings::setTelemetryEnabled(ui->groupBox->isChecked());
-
-    QDialog::accept();
+    if(embedded)
+        ui->buttonBox->hide();
+    else
+        ui->buttonBox->show();
 }
 
 } // namespace Internal
