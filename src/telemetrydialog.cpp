@@ -1,6 +1,7 @@
 ﻿#include "telemetrydialog.h"
 #include "ui_telemetrydialog.h"
 
+#include <QKeyEvent>
 
 namespace ConnectedCreator {
 namespace Internal {
@@ -20,6 +21,10 @@ TelemetryDialog::TelemetryDialog(QWidget *parent) :
     ui->settingsPage->embed();
     ui->dataSourcesPage->embed();
     ui->statisticsPage->embed();
+    // Filter out Esc key
+    ui->settingsPage->installEventFilter(this);
+    ui->dataSourcesPage->installEventFilter(this);
+    ui->statisticsPage->installEventFilter(this);
 }
 
 TelemetryDialog::~TelemetryDialog()
@@ -41,6 +46,23 @@ void TelemetryDialog::accept()
     ui->settingsPage->accept();
 
     QDialog::accept();
+}
+
+bool TelemetryDialog::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if(keyEvent->key() == Qt::Key_Escape) {
+            // Propagate to parent
+            reject();
+            return true;
+        }  else {
+            return false;
+        }
+    }
+
+    // Standard event processing
+    return QObject::eventFilter(obj, event);
 }
 
 } // namespace Internal

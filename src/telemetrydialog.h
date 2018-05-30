@@ -22,6 +22,9 @@ public:
 public slots:
     void accept() override;
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
+
 private:
     Ui::TelemetryDialog *ui;
     QTelemetry::QTelemetryManager *m_manager = nullptr;
