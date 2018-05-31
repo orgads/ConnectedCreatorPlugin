@@ -12,12 +12,12 @@ QmlDesignerUsageTimeSource::QmlDesignerUsageTimeSource()
 
 QString QmlDesignerUsageTimeSource::name() const
 {
-    return tr("QmlDesigner usage time");
+    return tr("QmlDesigner start count and usage time");
 }
 
 QString QmlDesignerUsageTimeSource::description() const
 {
-    return tr("QmlDesigner total usage time in seconds");
+    return tr("QmlDesigner start count and total usage time in seconds");
 }
 
 void QmlDesignerUsageTimeSource::timerControl(Core::Id mode)

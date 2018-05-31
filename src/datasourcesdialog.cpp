@@ -47,7 +47,7 @@ void DataSourcesDialog::generateDataSourcesList()
         QString name = src->name(); // src->description();
         if (name.isEmpty()) continue;
 
-        QString element = QString("<li>") + name + "</li>";
+        QString element = QString("<li>") + "<b>" + src->id() + "</b> – " + name + "</li>";
         if(src->telemetryLevel() < QTelemetry::TelemetryLevel::DetailedUsageStatistics)
             genericText += element;
         else
