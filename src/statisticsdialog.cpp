@@ -13,6 +13,7 @@
 #include <QHeaderView>
 #include <QFileDialog>
 #include <QDateTime>
+#include <QMessageBox>
 #include <QDebug>
 
 namespace ConnectedCreator {
@@ -36,8 +37,8 @@ StatisticsDialog::~StatisticsDialog()
 void StatisticsDialog::init()
 {
     // Create and apply json tree model
-    m_model = new QJsonModel(this);
-    ui->treeView->setModel(m_model);
+    m_viewModel = new QJsonModel(this);
+    ui->treeView->setModel(m_viewModel);
 
     // Add JSON syntax highlighting
     new JsonSyntaxHighlighter(ui->textBrowser->document());
@@ -115,7 +116,7 @@ void StatisticsDialog::loadStatistics()
 
     // Show JSON statistics
     ui->textBrowser->setPlainText(QString::fromUtf8(statisticsData.constData()));
-    m_model->loadJson(statisticsData);
+    m_viewModel->loadJson(statisticsData);
     ui->treeView->expandAll();
 }
 
@@ -144,7 +145,7 @@ void StatisticsDialog::embed(bool embedded)
 void StatisticsDialog::syncScrollbars()
 {
     // Get tree view row height in pixels for scroll step in text browser
-    int step = ui->treeView->rowHeight(m_model->index(0, 0));
+    int step = ui->treeView->rowHeight(m_viewModel->index(0, 0));
     ui->textBrowser->verticalScrollBar()->setSingleStep(step);
 
     // Disconnect all signals
@@ -188,6 +189,16 @@ void StatisticsDialog::on_saveToolButton_clicked()
             return;
         }
         file.write(statisticsData);
+    }
+}
+
+void StatisticsDialog::on_clearLogButton_clicked()
+{
+    int res = QMessageBox::question(this, tr("Log clean-up"),
+         tr("Are You sure You want to delete all transmitted log files?"),
+         QMessageBox::Yes, QMessageBox::No);
+    if(res == QMessageBox::Yes) {
+        ((QTelemetry::StatisticsModel *)m_manager->statisticsModel())->clearCache();
     }
 }
 

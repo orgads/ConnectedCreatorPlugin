@@ -32,6 +32,7 @@ private slots:
     void on_textToolButton_toggled(bool checked);
     void on_treeToolButton_toggled(bool checked);
     void on_saveToolButton_clicked();
+    void on_clearLogButton_clicked();
 
     void loadStatistics();
 
@@ -40,7 +41,7 @@ private:
 
     Ui::StatisticsDialog *ui;
     QTelemetry::QTelemetryManager *m_manager = nullptr;
-    QJsonModel *m_model;
+    QJsonModel *m_viewModel;
     void syncScrollbars();
     QByteArray getStatisticsData();
     QMetaEnum telemetryEnum;
