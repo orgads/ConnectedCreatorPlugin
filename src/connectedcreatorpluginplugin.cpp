@@ -100,7 +100,7 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
     // Create and init telemetry manager
     manager()->setProductIdentifier("io.qt.qtc.telemetry");
     // Set Telemetry Level
-    manager()->setTelemetryLevel(QTelemetry::TelemetryLevel::DetailedUsageStatistics);
+    manager()->setTelemetryLevel(QTelemetry::TelemetryLevel::CustomUsageStatistics);
 
 //    manager()->setSettingsDelay(30);
     manager()->setEnabled(PluginSettings::telemetryEnabled());

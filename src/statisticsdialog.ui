@@ -191,7 +191,7 @@
      <item>
       <widget class="QSlider" name="slider">
        <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Telemetry level: &lt;br/&gt;    • Detailed Usage Statistics (&lt;span style=&quot; font-weight:600;&quot;&gt;Max&lt;/span&gt;)&lt;br/&gt;    • Detailed System Information&lt;br/&gt;    • Basic Usage Statistics&lt;br/&gt;    • Basic System Information&lt;br/&gt;    • No Telemetry (&lt;span style=&quot; font-weight:600;&quot;&gt;Min&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Telemetry level: &lt;br/&gt;    • Custom Usage Statistics (&lt;span style=&quot; font-weight:600;&quot;&gt;Max&lt;/span&gt;)&lt;br/&gt;    • Custom System Information&lt;br/&gt;    • Detailed Usage Statistics&lt;br/&gt;    • Detailed System Information&lt;br/&gt;    • Basic Usage Statistics&lt;br/&gt;    • Basic System Information&lt;br/&gt;    • No Telemetry (&lt;span style=&quot; font-weight:600;&quot;&gt;Min&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="maximum">
         <number>4</number>

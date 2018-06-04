@@ -7,7 +7,7 @@
 #include <extensionsystem/iplugin.h>
 
 QtcLicenseSource::QtcLicenseSource()
-    : QAbstractDataSource("qtcLicense", QTelemetry::TelemetryLevel::DetailedUsageStatistics)
+    : QAbstractDataSource("qtcLicense", QTelemetry::TelemetryLevel::CustomSystemInformation)
 {
 }
 

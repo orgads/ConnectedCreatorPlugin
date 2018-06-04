@@ -8,7 +8,7 @@
 
 /// Data source reports QmlDesigner usage time in seconds.
 ///
-/// The default telemetry level for this source is TelemetryLevel::DetailedUsageStatistics.
+/// The default telemetry level for this source is TelemetryLevel::CustomUsageStatistics.
 ///
 class QmlDesignerUsageTimeSource : public QTelemetry::QAbstractUsageTimeSource
 {
