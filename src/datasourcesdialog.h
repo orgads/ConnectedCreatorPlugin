@@ -23,7 +23,6 @@ public slots:
     void embed(bool embedded = true);
 
 private:
-    bool checkEvalLicense();
     void generateDataSourcesList();
 
     Ui::DataSourcesDialog *ui;

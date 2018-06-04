@@ -20,6 +20,7 @@
 #include "qnetworkmanager.h"
 #include <AllSources>
 #include "qmldesignerusagetimesource.h"
+#include "qtclicensesource.h"
 
 #include <QAction>
 #include <QMessageBox>
@@ -121,6 +122,7 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
 
     // Add Qt Creator specific data sources
     manager()->addDataSource(new QmlDesignerUsageTimeSource);
+    manager()->addDataSource(new QtcLicenseSource);
 
     // Connect Telemetry Manager to UI
     telemetryDialog()->setTelemetryManager(manager());

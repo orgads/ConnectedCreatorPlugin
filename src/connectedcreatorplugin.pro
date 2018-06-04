@@ -15,7 +15,8 @@ SOURCES += \
     qmldesignerusagetimesource.cpp \
     telemetrydialog.cpp \
     datasourcesdialog.cpp \
-    settingsdialog.cpp
+    settingsdialog.cpp \
+    qtclicensesource.cpp
 
 HEADERS += \
     connectedcreatorpluginplugin.h \
@@ -29,7 +30,8 @@ HEADERS += \
     qmldesignerusagetimesource.h \
     telemetrydialog.h \
     settingsdialog.h \
-    datasourcesdialog.h
+    datasourcesdialog.h \
+    qtclicensesource.h
 
 FORMS += \
     statisticsdialog.ui \

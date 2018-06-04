@@ -6,11 +6,7 @@
 #include <qtelemetrymanager.h>
 #include <abstractdatasource.h>
 
-#include <coreplugin/icore.h>
 #include <coreplugin/settingsdatabase.h>
-#include <extensionsystem/pluginmanager.h>
-#include <extensionsystem/pluginspec.h>
-#include <extensionsystem/iplugin.h>
 
 namespace ConnectedCreator {
 namespace Internal {
@@ -58,20 +54,6 @@ void DataSourcesDialog::generateDataSourcesList()
 
     ui->genericTextBrowser->setHtml(genericText);
     ui->qtcTextBrowser->setHtml(qtcText);
-}
-
-bool DataSourcesDialog::checkEvalLicense()
-{
-    auto plugins = ExtensionSystem::PluginManager::plugins();
-    bool eval = false;
-    foreach (ExtensionSystem::PluginSpec *spec, plugins) {
-        if(spec->name().contains("LicenseChecker")) {
-            metaObject()->invokeMethod(
-                spec->plugin(), "evaluationLicense", Q_RETURN_ARG(bool, eval));
-            break;
-        }
-    }
-    return eval;
 }
 
 void DataSourcesDialog::embed(bool embedded)
