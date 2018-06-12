@@ -174,14 +174,22 @@ void ConnectedCreatorPlugin::extensionsInitialized()
  * depend on this plugin have been called.
  * @return
  */
+void ConnectedCreatorPlugin::configureNetwork()
+{
+    // Get backend URL
+    QString url = !QString(TELEMETRY_BACKEND_URL).isEmpty()
+            ? QString(TELEMETRY_BACKEND_URL) : QString("http://localhost:3000");
+    // Create and init network manager
+    network()->setBackend(url);
+}
+
 bool ConnectedCreatorPlugin::delayedInitialize()
 {
     // Configure QTelemetry after all plugins initialized
     // to have all the objects available before configuration
     configureTelemetryManager();
 
-    // Create and init network manager
-    network()->setBackend("http://localhost:8080", "telemetry");
+    configureNetwork();
 
     // NOTE. Init scheduler after telemetry manager and all the data sources
     // to prevent sending empty statistics

@@ -50,6 +50,7 @@ private:
     void statisticsAction();
     void configureTelemetryManager();
     void configureScheduler();
+    void configureNetwork();
 
     template <typename ConnectedCreatorFunction>
     Core::Command* addMenuAction(const QString &text,
