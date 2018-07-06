@@ -36,7 +36,7 @@ public:
     ShutdownFlag aboutToShutdown() override;
 
     TelemetryDialog *telemetryDialog();
-    SettingsDialog *settginsDialog();
+    SettingsDialog *settingsDialog();
     DataSourcesDialog* dataSourcesDialog();
     StatisticsDialog* statisticsDialog();
     QTelemetry::QTelemetryManager* manager();

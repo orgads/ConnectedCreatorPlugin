@@ -126,7 +126,7 @@ void ConnectedCreatorPlugin::configureTelemetryManager()
 
     // Connect Telemetry Manager to UI
     telemetryDialog()->setTelemetryManager(manager());
-//    settginsDialog()->setTelemetryManager(manager());
+//    settingsDialog()->setTelemetryManager(manager());
 //    dataSourcesDialog()->setTelemetryManager(manager());
 //    statisticsDialog()->setTelemetryManager(manager());
 }
@@ -178,7 +178,7 @@ void ConnectedCreatorPlugin::configureNetwork()
 {
     // Get backend URL
     QString url = !QString(TELEMETRY_BACKEND_URL).isEmpty()
-            ? QString(TELEMETRY_BACKEND_URL) : QString("http://localhost:3000");
+            ? QString(TELEMETRY_BACKEND_URL) : QString("http://localhost:3000/telemetry");
     // Create and init network manager
     network()->setBackend(url);
 }
@@ -237,7 +237,7 @@ QTelemetry::QNetworkManager* ConnectedCreatorPlugin::network()
     return m_network;
 }
 
-SettingsDialog* ConnectedCreatorPlugin::settginsDialog()
+SettingsDialog* ConnectedCreatorPlugin::settingsDialog()
 {
     if(!m_settingsDialog) {
         m_settingsDialog = new SettingsDialog(Core::ICore::mainWindow());
@@ -276,7 +276,7 @@ void ConnectedCreatorPlugin::telemetryAction()
 
 void ConnectedCreatorPlugin::settingsAction()
 {
-    settginsDialog()->exec();
+    settingsDialog()->exec();
 }
 
 void ConnectedCreatorPlugin::dataSourcesAction()
