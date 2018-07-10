@@ -196,10 +196,10 @@ bool ConnectedCreatorPlugin::delayedInitialize()
     configureScheduler();
 
     // Show telemetry control dialog to user on first run
-    if(PluginSettings::firstStart()) {
-        // The 1st time Control Dialog is opened 30 minutes after the start
-        QTimer::singleShot(30*60*1000, this, &ConnectedCreatorPlugin:: dataSourcesAction);
-    }
+//    if(PluginSettings::firstStart()) {
+//        // The 1st time Control Dialog is opened 30 minutes after the start
+//        QTimer::singleShot(30*60*1000, this, &ConnectedCreatorPlugin:: dataSourcesAction);
+//    }
 
     // Plugin should return true from the function if itactually implements delayedInitialize()
     return true;
