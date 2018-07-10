@@ -21,6 +21,8 @@
 #include <AllSources>
 #include "qmldesignerusagetimesource.h"
 #include "qtclicensesource.h"
+#include "qtelemetry_logging.h"
+#include <statisticsmodel.h>
 
 #include <QAction>
 #include <QMessageBox>
@@ -136,12 +138,30 @@ void ConnectedCreatorPlugin::configureScheduler()
     // Create scheduler and add submission task to it
     scheduler()->addTask("SubmitData", [=]() {
         network()->sendData();
-        qDebug() << QDateTime::currentDateTime().toString(Qt::ISODate)
-                 << ": SubmitData executed...";
-    }, 7, QTelemetry::DurationMeasure::Days);
+        qCInfo(QTelemetry::Log) << QDateTime::currentDateTime().toString(Qt::ISODate)
+                                << ": SubmitData Task executed...";
+    }, 7, QTelemetry::DurationMeasure::Minutes);
 
-    // TODO: Add tasks to the scheduler
-    // ...
+    // Add task to delete expired logs
+    scheduler()->addTask("DeleteExpiredLogs", [=]() {
+        int expire = PluginSettings::expirePeriod();
+        QTelemetry::StatisticsModel *model =
+                (QTelemetry::StatisticsModel *)m_manager->statisticsModel();
+        // expire == -1 - do nothing - never expires
+        if(expire == 0) {
+            // Delete all transferred files before current date time
+            model->clearCache();
+        } else if(expire > 0) {
+            // Delete all transferred files after 'expire' days period
+            QDateTime date = QDateTime::currentDateTimeUtc().addDays(-expire);
+            model->clearCache(date);
+        }
+        qCInfo(QTelemetry::Log) << QDateTime::currentDateTime().toString(Qt::ISODate)
+                                << ": DeleteExpiredLogs Task executed...";
+    }, 1, QTelemetry::DurationMeasure::Days);
+
+    // Add task to send left behind logs
+
 }
 
 /// \brief Helper function to create menu action
