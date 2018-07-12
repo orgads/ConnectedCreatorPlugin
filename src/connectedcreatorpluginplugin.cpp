@@ -140,13 +140,12 @@ void ConnectedCreatorPlugin::configureScheduler()
         network()->sendData();
         qCInfo(QTelemetry::Log) << QDateTime::currentDateTime().toString(Qt::ISODate)
                                 << ": SubmitData Task executed...";
-    }, 7, QTelemetry::DurationMeasure::Minutes);
+    }, 7, QTelemetry::DurationMeasure::Days);
 
     // Add task to delete expired logs
     scheduler()->addTask("DeleteExpiredLogs", [=]() {
         int expire = PluginSettings::expirePeriod();
-        QTelemetry::StatisticsModel *model =
-                (QTelemetry::StatisticsModel *)m_manager->statisticsModel();
+        auto *model = (QTelemetry::StatisticsModel *)m_manager->statisticsModel();
         // expire == -1 - do nothing - never expires
         if(expire == 0) {
             // Delete all transferred files before current date time
@@ -161,7 +160,19 @@ void ConnectedCreatorPlugin::configureScheduler()
     }, 1, QTelemetry::DurationMeasure::Days);
 
     // Add task to send left behind logs
-
+    scheduler()->addTask("SendLeftBehind", [=]() {
+        auto *model = m_manager->statisticsModel();
+        for(int i = 1; i < model->rowCount(); i++) {
+            QDateTime fileDT;
+            QModelIndex idx = model->index(i, 0);
+            if(!model->data(idx, QTelemetry::StatisticsModel::TransferredRole).toBool()) {
+                fileDT = model->data(idx, QTelemetry::StatisticsModel::SubmitTimeRole).toDateTime();
+                network()->sendData(fileDT);
+            }
+        }
+        qCInfo(QTelemetry::Log) << QDateTime::currentDateTime().toString(Qt::ISODate)
+                                << ": SendLeftBehind Task executed...";
+    }, 1, QTelemetry::DurationMeasure::Days);
 }
 
 /// \brief Helper function to create menu action
