@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0">
    <property name="spacing">
     <number>20</number>
    </property>
@@ -27,28 +27,35 @@
     <number>10</number>
    </property>
    <item>
-    <widget class="QLabel" name="descrLabel">
-     <property name="font">
-      <font>
-       <italic>true</italic>
-      </font>
+    <widget class="QGroupBox" name="telemetryGroupBox">
+     <property name="title">
+      <string>Telemetry</string>
      </property>
-     <property name="text">
-      <string>If enabled, the telemetry gathering can be disabled at any time.</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="checkBox">
-     <property name="text">
-      <string>Enable data tracking</string>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QCheckBox" name="checkBox">
+        <property name="toolTip">
+         <string>Help The Qth Company to improve user experience by enabling anonymous data tracking</string>
+        </property>
+        <property name="text">
+         <string>Enable user data tracking</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.qt.io/terms-conditions/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;The Qt Company privacy policy.&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
     <widget class="QGroupBox" name="logGroupBox">
      <property name="title">
-      <string>Log expiration settings</string>
+      <string>Log expiration</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <property name="leftMargin">
@@ -66,10 +73,10 @@
       <item row="0" column="0" colspan="3">
        <widget class="QRadioButton" name="keepRadioButton">
         <property name="toolTip">
-         <string>Keep logs permanently</string>
+         <string>Logs are kept permanently</string>
         </property>
         <property name="text">
-         <string>Never expires</string>
+         <string>Never</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -92,10 +99,10 @@
       <item row="1" column="0" colspan="3">
        <widget class="QRadioButton" name="sentRadioButton">
         <property name="toolTip">
-         <string>Logs cleaned-up right after data sent to backend</string>
+         <string>Logs deleted immediately after data is transmitted to the backend</string>
         </property>
         <property name="text">
-         <string>Expires right after data transmission</string>
+         <string>Immediately after data transmission</string>
         </property>
        </widget>
       </item>
@@ -115,7 +122,7 @@
       <item row="2" column="0">
        <widget class="QRadioButton" name="timeRadioButton">
         <property name="toolTip">
-         <string>Logs cleaned-up after specified period of time</string>
+         <string>Logs deleted after a specified time period</string>
         </property>
         <property name="text">
          <string>Expires after</string>
@@ -128,7 +135,7 @@
          <bool>false</bool>
         </property>
         <property name="toolTip">
-         <string>Logs cleaned-up after specified period of time</string>
+         <string>Logs deleted after a specified time period</string>
         </property>
         <property name="minimum">
          <number>1</number>
@@ -141,10 +148,10 @@
       <item row="2" column="2">
        <widget class="QLabel" name="label">
         <property name="toolTip">
-         <string>Logs cleaned-up after specified period of time</string>
+         <string>Logs deleted after a specified time period</string>
         </property>
         <property name="text">
-         <string>days period</string>
+         <string>days</string>
         </property>
        </widget>
       </item>
